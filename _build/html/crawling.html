@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Crawling data &#8212; PSD</title>
+    <title>Business Understanding &#8212; PSD</title>
   
   
   
@@ -179,7 +179,8 @@
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Crawling data</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Business Understanding</a></li>
+
 </ul>
 
     </div>
@@ -352,7 +353,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -363,11 +366,44 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Crawling data</h1>
+    <h1>Business Understanding</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Business Understanding</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#latar-belakang-dan-tujuan-proyek">Latar Belakang dan Tujuan Proyek</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-understanding">Data Understanding</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-data-analisis-kualitas-udara-wilayah-gresik">Eksplorasi data - Analisis kualitas udara wilayah Gresik</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sumber-data-data-source">Sumber Data (Data Source)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spesifikasi-pengambilan-data-data-scope">Spesifikasi Pengambilan Data (Data Scope)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deskripsi-variabel-features-description">Deskripsi Variabel (Features Description)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pertimbangan-kualitas-data">Pertimbangan Kualitas Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#crawling-data">Crawling Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#eksekusi-crawling-data-satelit-no2-co-so2-o3">Eksekusi Crawling Data Satelit (NO2, CO, SO2, O3)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#transformasi-data-mentah-netcdf-ke-csv">Transformasi Data Mentah (NetCDF ke CSV)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-hasil-dengan-grafik-kartesius">Visualisasi Hasil dengan Grafik Kartesius</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-no2">Visualisasi NO2</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-co">Visualisasi CO</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-so2">Visualisasi SO2</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-o3">Visualisasi O3</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-peta-heatmap-folium">Visualisasi Peta Heatmap (Folium)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -377,8 +413,976 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="crawling-data">
-<h1>Crawling data<a class="headerlink" href="#crawling-data" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="business-understanding">
+<h1>Business Understanding<a class="headerlink" href="#business-understanding" title="Link to this heading">#</a></h1>
+<section id="latar-belakang-dan-tujuan-proyek">
+<h2>Latar Belakang dan Tujuan Proyek<a class="headerlink" href="#latar-belakang-dan-tujuan-proyek" title="Link to this heading">#</a></h2>
+<p>Tujuan utama dari proyek sains data ini adalah:</p>
+<blockquote>
+<div><p><strong>“Menganalisis kualitas udara di wilayah Gresik berdasarkan perubahan konsentrasi polutan NO₂, CO, SO₂, dan O₃ secara temporal selama periode 1 tahun terakhir menggunakan data satelit penginderaan jauh Sentinel-5P.”</strong></p>
+</div></blockquote>
+<p>Tujuan di atas dirumuskan secara spesifik agar mencakup komponen penting dalam proyek sains data:</p>
+<ul class="simple">
+<li><p><strong>Data:</strong> Konsentrasi polutan (NO₂, CO, SO₂, O₃)</p></li>
+<li><p><strong>Periode waktu:</strong> 1 tahun terakhir (01 september 2025 hingga 31 Agustus 2026)</p></li>
+<li><p><strong>Wilayah:</strong> Kabupaten Gresik (berdasarkan batas koordinat wilayah)</p></li>
+<li><p><strong>Analisis:</strong> Analisis temporal (<em>Time Series</em>)</p></li>
+<li><p><strong>Output:</strong> Visualisasi data dan penarikan kesimpulan terkait tren kualitas udara</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="data-understanding">
+<h1>Data Understanding<a class="headerlink" href="#data-understanding" title="Link to this heading">#</a></h1>
+<p>Menurut standar <em>World Health Organization</em> (WHO), terdapat beberapa polutan utama yang menjadi indikator kualitas udara dengan bukti kuat terkait dampaknya terhadap kesehatan, yaitu PM₂.₅, PM₁₀, O₃, NO₂, SO₂, dan CO.</p>
+<p>Namun, berdasarkan ketersediaan instrumen (<em>band</em>) pada satelit <strong>Sentinel-5P</strong> yang digunakan dalam proyek ini, kita akan berfokus pada 4 parameter gas utama yang paling praktis dan relevan untuk diakses:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Parameter</p></th>
+<th class="head text-left"><p>Nama Polutan</p></th>
+<th class="head text-left"><p>Mengapa Penting?</p></th>
+<th class="head text-left"><p>Sumber Umum</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><strong>NO₂</strong></p></td>
+<td class="text-left"><p><em>Nitrogen Dioxide</em></p></td>
+<td class="text-left"><p>Berkaitan erat dengan pembakaran kendaraan bermotor dan aktivitas kawasan industri.</p></td>
+<td class="text-left"><p>Asap kendaraan bermotor, pabrik industri, dan pembangkit listrik.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><strong>CO</strong></p></td>
+<td class="text-left"><p><em>Carbon Monoxide</em></p></td>
+<td class="text-left"><p>Merupakan indikator terjadinya proses pembakaran yang tidak sempurna.</p></td>
+<td class="text-left"><p>Kendaraan bermotor dan pembakaran bahan bakar.</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><strong>SO₂</strong></p></td>
+<td class="text-left"><p><em>Sulfur Dioxide</em></p></td>
+<td class="text-left"><p>Sangat relevan untuk melacak emisi dari aktivitas pembakaran bahan bakar fosil yang mengandung sulfur (belerang).</p></td>
+<td class="text-left"><p>Kawasan industri, pembangkit listrik, dan pembakaran batu bara/minyak.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><strong>O₃</strong></p></td>
+<td class="text-left"><p><em>Ozone</em></p></td>
+<td class="text-left"><p>Polutan sekunder yang tidak diemisikan secara langsung, melainkan terbentuk melalui reaksi kimia di atmosfer.</p></td>
+<td class="text-left"><p>Terbentuk dari reaksi antara NOx dan VOC (<em>Volatile Organic Compounds</em>) dengan bantuan sinar matahari.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<section id="eksplorasi-data-analisis-kualitas-udara-wilayah-gresik">
+<h2>Eksplorasi data - Analisis kualitas udara wilayah Gresik<a class="headerlink" href="#eksplorasi-data-analisis-kualitas-udara-wilayah-gresik" title="Link to this heading">#</a></h2>
+<section id="sumber-data-data-source">
+<h3>Sumber Data (Data Source)<a class="headerlink" href="#sumber-data-data-source" title="Link to this heading">#</a></h3>
+<p>Data kualitas udara yang digunakan bersumber dari pantauan satelit penginderaan jauh <strong>Sentinel-5P (S5P) Precursor</strong>. Satelit ini dilengkapi instrumen TROPOMI yang sangat sensitif dalam mendeteksi komposisi gas di atmosfer. Pengambilan data dilakukan secara komputasional (<em>crawling</em>) menggunakan platform Copernicus Data Space melalui pustaka/API <code class="docutils literal notranslate"><span class="pre">openeo</span></code>.</p>
+</section>
+<section id="spesifikasi-pengambilan-data-data-scope">
+<h3>Spesifikasi Pengambilan Data (Data Scope)<a class="headerlink" href="#spesifikasi-pengambilan-data-data-scope" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Cakupan Spasial (<em>Spatial Extent</em>):</strong> Pengambilan data difokuskan secara eksklusif pada <em>Area of Interest</em> (AOI) Kabupaten Gresik. Ekstraksi menggunakan <em>Bounding Box</em> koordinat yang mencakup wilayah daratan dan pesisir sekitar Gresik.</p></li>
+<li><p><strong>Cakupan Temporal (<em>Temporal Extent</em>):</strong> Data historis ditarik mulai dari <strong>1 Januari 2025 hingga 31 Agustus 2026</strong> guna menangkap variasi harian, bulanan, maupun musiman selama lebih dari 1 tahun terakhir.</p></li>
+<li><p><strong>Agregasi (<em>Aggregation</em>):</strong></p>
+<ul>
+<li><p><em>Temporal</em>: Data harian diagregasi dengan menghitung nilai rata-rata (<em>daily mean</em>) untuk menghindari duplikasi observasi pada hari yang sama.</p></li>
+<li><p><em>Spasial</em>: Seluruh nilai piksel satelit yang jatuh di dalam batas koordinat Gresik dirata-ratakan (<em>spatial mean</em>), menghasilkan satu nilai representatif untuk keseluruhan area pada hari tersebut.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="deskripsi-variabel-features-description">
+<h3>Deskripsi Variabel (Features Description)<a class="headerlink" href="#deskripsi-variabel-features-description" title="Link to this heading">#</a></h3>
+<p>Terdapat empat variabel polutan utama dan satu variabel waktu yang diekstrak:</p>
+<ol class="arabic simple">
+<li><p><strong>NO₂ (Nitrogen Dioksida):</strong> Indikator pembakaran bahan bakar, relevan untuk memantau emisi lalu lintas dan kawasan industri di Gresik.</p></li>
+<li><p><strong>CO (Karbon Monoksida):</strong> Gas buang dari pembakaran tidak sempurna, mencerminkan polusi dari kendaraan bermotor atau pembakaran lain.</p></li>
+<li><p><strong>SO₂ (Sulfur Dioksida):</strong> Polutan yang mengindikasikan aktivitas pabrik industri berat atau pembangkit listrik yang membakar bahan bakar fosil bersulfur.</p></li>
+<li><p><strong>O₃ (Ozon):</strong> Polutan sekunder hasil reaksi gas-gas lain dengan sinar matahari.</p></li>
+<li><p><strong>Date (Tanggal):</strong> Indeks waktu perekaman satelit dalam format YYYY-MM-DD.</p></li>
+</ol>
+</section>
+<section id="pertimbangan-kualitas-data">
+<h3>Pertimbangan Kualitas Data<a class="headerlink" href="#pertimbangan-kualitas-data" title="Link to this heading">#</a></h3>
+<p>Dalam memproses data satelit ini, beberapa hal perlu diperhatikan:</p>
+<ul class="simple">
+<li><p><strong>Missing Values (Kekosongan Data):</strong> Tutupan awan yang tebal dapat menghalangi sensor satelit merekam permukaan bumi secara sempurna, menghasilkan baris data kosong (NaN).</p></li>
+<li><p><strong>Outliers (Pencilan):</strong> Nilai polutan yang melompat drastis pada hari tertentu harus dicek apakah itu anomali sensor, atau benar-benar ada fenomena nyata (misal: kebakaran atau lonjakan aktivitas pabrik).</p></li>
+</ul>
+</section>
+<section id="crawling-data">
+<h3>Crawling Data<a class="headerlink" href="#crawling-data" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install library untuk crawling dan manipulasi data</span>
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>openeo<span class="w"> </span>netCDF4<span class="w"> </span>pandas<span class="w"> </span>numpy
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: openeo in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (0.51.0)
+Requirement already satisfied: netCDF4 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (1.7.2)
+Requirement already satisfied: pandas in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (2.3.3)
+Requirement already satisfied: numpy in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (2.0.2)
+Requirement already satisfied: requests&gt;=2.26.0 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from openeo) (2.32.5)
+Requirement already satisfied: urllib3&gt;=1.9.0 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from openeo) (2.6.3)
+Requirement already satisfied: shapely&gt;=1.6.4 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from openeo) (2.0.7)
+Requirement already satisfied: xarray&lt;2025.01.2,&gt;=0.12.3 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from openeo) (2024.7.0)
+Requirement already satisfied: pystac&gt;=1.5.0 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from openeo) (1.10.1)
+Requirement already satisfied: deprecated&gt;=1.2.12 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from openeo) (1.3.1)
+Requirement already satisfied: oschmod&gt;=0.3.12 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from openeo) (0.3.12)
+Requirement already satisfied: geopandas&gt;=0.14 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from openeo) (1.0.1)
+Requirement already satisfied: python-dateutil&gt;=2.8.2 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from pandas) (2.9.0.post0)
+Requirement already satisfied: pytz&gt;=2020.1 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from pandas) (2025.2)
+Requirement already satisfied: tzdata&gt;=2022.7 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from pandas) (2025.3)
+Requirement already satisfied: packaging&gt;=23.1 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from xarray&lt;2025.01.2,&gt;=0.12.3-&gt;openeo) (26.0)
+Requirement already satisfied: cftime in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from netCDF4) (1.6.4.post1)
+Requirement already satisfied: certifi in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from netCDF4) (2026.1.4)
+Requirement already satisfied: wrapt&lt;3,&gt;=1.10 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from deprecated&gt;=1.2.12-&gt;openeo) (2.4.0)
+Requirement already satisfied: pyogrio&gt;=0.7.2 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from geopandas&gt;=0.14-&gt;openeo) (0.11.1)
+Requirement already satisfied: pyproj&gt;=3.3.0 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from geopandas&gt;=0.14-&gt;openeo) (3.6.1)
+Requirement already satisfied: pywin32 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from oschmod&gt;=0.3.12-&gt;openeo) (311)
+Requirement already satisfied: six&gt;=1.5 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from python-dateutil&gt;=2.8.2-&gt;pandas) (1.17.0)
+Requirement already satisfied: charset_normalizer&lt;4,&gt;=2 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from requests&gt;=2.26.0-&gt;openeo) (3.4.4)
+Requirement already satisfied: idna&lt;4,&gt;=2.5 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from requests&gt;=2.26.0-&gt;openeo) (3.11)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Koneksi ke Server Copernicus (OpenEO)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">openeo</span>
+<span class="n">connection</span> <span class="o">=</span> <span class="n">openeo</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;openeo.dataspace.copernicus.eu&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">authenticate_oidc</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Authenticated using refresh token.
+</pre></div>
+</div>
+</div>
+</div>
+<section id="eksekusi-crawling-data-satelit-no2-co-so2-o3">
+<h4>Eksekusi Crawling Data Satelit (NO2, CO, SO2, O3)<a class="headerlink" href="#eksekusi-crawling-data-satelit-no2-co-so2-o3" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gresik_aoi</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">[</span>
+            <span class="p">[</span><span class="mf">112.67942786996122</span><span class="p">,</span> <span class="o">-</span><span class="mf">7.213184809212251</span><span class="p">],</span>
+            <span class="p">[</span><span class="mf">112.449759</span><span class="p">,</span> <span class="o">-</span><span class="mf">7.2489316</span><span class="p">],</span>
+            <span class="p">[</span><span class="mf">112.4661196</span><span class="p">,</span> <span class="o">-</span><span class="mf">7.0415282</span><span class="p">],</span>
+            <span class="p">[</span><span class="mf">112.3945295</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.9969664</span><span class="p">],</span>
+            <span class="p">[</span><span class="mf">112.4940069</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.8292297</span><span class="p">],</span>
+            <span class="p">[</span><span class="mf">112.67942786996122</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.8646196</span><span class="p">],</span>
+            <span class="p">[</span><span class="mf">112.67942786996122</span><span class="p">,</span> <span class="o">-</span><span class="mf">7.213184809212251</span><span class="p">]</span>
+        <span class="p">]</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+<span class="c1"># Bounding Box (Diambil dari nilai min/max koordinat di atas)</span>
+<span class="n">bbox_gresik</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;west&quot;</span><span class="p">:</span> <span class="mf">112.3945295</span><span class="p">,</span>      <span class="c1"># Bujur terkecil</span>
+    <span class="s2">&quot;south&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">7.2489316</span><span class="p">,</span>      <span class="c1"># Lintang terkecil</span>
+    <span class="s2">&quot;east&quot;</span><span class="p">:</span> <span class="mf">112.67942786996122</span><span class="p">,</span> <span class="c1"># Bujur terbesar</span>
+    <span class="s2">&quot;north&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">6.8292297</span>       <span class="c1"># Lintang terbesar</span>
+<span class="p">}</span>
+<span class="n">rentang_waktu</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;2025-09-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2026-08-31&quot;</span><span class="p">]</span>
+<span class="c1"># Fungsi bantuan untuk memudahkan load dan agregasi</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">crawl_polutan</span><span class="p">(</span><span class="n">band_name</span><span class="p">):</span>
+    <span class="n">cube</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">load_collection</span><span class="p">(</span>
+        <span class="s2">&quot;SENTINEL_5P_L2&quot;</span><span class="p">,</span>
+        <span class="n">temporal_extent</span><span class="o">=</span><span class="n">rentang_waktu</span><span class="p">,</span>
+        <span class="n">spatial_extent</span><span class="o">=</span><span class="n">bbox_gresik</span><span class="p">,</span>
+        <span class="n">bands</span><span class="o">=</span><span class="p">[</span><span class="n">band_name</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="c1"># Agregasi waktu (rata-rata harian)</span>
+    <span class="n">daily</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">aggregate_temporal_period</span><span class="p">(</span><span class="n">reducer</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s2">&quot;day&quot;</span><span class="p">)</span>
+    <span class="c1"># Agregasi spasial (rata-rata di dalam poligon GeoJSON Gresik)</span>
+    <span class="n">aoi_mean</span> <span class="o">=</span> <span class="n">daily</span><span class="o">.</span><span class="n">aggregate_spatial</span><span class="p">(</span><span class="n">reducer</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="n">geometries</span><span class="o">=</span><span class="n">gresik_aoi</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">aoi_mean</span>
+<span class="c1"># menyiapkan proses (data cube) untuk masing-masing polutan</span>
+<span class="n">s5p_NO2</span> <span class="o">=</span> <span class="n">crawl_polutan</span><span class="p">(</span><span class="s2">&quot;NO2&quot;</span><span class="p">)</span>
+<span class="n">s5p_CO</span> <span class="o">=</span> <span class="n">crawl_polutan</span><span class="p">(</span><span class="s2">&quot;CO&quot;</span><span class="p">)</span>
+<span class="n">s5p_SO2</span> <span class="o">=</span> <span class="n">crawl_polutan</span><span class="p">(</span><span class="s2">&quot;SO2&quot;</span><span class="p">)</span>
+<span class="n">s5p_O3</span> <span class="o">=</span> <span class="n">crawl_polutan</span><span class="p">(</span><span class="s2">&quot;O3&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Eksekusi job dan simpan ke file NetCDF (.nc)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Memulai NO2...&quot;</span><span class="p">)</span>
+<span class="n">s5p_NO2</span><span class="o">.</span><span class="n">execute_batch</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;NO2_Gresik&quot;</span><span class="p">,</span> <span class="n">outputfile</span><span class="o">=</span><span class="s2">&quot;NO2_Gresik.nc&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Memulai CO...&quot;</span><span class="p">)</span>
+<span class="n">s5p_CO</span><span class="o">.</span><span class="n">execute_batch</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;CO_Gresik&quot;</span><span class="p">,</span> <span class="n">outputfile</span><span class="o">=</span><span class="s2">&quot;CO_Gresik.nc&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Memulai SO2...&quot;</span><span class="p">)</span>
+<span class="n">s5p_SO2</span><span class="o">.</span><span class="n">execute_batch</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;SO2_Gresik&quot;</span><span class="p">,</span> <span class="n">outputfile</span><span class="o">=</span><span class="s2">&quot;SO2_Gresik.nc&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Memulai O3...&quot;</span><span class="p">)</span>
+<span class="n">s5p_O3</span><span class="o">.</span><span class="n">execute_batch</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;O3_Gresik&quot;</span><span class="p">,</span> <span class="n">outputfile</span><span class="o">=</span><span class="s2">&quot;O3_Gresik.nc&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Semua file selesai!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Memulai NO2...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:00 Job &#39;j-26090416124946aeb79ef30b5db1346c&#39;: send &#39;start&#39;
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:05 Job &#39;j-26090416124946aeb79ef30b5db1346c&#39;: queued (progress 0%)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:11 Job &#39;j-26090416124946aeb79ef30b5db1346c&#39;: queued (progress 0%)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:17 Job &#39;j-26090416124946aeb79ef30b5db1346c&#39;: queued (progress 0%)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:26 Job &#39;j-26090416124946aeb79ef30b5db1346c&#39;: queued (progress 0%)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="transformasi-data-mentah-netcdf-ke-csv">
+<h4>Transformasi Data Mentah (NetCDF ke CSV)<a class="headerlink" href="#transformasi-data-mentah-netcdf-ke-csv" title="Link to this heading">#</a></h4>
+<p>File keluaran Copernicus berformat <code class="docutils literal notranslate"><span class="pre">.nc</span></code> bersifat multidimensi. Kita perlu mengekstrak array konsentrasi polutan dan waktunya, lalu mengonversinya menjadi DataFrame dua dimensi (<code class="docutils literal notranslate"><span class="pre">.csv</span></code>) agar siap pakai untuk analisis lanjutan. sekaligus menggabungkan keemmpat data tersebut menjadi 1 file .csv</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">netCDF4</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">functools</span>
+
+<span class="c1"># Daftar polutan dan nama file .nc yang sudah diunduh</span>
+<span class="n">polutan_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">,</span> <span class="s2">&quot;CO&quot;</span><span class="p">,</span> <span class="s2">&quot;SO2&quot;</span><span class="p">,</span> <span class="s2">&quot;O3&quot;</span><span class="p">]</span>
+<span class="n">file_nc</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;NO2_Gresik.nc&quot;</span><span class="p">,</span> <span class="s2">&quot;CO_Gresik.nc&quot;</span><span class="p">,</span> <span class="s2">&quot;SO2_Gresik.nc&quot;</span><span class="p">,</span> <span class="s2">&quot;O3_Gresik.nc&quot;</span><span class="p">]</span>
+
+<span class="c1"># List untuk menyimpan DataFrame masing-masing polutan sementara</span>
+<span class="n">dfs_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">polutan</span><span class="p">,</span> <span class="n">file</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">polutan_list</span><span class="p">,</span> <span class="n">file_nc</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">ds</span> <span class="o">=</span> <span class="n">netCDF4</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="n">kadar</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="n">polutan</span><span class="p">][:]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span> 
+        
+        <span class="c1"># Ekstrak tanggal SPESIFIK untuk file ini</span>
+        <span class="n">time_var</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="s2">&quot;t&quot;</span><span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dates</span> <span class="o">=</span> <span class="n">netCDF4</span><span class="o">.</span><span class="n">num2date</span><span class="p">(</span><span class="n">time_var</span><span class="p">[:],</span> <span class="n">units</span><span class="o">=</span><span class="n">time_var</span><span class="o">.</span><span class="n">units</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">dates</span> <span class="o">=</span> <span class="n">time_var</span><span class="p">[:]</span>
+        <span class="n">new_dates</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dates</span><span class="p">]</span>
+            
+        <span class="n">df_temp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+            <span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">new_dates</span><span class="p">),</span>
+            <span class="n">polutan</span><span class="p">:</span> <span class="n">kadar</span>
+        <span class="p">})</span>
+        
+        <span class="n">dfs_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df_temp</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Berhasil mengekstrak </span><span class="si">{</span><span class="n">polutan</span><span class="si">}</span><span class="s2"> (Jumlah data: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df_temp</span><span class="p">)</span><span class="si">}</span><span class="s2"> hari)&quot;</span><span class="p">)</span>
+        
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error memproses file </span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Proses Penggabungan (Merge) berdasarkan kolom &#39;date&#39;</span>
+<span class="k">if</span> <span class="n">dfs_list</span><span class="p">:</span>
+    <span class="n">df_gabungan</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">),</span> <span class="n">dfs_list</span><span class="p">)</span>
+    
+    <span class="n">df_gabungan</span> <span class="o">=</span> <span class="n">df_gabungan</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="n">df_gabungan</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_gabungan</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+            
+    <span class="c1"># Export langsung menjadi 1 file CSV tunggal</span>
+    <span class="n">nama_file_akhir</span> <span class="o">=</span> <span class="s2">&quot;Polutan_Gresik_Terkini.csv&quot;</span>
+    <span class="n">df_gabungan</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">nama_file_akhir</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> SUKSES: Semua data berhasil digabung menjadi 1 file -&gt; </span><span class="si">{</span><span class="n">nama_file_akhir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Tampilkan cuplikan 5 data awal</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">df_gabungan</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Gagal mengekstrak data dari file NetCDF.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Berhasil mengekstrak NO2 (Jumlah data: 288 hari)
+Berhasil mengekstrak CO (Jumlah data: 275 hari)
+Berhasil mengekstrak SO2 (Jumlah data: 307 hari)
+Berhasil mengekstrak O3 (Jumlah data: 360 hari)
+
+ SUKSES: Semua data berhasil digabung menjadi 1 file -&gt; Polutan_Gresik_Terkini.csv
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>NO2</th>
+      <th>CO</th>
+      <th>SO2</th>
+      <th>O3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2025-09-01</td>
+      <td>0.000031</td>
+      <td>0.025056</td>
+      <td>0.000090</td>
+      <td>0.115491</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2025-09-02</td>
+      <td>0.000029</td>
+      <td>0.024533</td>
+      <td>0.000035</td>
+      <td>0.113613</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2025-09-03</td>
+      <td>0.000036</td>
+      <td>0.024816</td>
+      <td>0.000072</td>
+      <td>0.113319</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2025-09-04</td>
+      <td>0.000055</td>
+      <td>0.025231</td>
+      <td>0.000104</td>
+      <td>0.113707</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2025-09-05</td>
+      <td>0.000055</td>
+      <td>0.031736</td>
+      <td>0.000034</td>
+      <td>0.114151</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="visualisasi-hasil-dengan-grafik-kartesius">
+<h4>Visualisasi Hasil dengan Grafik Kartesius<a class="headerlink" href="#visualisasi-hasil-dengan-grafik-kartesius" title="Link to this heading">#</a></h4>
+<p>Menampilkan grafik kartesius (<em>line plot</em>) deret waktu konsentrasi polutan kualitas udara (NO₂, CO, SO₂, O₃) di area Kabupaten Gresik selama rentang waktu lebih dari 1 tahun terakhir.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>matplotlib
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting matplotlib
+  Downloading matplotlib-3.9.4-cp39-cp39-win_amd64.whl.metadata (11 kB)
+Collecting contourpy&gt;=1.0.1 (from matplotlib)
+  Downloading contourpy-1.3.0-cp39-cp39-win_amd64.whl.metadata (5.4 kB)
+Collecting cycler&gt;=0.10 (from matplotlib)
+  Downloading cycler-0.12.1-py3-none-any.whl.metadata (3.8 kB)
+Collecting fonttools&gt;=4.22.0 (from matplotlib)
+  Downloading fonttools-4.60.2-cp39-cp39-win_amd64.whl.metadata (115 kB)
+Collecting kiwisolver&gt;=1.3.1 (from matplotlib)
+  Downloading kiwisolver-1.4.7-cp39-cp39-win_amd64.whl.metadata (6.4 kB)
+Requirement already satisfied: numpy&gt;=1.23 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from matplotlib) (2.0.2)
+Requirement already satisfied: packaging&gt;=20.0 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from matplotlib) (26.0)
+Collecting pillow&gt;=8 (from matplotlib)
+  Downloading pillow-11.3.0-cp39-cp39-win_amd64.whl.metadata (9.2 kB)
+Collecting pyparsing&gt;=2.3.1 (from matplotlib)
+  Downloading pyparsing-3.3.2-py3-none-any.whl.metadata (5.8 kB)
+Requirement already satisfied: python-dateutil&gt;=2.7 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from matplotlib) (2.9.0.post0)
+Collecting importlib-resources&gt;=3.2.0 (from matplotlib)
+  Downloading importlib_resources-6.5.2-py3-none-any.whl.metadata (3.9 kB)
+Requirement already satisfied: zipp&gt;=3.1.0 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from importlib-resources&gt;=3.2.0-&gt;matplotlib) (3.23.0)
+Requirement already satisfied: six&gt;=1.5 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from python-dateutil&gt;=2.7-&gt;matplotlib) (1.17.0)
+Downloading matplotlib-3.9.4-cp39-cp39-win_amd64.whl (7.8 MB)
+   ---------------------------------------- 0.0/7.8 MB ? eta -:--:--
+   ---- ----------------------------------- 0.8/7.8 MB 4.2 MB/s eta 0:00:02
+   ---------- ----------------------------- 2.1/7.8 MB 5.1 MB/s eta 0:00:02
+   ----------------- ---------------------- 3.4/7.8 MB 5.4 MB/s eta 0:00:01
+   -------------------------- ------------- 5.2/7.8 MB 6.3 MB/s eta 0:00:01
+   ---------------------------- ----------- 5.5/7.8 MB 6.2 MB/s eta 0:00:01
+   ---------------------------- ----------- 5.5/7.8 MB 6.2 MB/s eta 0:00:01
+   -------------------------------------- - 7.6/7.8 MB 5.2 MB/s eta 0:00:01
+   ---------------------------------------- 7.8/7.8 MB 5.1 MB/s  0:00:01
+Downloading contourpy-1.3.0-cp39-cp39-win_amd64.whl (211 kB)
+Downloading cycler-0.12.1-py3-none-any.whl (8.3 kB)
+Downloading fonttools-4.60.2-cp39-cp39-win_amd64.whl (1.5 MB)
+   ---------------------------------------- 0.0/1.5 MB ? eta -:--:--
+   -------------------- ------------------- 0.8/1.5 MB 3.7 MB/s eta 0:00:01
+   ---------------------------------------- 1.5/1.5 MB 4.1 MB/s  0:00:00
+Downloading importlib_resources-6.5.2-py3-none-any.whl (37 kB)
+Downloading kiwisolver-1.4.7-cp39-cp39-win_amd64.whl (55 kB)
+Downloading pillow-11.3.0-cp39-cp39-win_amd64.whl (7.0 MB)
+   ---------------------------------------- 0.0/7.0 MB ? eta -:--:--
+   ------- -------------------------------- 1.3/7.0 MB 6.7 MB/s eta 0:00:01
+   ------------- -------------------------- 2.4/7.0 MB 6.4 MB/s eta 0:00:01
+   --------------------- ------------------ 3.7/7.0 MB 6.1 MB/s eta 0:00:01
+   ------------------------------ --------- 5.2/7.0 MB 6.1 MB/s eta 0:00:01
+   ------------------------------------ --- 6.3/7.0 MB 6.1 MB/s eta 0:00:01
+   ---------------------------------------- 7.0/7.0 MB 5.8 MB/s  0:00:01
+Downloading pyparsing-3.3.2-py3-none-any.whl (122 kB)
+Installing collected packages: pyparsing, pillow, kiwisolver, importlib-resources, fonttools, cycler, contourpy, matplotlib
+
+   ---------------------------------------- 0/8 [pyparsing]
+   ----- ---------------------------------- 1/8 [pillow]
+   ----- ---------------------------------- 1/8 [pillow]
+   ----- ---------------------------------- 1/8 [pillow]
+   ----- ---------------------------------- 1/8 [pillow]
+   ----- ---------------------------------- 1/8 [pillow]
+   ----- ---------------------------------- 1/8 [pillow]
+   ----- ---------------------------------- 1/8 [pillow]
+   ----- ---------------------------------- 1/8 [pillow]
+   ----- ---------------------------------- 1/8 [pillow]
+   ----- ---------------------------------- 1/8 [pillow]
+   ----- ---------------------------------- 1/8 [pillow]
+   ----- ---------------------------------- 1/8 [pillow]
+   ----- ---------------------------------- 1/8 [pillow]
+   ----- ---------------------------------- 1/8 [pillow]
+   ---------- ----------------------------- 2/8 [kiwisolver]
+   ---------- ----------------------------- 2/8 [kiwisolver]
+   ---------- ----------------------------- 2/8 [kiwisolver]
+   --------------- ------------------------ 3/8 [importlib-resources]
+   --------------- ------------------------ 3/8 [importlib-resources]
+   --------------- ------------------------ 3/8 [importlib-resources]
+   --------------- ------------------------ 3/8 [importlib-resources]
+   --------------- ------------------------ 3/8 [importlib-resources]
+   -------------------- ------------------- 4/8 [fonttools]
+   -------------------- ------------------- 4/8 [fonttools]
+   -------------------- ------------------- 4/8 [fonttools]
+   -------------------- ------------------- 4/8 [fonttools]
+   -------------------- ------------------- 4/8 [fonttools]
+   -------------------- ------------------- 4/8 [fonttools]
+   -------------------- ------------------- 4/8 [fonttools]
+   -------------------- ------------------- 4/8 [fonttools]
+   -------------------- ------------------- 4/8 [fonttools]
+   -------------------- ------------------- 4/8 [fonttools]
+   -------------------- ------------------- 4/8 [fonttools]
+   -------------------- ------------------- 4/8 [fonttools]
+   -------------------- ------------------- 4/8 [fonttools]
+   -------------------- ------------------- 4/8 [fonttools]
+   -------------------- ------------------- 4/8 [fonttools]
+   -------------------- ------------------- 4/8 [fonttools]
+   -------------------- ------------------- 4/8 [fonttools]
+   -------------------- ------------------- 4/8 [fonttools]
+   -------------------- ------------------- 4/8 [fonttools]
+   -------------------- ------------------- 4/8 [fonttools]
+   -------------------- ------------------- 4/8 [fonttools]
+   -------------------- ------------------- 4/8 [fonttools]
+   -------------------- ------------------- 4/8 [fonttools]
+   -------------------- ------------------- 4/8 [fonttools]
+   -------------------- ------------------- 4/8 [fonttools]
+   -------------------- ------------------- 4/8 [fonttools]
+   -------------------- ------------------- 4/8 [fonttools]
+   -------------------- ------------------- 4/8 [fonttools]
+   ------------------------------ --------- 6/8 [contourpy]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ----------------------------------- ---- 7/8 [matplotlib]
+   ---------------------------------------- 8/8 [matplotlib]
+
+Successfully installed contourpy-1.3.0 cycler-0.12.1 fonttools-4.60.2 importlib-resources-6.5.2 kiwisolver-1.4.7 matplotlib-3.9.4 pillow-11.3.0 pyparsing-3.3.2
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="visualisasi-no2">
+<h4>Visualisasi NO2<a class="headerlink" href="#visualisasi-no2" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">df_final</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;Polutan_Gresik_Terkini.csv&quot;</span><span class="p">)</span>
+
+<span class="n">df_no2</span> <span class="o">=</span> <span class="n">df_final</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;NO2&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_no2</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_no2</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">])</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df_no2</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">],</span> <span class="n">df_no2</span><span class="p">[</span><span class="s1">&#39;NO2&#39;</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;NO₂&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#d9534f&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Tren Konsentrasi Nitrogen Dioksida (NO₂) di Kabupaten Gresik</span><span class="se">\n</span><span class="s2">(1 Sep 2025 – 31 Ags 2026)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Tanggal&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Konsentrasi (mol/m²)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/82b3272054902035f88f32622d6e3eeb80a92ddb21e2f786058464e6fa0f71a8.png" src="_images/82b3272054902035f88f32622d6e3eeb80a92ddb21e2f786058464e6fa0f71a8.png" />
+</div>
+</div>
+</section>
+<section id="visualisasi-co">
+<h4>Visualisasi CO<a class="headerlink" href="#visualisasi-co" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">df_final</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;Polutan_Gresik_Terkini.csv&quot;</span><span class="p">)</span>
+
+<span class="n">df_co</span> <span class="o">=</span> <span class="n">df_final</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;CO&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_co</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_co</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">])</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df_co</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">],</span> <span class="n">df_co</span><span class="p">[</span><span class="s1">&#39;CO&#39;</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;CO&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#f0ad4e&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Tren Konsentrasi Karbon Monoksida (CO) di Kabupaten Gresik</span><span class="se">\n</span><span class="s2">(1 Sep 2025 – 31 Ags 2026)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Tanggal&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Konsentrasi (mol/m²)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/0d3bfa83f5845207bb7bf16b132adf60942639d82509e83433717cfce3e506a8.png" src="_images/0d3bfa83f5845207bb7bf16b132adf60942639d82509e83433717cfce3e506a8.png" />
+</div>
+</div>
+</section>
+<section id="visualisasi-so2">
+<h4>Visualisasi SO2<a class="headerlink" href="#visualisasi-so2" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">df_final</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;Polutan_Gresik_Terkini.csv&quot;</span><span class="p">)</span>
+
+<span class="n">df_so2</span> <span class="o">=</span> <span class="n">df_final</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;SO2&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_so2</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_so2</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">])</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df_so2</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">],</span> <span class="n">df_so2</span><span class="p">[</span><span class="s1">&#39;SO2&#39;</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;SO₂&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#5bc0de&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Tren Konsentrasi Sulfur Dioksida (SO₂) di Kabupaten Gresik</span><span class="se">\n</span><span class="s2">(1 Sep 2025 – 31 Ags 2026)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Tanggal&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Konsentrasi (mol/m²)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/bb16b6005e4c61db9991a2e528b2ae5551d9f2db8ba8df1a41e259d87c705ccf.png" src="_images/bb16b6005e4c61db9991a2e528b2ae5551d9f2db8ba8df1a41e259d87c705ccf.png" />
+</div>
+</div>
+</section>
+<section id="visualisasi-o3">
+<h4>Visualisasi O3<a class="headerlink" href="#visualisasi-o3" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">df_final</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;Polutan_Gresik_Terkini.csv&quot;</span><span class="p">)</span>
+
+<span class="n">df_o3</span> <span class="o">=</span> <span class="n">df_final</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;O3&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_o3</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_o3</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">])</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df_o3</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">],</span> <span class="n">df_o3</span><span class="p">[</span><span class="s1">&#39;O3&#39;</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;O₃&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#5cb85c&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Tren Konsentrasi Ozon (O₃) di Kabupaten Gresik</span><span class="se">\n</span><span class="s2">(1 Sep 2025 – 31 Ags 2026)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Tanggal&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Konsentrasi (mol/m²)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/d28b48506e45333ed0b087e511cce3e15f4a943c4fbe25f5fca062a03d2a7997.png" src="_images/d28b48506e45333ed0b087e511cce3e15f4a943c4fbe25f5fca062a03d2a7997.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="visualisasi-peta-heatmap-folium">
+<h3>Visualisasi Peta Heatmap (Folium)<a class="headerlink" href="#visualisasi-peta-heatmap-folium" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>folium
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting folium
+  Downloading folium-0.20.0-py2.py3-none-any.whl.metadata (4.2 kB)
+Collecting branca&gt;=0.6.0 (from folium)
+  Downloading branca-0.8.2-py3-none-any.whl.metadata (1.7 kB)
+Requirement already satisfied: jinja2&gt;=2.9 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from folium) (3.1.6)
+Requirement already satisfied: numpy in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from folium) (2.0.2)
+Requirement already satisfied: requests in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from folium) (2.32.5)
+Collecting xyzservices (from folium)
+  Downloading xyzservices-2026.9.1-py3-none-any.whl.metadata (4.1 kB)
+Requirement already satisfied: MarkupSafe&gt;=2.0 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from jinja2&gt;=2.9-&gt;folium) (3.0.3)
+Requirement already satisfied: charset_normalizer&lt;4,&gt;=2 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from requests-&gt;folium) (3.4.4)
+Requirement already satisfied: idna&lt;4,&gt;=2.5 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from requests-&gt;folium) (3.11)
+Requirement already satisfied: urllib3&lt;3,&gt;=1.21.1 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from requests-&gt;folium) (2.6.3)
+Requirement already satisfied: certifi&gt;=2017.4.17 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from requests-&gt;folium) (2026.1.4)
+Downloading folium-0.20.0-py2.py3-none-any.whl (113 kB)
+Downloading branca-0.8.2-py3-none-any.whl (26 kB)
+Downloading xyzservices-2026.9.1-py3-none-any.whl (98 kB)
+Installing collected packages: xyzservices, branca, folium
+
+   ------------- -------------------------- 1/3 [branca]
+   -------------------------- ------------- 2/3 [folium]
+   -------------------------- ------------- 2/3 [folium]
+   -------------------------- ------------- 2/3 [folium]
+   -------------------------- ------------- 2/3 [folium]
+   ---------------------------------------- 3/3 [folium]
+
+Successfully installed branca-0.8.2 folium-0.20.0 xyzservices-2026.9.1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">folium</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">folium.plugins</span><span class="w"> </span><span class="kn">import</span> <span class="n">HeatMap</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Pusat koordinat lokasi Kabupaten Gresik</span>
+<span class="n">center_lat</span><span class="p">,</span> <span class="n">center_lon</span> <span class="o">=</span> <span class="o">-</span><span class="mf">7.16</span><span class="p">,</span> <span class="mf">112.56</span>
+
+<span class="c1"># Inisialisasi peta interaktif Folium</span>
+<span class="n">peta_kualitas_udara</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span>
+    <span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="n">center_lat</span><span class="p">,</span> <span class="n">center_lon</span><span class="p">],</span>
+    <span class="n">zoom_start</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span>
+    <span class="n">tiles</span><span class="o">=</span><span class="s2">&quot;OpenStreetMap&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Menambahkan layer Poligon batas wilayah Gresik</span>
+<span class="n">folium</span><span class="o">.</span><span class="n">GeoJson</span><span class="p">(</span>
+    <span class="n">gresik_aoi</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Area Pengamatan (AOI) Gresik&quot;</span><span class="p">,</span>
+    <span class="n">style_function</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;fillColor&quot;</span><span class="p">:</span> <span class="s2">&quot;#3388ff&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;#0000ff&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">&quot;fillOpacity&quot;</span><span class="p">:</span> <span class="mf">0.15</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">peta_kualitas_udara</span><span class="p">)</span>
+
+<span class="c1"># Menambahkan Marker (Pin Merah) di tengah Gresik</span>
+<span class="n">folium</span><span class="o">.</span><span class="n">Marker</span><span class="p">(</span>
+    <span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="n">center_lat</span><span class="p">,</span> <span class="n">center_lon</span><span class="p">],</span>
+    <span class="n">popup</span><span class="o">=</span><span class="s2">&quot;&lt;b&gt;Lokasi Pengamatan Utama&lt;/b&gt;&lt;br&gt;Kabupaten Gresik&quot;</span><span class="p">,</span>
+    <span class="n">tooltip</span><span class="o">=</span><span class="s2">&quot;Pusat Gresik&quot;</span><span class="p">,</span>
+    <span class="n">icon</span><span class="o">=</span><span class="n">folium</span><span class="o">.</span><span class="n">Icon</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s2">&quot;info-sign&quot;</span><span class="p">),</span>
+<span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">peta_kualitas_udara</span><span class="p">)</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">sample_lats</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">7.24</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.83</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span> <span class="c1"># Lintang (Selatan - Utara)</span>
+<span class="n">sample_lons</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">112.39</span><span class="p">,</span> <span class="mf">112.67</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span> <span class="c1"># Bujur (Barat - Timur)</span>
+<span class="n">sample_weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">heatmap_points</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">sample_lats</span><span class="p">,</span> <span class="n">sample_lons</span><span class="p">,</span> <span class="n">sample_weights</span><span class="p">))</span>
+
+<span class="n">HeatMap</span><span class="p">(</span>
+    <span class="n">heatmap_points</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Heatmap Intensitas Polusi Udara&quot;</span><span class="p">,</span>
+    <span class="n">radius</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span>
+    <span class="n">blur</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+    <span class="n">max_zoom</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">peta_kualitas_udara</span><span class="p">)</span>
+
+<span class="n">folium</span><span class="o">.</span><span class="n">LayerControl</span><span class="p">()</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">peta_kualitas_udara</span><span class="p">)</span>
+
+<span class="n">peta_kualitas_udara</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;"><span style="color:#565656">Make this Notebook Trusted to load map: File -> Trust Notebook</span><iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    
+    &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://code.jquery.com/jquery-3.7.1.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js&quot;&gt;&lt;/script&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css&quot;/&gt;
+    
+            &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; /&gt;
+            &lt;style&gt;
+                #map_1fe82da235caaf466214945a5ca3b421 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            &lt;/style&gt;
+
+            &lt;style&gt;html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            &lt;/style&gt;
+
+            &lt;style&gt;#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            &lt;/style&gt;
+
+            &lt;script&gt;
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            &lt;/script&gt;
+
+        
+    &lt;script src=&quot;https://cdn.jsdelivr.net/gh/python-visualization/folium@main/folium/templates/leaflet_heat.min.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    
+    
+            &lt;div class=&quot;folium-map&quot; id=&quot;map_1fe82da235caaf466214945a5ca3b421&quot; &gt;&lt;/div&gt;
+        
+&lt;/body&gt;
+&lt;script&gt;
+    
+    
+            var map_1fe82da235caaf466214945a5ca3b421 = L.map(
+                &quot;map_1fe82da235caaf466214945a5ca3b421&quot;,
+                {
+                    center: [-7.16, 112.56],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  &quot;zoom&quot;: 11,
+  &quot;zoomControl&quot;: true,
+  &quot;preferCanvas&quot;: false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_1cf4332792c8b5a32ce0e06855bbeaeb = L.tileLayer(
+                &quot;https://tile.openstreetmap.org/{z}/{x}/{y}.png&quot;,
+                {
+  &quot;minZoom&quot;: 0,
+  &quot;maxZoom&quot;: 19,
+  &quot;maxNativeZoom&quot;: 19,
+  &quot;noWrap&quot;: false,
+  &quot;attribution&quot;: &quot;\u0026copy; \u003ca href=\&quot;https://www.openstreetmap.org/copyright\&quot;\u003eOpenStreetMap\u003c/a\u003e contributors&quot;,
+  &quot;subdomains&quot;: &quot;abc&quot;,
+  &quot;detectRetina&quot;: false,
+  &quot;tms&quot;: false,
+  &quot;opacity&quot;: 1,
+}
+
+            );
+        
+    
+            tile_layer_1cf4332792c8b5a32ce0e06855bbeaeb.addTo(map_1fe82da235caaf466214945a5ca3b421);
+        
+    
+        function geo_json_9f950c47516d7a71cc245c48dc28cd92_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {&quot;color&quot;: &quot;#0000ff&quot;, &quot;fillColor&quot;: &quot;#3388ff&quot;, &quot;fillOpacity&quot;: 0.15, &quot;weight&quot;: 2};
+            }
+        }
+
+        function geo_json_9f950c47516d7a71cc245c48dc28cd92_onEachFeature(feature, layer) {
+
+            layer.on({
+            });
+        };
+        var geo_json_9f950c47516d7a71cc245c48dc28cd92 = L.geoJson(null, {
+                onEachFeature: geo_json_9f950c47516d7a71cc245c48dc28cd92_onEachFeature,
+            
+                style: geo_json_9f950c47516d7a71cc245c48dc28cd92_styler,
+            ...{
+}
+        });
+
+        function geo_json_9f950c47516d7a71cc245c48dc28cd92_add (data) {
+            geo_json_9f950c47516d7a71cc245c48dc28cd92
+                .addData(data);
+        }
+            geo_json_9f950c47516d7a71cc245c48dc28cd92_add({&quot;features&quot;: [{&quot;geometry&quot;: {&quot;coordinates&quot;: [[[112.67942786996122, -7.213184809212251], [112.449759, -7.2489316], [112.4661196, -7.0415282], [112.3945295, -6.9969664], [112.4940069, -6.8292297], [112.67942786996122, -6.8646196], [112.67942786996122, -7.213184809212251]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;0&quot;, &quot;type&quot;: &quot;Feature&quot;}], &quot;type&quot;: &quot;FeatureCollection&quot;});
+
+        
+    
+            geo_json_9f950c47516d7a71cc245c48dc28cd92.addTo(map_1fe82da235caaf466214945a5ca3b421);
+        
+    
+            var marker_09ac335614cf186f6b31aa138f8b214c = L.marker(
+                [-7.16, 112.56],
+                {
+}
+            ).addTo(map_1fe82da235caaf466214945a5ca3b421);
+        
+    
+            var icon_e841a27fa303d7cd033b5bba1929c36f = L.AwesomeMarkers.icon(
+                {
+  &quot;markerColor&quot;: &quot;red&quot;,
+  &quot;iconColor&quot;: &quot;white&quot;,
+  &quot;icon&quot;: &quot;info-sign&quot;,
+  &quot;prefix&quot;: &quot;glyphicon&quot;,
+  &quot;extraClasses&quot;: &quot;fa-rotate-0&quot;,
+}
+            );
+        
+    
+        var popup_fab7585d0598ef28840fd154c5644183 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_67012c81d8af02abdc61a3fe596771c4 = $(`&lt;div id=&quot;html_67012c81d8af02abdc61a3fe596771c4&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;&lt;b&gt;Lokasi Pengamatan Utama&lt;/b&gt;&lt;br&gt;Kabupaten Gresik&lt;/div&gt;`)[0];
+                popup_fab7585d0598ef28840fd154c5644183.setContent(html_67012c81d8af02abdc61a3fe596771c4);
+            
+        
+
+        marker_09ac335614cf186f6b31aa138f8b214c.bindPopup(popup_fab7585d0598ef28840fd154c5644183)
+        ;
+
+        
+    
+    
+            marker_09ac335614cf186f6b31aa138f8b214c.bindTooltip(
+                `&lt;div&gt;
+                     Pusat Gresik
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+                marker_09ac335614cf186f6b31aa138f8b214c.setIcon(icon_e841a27fa303d7cd033b5bba1929c36f);
+            
+    
+            var heat_map_f8693ddef178f18450e483cc849d89cb = L.heatLayer(
+                [[-7.086438551272582, 112.5697688609232, 0.2824990950687461], [-6.850207134371934, 112.41355919019861, 0.9220423253436534], [-6.939882483857324, 112.4352560399465, 0.6042018979582857], [-6.994550021479215, 112.64159517278759, 0.8611659728861933], [-7.176032357418602, 112.55980013670468, 0.4560396808244894], [-7.176042246662157, 112.39257517445266, 0.9164185827969604], [-7.216185719011039, 112.4184120320025, 0.5113613429873305], [-6.884867780232277, 112.57578049535026, 0.2086701211842387], [-6.993542845185284, 112.39141724347694, 0.9243055811354111], [-6.949690243103621, 112.4350262543969, 0.2730293414289069], [-7.231560357338721, 112.54364546102265, 0.4554509100723319], [-6.842336960613582, 112.58373065535396, 0.960049573640644], [-6.898698517271828, 112.57254915266073, 0.960485717550045], [-7.152940964621907, 112.45279540664896, 0.658750310498629], [-7.165451763445089, 112.58941018197731, 0.7054697697358394], [-7.164804150960093, 112.4564297444991, 0.5587564175826558], [-7.11526068038659, 112.48111191548459, 0.43456861735845165], [-7.0248498630307825, 112.59901759343305, 0.4629316362959328], [-7.062902542356733, 112.57189721173322, 0.7380147648616309], [-7.120596052518803, 112.62778255493838, 0.8018996235501441], [-6.989140313163825, 112.5741316098441, 0.8332632349806788], [-7.182807517132663, 112.54912640893393, 0.8316945142356431], [-7.120220694100561, 112.41622893499186, 0.27296488243895234], [-7.089791644249587, 112.49296042485665, 0.5955362437620653], [-7.053011306471015, 112.46425666295089, 0.24604700801331544], [-6.918077855828865, 112.45831710014615, 0.6396231058589885], [-7.1581337493150725, 112.66244295533069, 0.5532244010987016], [-7.02916388025042, 112.50006736290669, 0.9101633462066399], [-6.9971100267665625, 112.6397730354496, 0.480732010041663], [-7.220955330784801, 112.56671881527923, 0.2936536131420847], [-6.99090661072041, 112.61254716499167, 0.31439334564226873], [-7.170085109288211, 112.53073838606946, 0.8092085053739779], [-7.213328846876036, 112.55153308769538, 0.6945744506530089], [-6.8509569297261335, 112.52790495426929, 0.28089814089823223], [-6.844090866439431, 112.44466803658345, 0.26728544489199796], [-6.908557087272251, 112.59228659227323, 0.7607753051672961], [-7.115108354638918, 112.46861626148345, 0.25821040509135484], [-7.199954433257383, 112.3968084706008, 0.857488047432285], [-6.959464459130015, 112.570732242854, 0.764993781725197], [-7.059537477566764, 112.43959099023398, 0.26507902451351983], [-7.189964323713641, 112.65332840361881, 0.26787017126815355], [-7.036977466854379, 112.65710000156072, 0.9893116628009404], [-7.2259007063427605, 112.64616202926173, 0.49941663660489627], [-6.8671786351477, 112.49364443607152, 0.49651371765351276], [-7.133900207543993, 112.39432785262808, 0.8502396538060022], [-6.968365863414867, 112.64992919752457, 0.957798861907087], [-7.112198458803341, 112.50989156152885, 0.9888008510582968], [-7.026772111317098, 112.66066334933222, 0.8027025482071533], [-7.015848785469255, 112.659813593585, 0.5010076684247327], [-7.164209673234534, 112.62884264753086, 0.26680057335893503], [-6.842470302616531, 112.47244568977949, 0.8217175327419495], [-6.922195542421943, 112.49782736400854, 0.6467233997886441], [-6.854805433958682, 112.62831826802473, 0.5393776073975811], [-6.873120786324664, 112.47873816144376, 0.9250835080757889], [-6.994861008687455, 112.43745796907211, 0.2889579858449211], [-6.862031563640522, 112.54590435348834, 0.5941000834326873], [-7.203718074158713, 112.65212333676502, 0.20908291581393526], [-7.159647026408151, 112.584888343069, 0.5749285135953011], [-7.2214568115466795, 112.54961712762503, 0.24504262054546988], [-7.106614564387062, 112.41720941825582, 0.29505433301445755], [-7.0806423112273125, 112.56220202347576, 0.2940209974216839], [-7.128746896972703, 112.6672150780292, 0.7193682416928509], [-6.900217621247709, 112.42922352426623, 0.7968359034123387], [-7.093731136055629, 112.53513230266185, 0.6666950120777277], [-7.124816851028174, 112.63566446013984, 0.9697380387796335], [-7.017494605905118, 112.59741521297119, 0.4998964636189633], [-7.182221067760348, 112.58516440747867, 0.4285696690254886], [-6.911099237890844, 112.5866955435164, 0.8948793025515682], [-7.209434236091294, 112.49065752234154, 0.37887667081556214], [-6.835376355993788, 112.47220571639406, 0.970578031552489], [-6.923379644588371, 112.61662112353399, 0.20972357975185307], [-7.15852657057099, 112.61683175051017, 0.9759030613661113], [-7.237735931979323, 112.63278024920243, 0.2345279295604609], [-6.905660814333518, 112.64570735471581, 0.912914490958457], [-6.950188489022477, 112.53317587168107, 0.6221608872690398], [-6.941107061103195, 112.53042456251242, 0.9943718368954404], [-6.923779157858762, 112.6135226501107, 0.2590372517883191], [-7.209641692789023, 112.57198990061778, 0.6430834275210566], [-7.093029051296848, 112.58655072563216, 0.9754420284952792], [-7.192493685594697, 112.61282194744211, 0.6184782753361191], [-6.886127595391007, 112.63920149570892, 0.70351891050821], [-6.9844477680007016, 112.48463864391843, 0.7565989511876938], [-7.1043318098104145, 112.49516322673918, 0.5636328518142186], [-7.2139410763827305, 112.41631494315544, 0.7020464640672508], [-7.112497248096578, 112.55191843947892, 0.6674514495384802], [-7.106674837969034, 112.4000638366631, 0.9209264083927913], [-6.940861466881394, 112.52036744507708, 0.2363571042731663], [-6.978601436744363, 112.54194049771812, 0.4247705516737843], [-6.876242775543706, 112.47023155059593, 0.9603291872612469], [-7.046391880683601, 112.55543331295932, 0.912211027112733], [-7.190966359165296, 112.39854006998293, 0.5645254022285704], [-6.947569637238572, 112.40045749284978, 0.6961060782412294], [-6.928078130067072, 112.62032815698471, 0.42190494638490617], [-7.009876348996507, 112.49085337959515, 0.3504969277790091], [-6.92390345621863, 112.42557694354252, 0.5709587239519858], [-7.0375438054906, 112.53622811281535, 0.48268178242084225], [-7.025679539953383, 112.60559819486761, 0.6669248894806976], [-7.0647081824729945, 112.45042988769912, 0.2621877095719879], [-7.229578158034921, 112.56440933322932, 0.9795158461329332], [-7.195764514932745, 112.41389729019825, 0.9889685955836824], [-7.227114033868439, 112.40447088192721, 0.7585293712157961], [-6.97907173138185, 112.53877929683908, 0.6288770930752963], [-7.111114047758706, 112.54137783405083, 0.4476220930290622], [-7.031486016622472, 112.5684803724195, 0.851036015765559], [-6.867897745690302, 112.59330557344235, 0.7477849380431034], [-7.137790186048962, 112.6632385822495, 0.330093551475913], [-7.071743001555392, 112.53456409752434, 0.9287417475950741], [-6.93022403319735, 112.48042781242356, 0.8580297943385353], [-7.146192752148435, 112.61265213453524, 0.9598399306335392], [-7.208438236970195, 112.46583303035338, 0.7805756067106879], [-7.121201904305355, 112.51291199779757, 0.690732156748632], [-7.173899272225858, 112.41196778677583, 0.5345944290324951], [-6.858823962539545, 112.39709820815632, 0.9461827866832107], [-6.9086706443785895, 112.65954155610982, 0.8928511116003268], [-6.980304459830727, 112.62407443374342, 0.23617493608495155], [-6.8827011580230355, 112.58487277770624, 0.22109357959780163], [-6.910494448471363, 112.50450682443599, 0.5011706935024397], [-7.163506275856726, 112.43852240961984, 0.8484426646254664], [-6.874050810619109, 112.4338023719479, 0.9898209034519556], [-7.018869680814583, 112.46006801148609, 0.3203335128828226], [-6.9089495363827345, 112.54378346611772, 0.6753045722817081], [-6.872602567031368, 112.59008685835602, 0.5047126853048172], [-7.109618575261536, 112.57485526548096, 0.9759315182516826], [-7.1948787109436525, 112.46838149114487, 0.873695138508567], [-7.146546583357804, 112.6573622785857, 0.8706629637689103], [-7.064885806663235, 112.59661113667482, 0.5749545278359762], [-6.904613945971778, 112.54521913470319, 0.5318556018701321], [-6.887100460864899, 112.56128180894562, 0.41872565754456503], [-7.237149626482212, 112.50748801747979, 0.2451003973207417], [-7.030593605943198, 112.45936467706032, 0.8917779010040425], [-7.068861488709, 112.48967235002236, 0.850320807304062], [-7.148935797707001, 112.60219691093002, 0.9997741386289045], [-7.19085519939319, 112.39403017681633, 0.9973094696591243], [-7.101577779724512, 112.42250033934194, 0.644345364482102], [-6.853407021395867, 112.40288073976609, 0.8151899321444085], [-7.10748679787149, 112.40140406464931, 0.9558125839059424], [-7.02729584508522, 112.62952896352309, 0.8797179125419292], [-6.951762226852977, 112.5870242006264, 0.39787848139455817], [-7.090911863024489, 112.52276867214445, 0.5604353082480749], [-6.841569346084406, 112.41739356498228, 0.303327532121196], [-6.845396609073735, 112.52765244503271, 0.9632408218069779], [-7.136769258711601, 112.52257209581856, 0.684939707560704], [-7.036128112584122, 112.4384965235748, 0.3829142444027702], [-7.116639892975124, 112.51147846178664, 0.7373605475246854], [-7.123215397305239, 112.50158132563126, 0.6945025923663166], [-7.2248763515846415, 112.56243802745462, 0.48653017442627244], [-6.990078623068243, 112.56782622224294, 0.2908460737597032], [-7.033901600476167, 112.40268512273617, 0.7372585564742398], [-7.218893711987505, 112.49489153209541, 0.6162461607230347], [-7.12575494966299, 112.56524077639999, 0.8178547133885115], [-6.867610986753672, 112.53087815240242, 0.6161308008895947], [-7.141779624826541, 112.62981715553273, 0.881745200254832], [-7.180593102442598, 112.5744342168533, 0.6415254710195885], [-7.0393243682861995, 112.4356216395828, 0.648750377228309], [-6.835883313814654, 112.40975924927213, 0.9013228821266761], [-7.140757338680285, 112.56987739789777, 0.5227862929699176], [-6.96442442556359, 112.39742316695165, 0.3072121827605126], [-6.9277359577152255, 112.55401716275657, 0.2230261410506712], [-7.142568606963116, 112.65326446759899, 0.8041098045388952], [-6.941431297069138, 112.55113276980525, 0.6962476410827718], [-7.089208915585107, 112.49868757933783, 0.7632638144793789], [-6.980754609456633, 112.57012070116386, 0.3703713292071286], [-6.980252818588033, 112.51831080933762, 0.3090971804694158], [-7.020332379529349, 112.54277270100846, 0.21163573253430557], [-7.202981194277693, 112.65361014645742, 0.4804700470452776], [-6.897525976808413, 112.49810873858422, 0.6719341494837066], [-7.108480173361588, 112.6591333578707, 0.5137952360797859], [-7.16352741073606, 112.6434981797477, 0.5499799376189833], [-7.223282191962547, 112.444821517741, 0.9233269555949988], [-6.997733893292821, 112.40942116424505, 0.4786043736186403], [-6.962198611644665, 112.41821784038568, 0.6111915913278487], [-7.233198990139579, 112.39510211118244, 0.8269224101929145], [-7.030041846097295, 112.41644402901166, 0.5172342258570162], [-7.147136732168845, 112.58124189655658, 0.6976693601822987], [-6.975479155932126, 112.40993282156886, 0.8898909669973962], [-7.168509764107954, 112.47931317648225, 0.9596164989261138], [-6.956715527377989, 112.62656508707146, 0.3176587847432304], [-7.08143850801678, 112.39651614200604, 0.9412701001291957], [-6.855940704617939, 112.6180511751249, 0.5936930344636306], [-7.183616412900143, 112.46891933693655, 0.4065955106391667], [-7.1001627960693945, 112.42308615173407, 0.5673086049906091], [-7.193475856291359, 112.58508640630197, 0.9840260602283817], [-6.86087561650579, 112.56610399709837, 0.5940944751942957], [-6.880290865113798, 112.63569216378758, 0.4630012882300066], [-7.134243932636786, 112.59581989226508, 0.7067206834533806], [-6.969406541125987, 112.61497466050776, 0.39211649502255447], [-6.904938897917502, 112.46896968031997, 0.2606906624869312], [-7.012367667244221, 112.43968307225832, 0.3031037775285194], [-7.022843262874037, 112.60017213045944, 0.302436671166218], [-7.140840560730815, 112.61591372699483, 0.3215221548098355], [-7.201827865199582, 112.6673414397602, 0.31106173811952814], [-6.872141539239136, 112.5055329495352, 0.7126997958425718], [-6.870828596563035, 112.49416506402198, 0.34550406751931584], [-6.98042840251796, 112.60739562900775, 0.4765338266590906], [-7.100997785670033, 112.48542499127085, 0.9174307279248095], [-7.09682407440881, 112.650612051169, 0.5791693122102979], [-6.942358171663202, 112.63035557051604, 0.7340461908168219], [-6.872184793419444, 112.51011832766501, 0.3378558969613039], [-6.876294566051302, 112.60024389898162, 0.35383121504693665], [-6.9202510261983745, 112.6012720047437, 0.2326948930131831]],
+                {
+  &quot;minOpacity&quot;: 0.5,
+  &quot;maxZoom&quot;: 1,
+  &quot;radius&quot;: 18,
+  &quot;blur&quot;: 12,
+}
+            );
+        
+    
+            heat_map_f8693ddef178f18450e483cc849d89cb.addTo(map_1fe82da235caaf466214945a5ca3b421);
+        
+    
+            var layer_control_bd7d3cd7c6e71e20a19df63acc003586_layers = {
+                base_layers : {
+                    &quot;openstreetmap&quot; : tile_layer_1cf4332792c8b5a32ce0e06855bbeaeb,
+                },
+                overlays :  {
+                    &quot;Area Pengamatan (AOI) Gresik&quot; : geo_json_9f950c47516d7a71cc245c48dc28cd92,
+                    &quot;Heatmap Intensitas Polusi Udara&quot; : heat_map_f8693ddef178f18450e483cc849d89cb,
+                },
+            };
+            let layer_control_bd7d3cd7c6e71e20a19df63acc003586 = L.control.layers(
+                layer_control_bd7d3cd7c6e71e20a19df63acc003586_layers.base_layers,
+                layer_control_bd7d3cd7c6e71e20a19df63acc003586_layers.overlays,
+                {
+  &quot;position&quot;: &quot;topright&quot;,
+  &quot;collapsed&quot;: true,
+  &quot;autoZIndex&quot;: true,
+}
+            ).addTo(map_1fe82da235caaf466214945a5ca3b421);
+
+        
+&lt;/script&gt;
+&lt;/html&gt;" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></div></div></div></div>
+</div>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -426,6 +1430,46 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Business Understanding</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#latar-belakang-dan-tujuan-proyek">Latar Belakang dan Tujuan Proyek</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-understanding">Data Understanding</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-data-analisis-kualitas-udara-wilayah-gresik">Eksplorasi data - Analisis kualitas udara wilayah Gresik</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sumber-data-data-source">Sumber Data (Data Source)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spesifikasi-pengambilan-data-data-scope">Spesifikasi Pengambilan Data (Data Scope)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deskripsi-variabel-features-description">Deskripsi Variabel (Features Description)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pertimbangan-kualitas-data">Pertimbangan Kualitas Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#crawling-data">Crawling Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#eksekusi-crawling-data-satelit-no2-co-so2-o3">Eksekusi Crawling Data Satelit (NO2, CO, SO2, O3)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#transformasi-data-mentah-netcdf-ke-csv">Transformasi Data Mentah (NetCDF ke CSV)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-hasil-dengan-grafik-kartesius">Visualisasi Hasil dengan Grafik Kartesius</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-no2">Visualisasi NO2</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-co">Visualisasi CO</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-so2">Visualisasi SO2</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-o3">Visualisasi O3</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-peta-heatmap-folium">Visualisasi Peta Heatmap (Folium)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
               
             
           </div>
