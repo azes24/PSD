@@ -4,7 +4,7 @@ NAMA : FATHUL AZIZ SAIFUDDIN
 
 NIM : 240411100141
 
-MATA KULIAH : Penamabangan Sains Data
+MATA KULIAH : Proyek Sains Data
 
 KELAS : IF 5A
 
