@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Implementasi Analisis Data Polutan Gresik: Dari CSV ke Cloud Database (Aiven) hingga KNIME &#8212; PSD</title>
+    <title>Analisis Data Polutan Gresik &#8212; PSD</title>
   
   
   
@@ -184,7 +184,7 @@
 <li class="toctree-l1"><a class="reference internal" href="crawling.html">Crawling Data kualitas udara di wilayah Gresik</a></li>
 
 
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Implementasi Analisis Data Polutan Gresik: Dari CSV ke Cloud Database (Aiven) hingga KNIME</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Analisis Data Polutan Gresik</a></li>
 </ul>
 
     </div>
@@ -370,7 +370,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Implementasi Analisis Data Polutan Gresik: Dari CSV ke Cloud Database (Aiven) hingga KNIME</h1>
+    <h1>Analisis Data Polutan Gresik</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -380,9 +380,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-1-memindahkan-data-time-series-ke-postgresql-aiven">Bagian 1 — Memindahkan Data Time Series ke PostgreSQL (Aiven)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-1-menyiapkan-service-postgresql-di-aiven">Langkah 1: Menyiapkan Service PostgreSQL di Aiven</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-2-menghubungkan-membuat-tabel-via-pgadmin-4">Langkah 2: Menghubungkan &amp; Membuat Tabel via pgAdmin 4</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memindahkan-data-time-series-ke-postgresql-aiven">Memindahkan Data Time Series ke PostgreSQL (Aiven)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-1-mengambil-kredensial-database-dari-aiven">Langkah 1: Mengambil Kredensial Database dari Aiven</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-2-konfigurasi-koneksi-di-heidisql">Langkah 2: Konfigurasi Koneksi di HeidiSQL</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-3-mengimpor-data-csv-ke-tabel">Langkah 3: Mengimpor Data CSV ke Tabel</a></li>
 </ul>
 </li>
@@ -415,29 +415,35 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="implementasi-analisis-data-polutan-gresik-dari-csv-ke-cloud-database-aiven-hingga-knime">
-<h1>Implementasi Analisis Data Polutan Gresik: Dari CSV ke Cloud Database (Aiven) hingga KNIME<a class="headerlink" href="#implementasi-analisis-data-polutan-gresik-dari-csv-ke-cloud-database-aiven-hingga-knime" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="analisis-data-polutan-gresik">
+<h1>Analisis Data Polutan Gresik<a class="headerlink" href="#analisis-data-polutan-gresik" title="Link to this heading">#</a></h1>
 <p><strong>Dataset:</strong> <code class="docutils literal notranslate"><span class="pre">Polutan_Gresik_Terkini.csv</span></code>
 <strong>Periode:</strong> 2025-09-01 s.d. 2026-08-30 (363 baris data harian)
 <strong>Variabel:</strong> <code class="docutils literal notranslate"><span class="pre">NO2</span></code>, <code class="docutils literal notranslate"><span class="pre">CO</span></code>, <code class="docutils literal notranslate"><span class="pre">SO2</span></code>, <code class="docutils literal notranslate"><span class="pre">O3</span></code> (konsentrasi harian gas polutan)</p>
-<p>Panduan ini menguraikan alur kerja <em>end-to-end</em>: memindahkan data <em>time-series</em> polutan dari file CSV menuju database PostgreSQL di platform <strong>Aiven</strong>, menginspeksinya lewat <strong>pgAdmin 4 / HeidiSQL</strong>, lalu menariknya ke <strong>KNIME Analytics Platform</strong> untuk dihitung statistika deskriptifnya. Setiap metrik pada node <strong>Statistics</strong> dijelaskan besertaan rumus dan contoh perhitungan manual memakai data asli pada dataset ini.</p>
 <hr class="docutils" />
-<section id="bagian-1-memindahkan-data-time-series-ke-postgresql-aiven">
-<h2>Bagian 1 — Memindahkan Data Time Series ke PostgreSQL (Aiven)<a class="headerlink" href="#bagian-1-memindahkan-data-time-series-ke-postgresql-aiven" title="Link to this heading">#</a></h2>
-<section id="langkah-1-menyiapkan-service-postgresql-di-aiven">
-<h3>Langkah 1: Menyiapkan Service PostgreSQL di Aiven<a class="headerlink" href="#langkah-1-menyiapkan-service-postgresql-di-aiven" title="Link to this heading">#</a></h3>
+<section id="memindahkan-data-time-series-ke-postgresql-aiven">
+<h2>Memindahkan Data Time Series ke PostgreSQL (Aiven)<a class="headerlink" href="#memindahkan-data-time-series-ke-postgresql-aiven" title="Link to this heading">#</a></h2>
+<section id="langkah-1-mengambil-kredensial-database-dari-aiven">
+<h3>Langkah 1: Mengambil Kredensial Database dari Aiven<a class="headerlink" href="#langkah-1-mengambil-kredensial-database-dari-aiven" title="Link to this heading">#</a></h3>
+<p>Sebelum menyambungkan koneksi melalui aplikasi apa pun, kita membutuhkan informasi kredensial server.</p>
 <ol class="arabic simple">
-<li><p>Masuk ke <em>dashboard</em> <strong>Aiven</strong>, buat proyek baru (atau gunakan yang sudah ada), lalu buat <em>service</em> <strong>PostgreSQL</strong>.</p></li>
-<li><p>Setelah <em>service</em> aktif (status <em>Running</em>), buka tab <strong>Overview</strong> dan catat kredensial koneksi:</p>
+<li><p>Akses <em>dashboard</em> atau console <strong>Aiven</strong>, lalu arahkan ke proyek yang dimiliki.</p></li>
+<li><p>Buka tab <strong>Overview</strong> pada layanan (<em>service</em>) PostgreSQL yang sedang beroperasi (<code class="docutils literal notranslate"><span class="pre">pg-157c2e9</span></code>).</p></li>
+<li><p>Pada bagian <strong>Connection information</strong>, catat parameter-parameter berikut ini:</p>
 <ul class="simple">
-<li><p><strong>Host</strong>, <strong>Port</strong>, <strong>User</strong> (<code class="docutils literal notranslate"><span class="pre">avnadmin</span></code>), <strong>Password</strong>, <strong>SSL mode</strong> (<code class="docutils literal notranslate"><span class="pre">require</span></code>).</p></li>
+<li><p><strong>Host:</strong> <code class="docutils literal notranslate"><span class="pre">pg-157c2e9-project-95fb.l.aivencloud.com</span></code></p></li>
+<li><p><strong>Port:</strong> <code class="docutils literal notranslate"><span class="pre">13459</span></code></p></li>
+<li><p><strong>User:</strong> <code class="docutils literal notranslate"><span class="pre">avnadmin</span></code></p></li>
+<li><p><strong>Password:</strong> (Klik ikon mata atau opsi <em>copy</em> untuk menyalin kata sandi rahasia)</p></li>
+<li><p><strong>SSL mode:</strong> <code class="docutils literal notranslate"><span class="pre">require</span></code></p></li>
 </ul>
 </li>
-<li><p>Buat database khusus, misalnya <code class="docutils literal notranslate"><span class="pre">db_polutan_gresik</span></code>, melalui tab <strong>Databases</strong>.</p></li>
+<li><p>Pastikan Anda telah mengunduh sertifikat SSL (klik <strong>Show</strong> pada bagian <em>CA certificate</em> kemudian unduh) apabila <em>client</em> yang Anda gunakan mensyaratkannya.</p></li>
 </ol>
+<p><img alt="Aiven PostgreSQL Console" src="_images/aiven1.png" /></p>
 </section>
-<section id="langkah-2-menghubungkan-membuat-tabel-via-pgadmin-4">
-<h3>Langkah 2: Menghubungkan &amp; Membuat Tabel via pgAdmin 4<a class="headerlink" href="#langkah-2-menghubungkan-membuat-tabel-via-pgadmin-4" title="Link to this heading">#</a></h3>
+<section id="langkah-2-konfigurasi-koneksi-di-heidisql">
+<h3>Langkah 2: Konfigurasi Koneksi di HeidiSQL<a class="headerlink" href="#langkah-2-konfigurasi-koneksi-di-heidisql" title="Link to this heading">#</a></h3>
 <ol class="arabic simple">
 <li><p>Buka <strong>pgAdmin 4</strong> → klik kanan <strong>Servers</strong> → <strong>Register → Server…</strong>.</p></li>
 <li><p>Tab <strong>General</strong>: beri nama koneksi, misal <code class="docutils literal notranslate"><span class="pre">Aiven</span> <span class="pre">Polutan</span> <span class="pre">Gresik</span></code>.</p></li>
@@ -745,9 +751,9 @@ $<span class="math notranslate nohighlight">\(Median_{CO} = X_{(275+1)/2} = X_{1
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-1-memindahkan-data-time-series-ke-postgresql-aiven">Bagian 1 — Memindahkan Data Time Series ke PostgreSQL (Aiven)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-1-menyiapkan-service-postgresql-di-aiven">Langkah 1: Menyiapkan Service PostgreSQL di Aiven</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-2-menghubungkan-membuat-tabel-via-pgadmin-4">Langkah 2: Menghubungkan &amp; Membuat Tabel via pgAdmin 4</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memindahkan-data-time-series-ke-postgresql-aiven">Memindahkan Data Time Series ke PostgreSQL (Aiven)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-1-mengambil-kredensial-database-dari-aiven">Langkah 1: Mengambil Kredensial Database dari Aiven</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-2-konfigurasi-koneksi-di-heidisql">Langkah 2: Konfigurasi Koneksi di HeidiSQL</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-3-mengimpor-data-csv-ke-tabel">Langkah 3: Mengimpor Data CSV ke Tabel</a></li>
 </ul>
 </li>

@@ -1,22 +1,30 @@
-# Implementasi Analisis Data Polutan Gresik: Dari CSV ke Cloud Database (Aiven) hingga KNIME
+# Analisis Data Polutan Gresik
 
 **Dataset:** `Polutan_Gresik_Terkini.csv`
 **Periode:** 2025-09-01 s.d. 2026-08-30 (363 baris data harian)
 **Variabel:** `NO2`, `CO`, `SO2`, `O3` (konsentrasi harian gas polutan)
 
-Panduan ini menguraikan alur kerja *end-to-end*: memindahkan data *time-series* polutan dari file CSV menuju database PostgreSQL di platform **Aiven**, menginspeksinya lewat **pgAdmin 4 / HeidiSQL**, lalu menariknya ke **KNIME Analytics Platform** untuk dihitung statistika deskriptifnya. Setiap metrik pada node **Statistics** dijelaskan besertaan rumus dan contoh perhitungan manual memakai data asli pada dataset ini.
-
 ---
 
-## Bagian 1 — Memindahkan Data Time Series ke PostgreSQL (Aiven)
+## Memindahkan Data Time Series ke PostgreSQL (Aiven)
 
-### Langkah 1: Menyiapkan Service PostgreSQL di Aiven
-1. Masuk ke *dashboard* **Aiven**, buat proyek baru (atau gunakan yang sudah ada), lalu buat *service* **PostgreSQL**.
-2. Setelah *service* aktif (status *Running*), buka tab **Overview** dan catat kredensial koneksi:
-   * **Host**, **Port**, **User** (`avnadmin`), **Password**, **SSL mode** (`require`).
-3. Buat database khusus, misalnya `db_polutan_gresik`, melalui tab **Databases**.
+### Langkah 1: Mengambil Kredensial Database dari Aiven
 
-### Langkah 2: Menghubungkan & Membuat Tabel via pgAdmin 4
+Sebelum menyambungkan koneksi melalui aplikasi apa pun, kita membutuhkan informasi kredensial server.
+1. Akses *dashboard* atau console **Aiven**, lalu arahkan ke proyek yang dimiliki.
+2. Buka tab **Overview** pada layanan (*service*) PostgreSQL yang sedang beroperasi (`pg-157c2e9`).
+3. Pada bagian **Connection information**, catat parameter-parameter berikut ini:
+   * **Host:** `pg-157c2e9-project-95fb.l.aivencloud.com`
+   * **Port:** `13459`
+   * **User:** `avnadmin`
+   * **Password:** (Klik ikon mata atau opsi *copy* untuk menyalin kata sandi rahasia)
+   * **SSL mode:** `require`
+4. Pastikan Anda telah mengunduh sertifikat SSL (klik **Show** pada bagian *CA certificate* kemudian unduh) apabila *client* yang Anda gunakan mensyaratkannya.
+
+![Aiven PostgreSQL Console](img/aiven1.png)
+
+
+### Langkah 2: Konfigurasi Koneksi di HeidiSQL
 1. Buka **pgAdmin 4** → klik kanan **Servers** → **Register → Server...**.
 2. Tab **General**: beri nama koneksi, misal `Aiven Polutan Gresik`.
 3. Tab **Connection**: isi Host, Port, Maintenance database (`db_polutan_gresik`), Username (`avnadmin`), dan Password dari Langkah 1, centang **Save password?**, lalu **Save**.
