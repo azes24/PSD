@@ -25,67 +25,8 @@ Sebelum menyambungkan koneksi melalui aplikasi apa pun, kita membutuhkan informa
 
 
 ### Langkah 2: Konfigurasi Koneksi di HeidiSQL
-1. Buka **pgAdmin 4** → klik kanan **Servers** → **Register → Server...**.
-2. Tab **General**: beri nama koneksi, misal `Aiven Polutan Gresik`.
-3. Tab **Connection**: isi Host, Port, Maintenance database (`db_polutan_gresik`), Username (`avnadmin`), dan Password dari Langkah 1, centang **Save password?**, lalu **Save**.
-4. Buat tabel `polutan_gresik` dengan skema yang menyesuaikan struktur CSV:
+...
 
-```sql
-CREATE TABLE polutan_gresik (
-    date DATE PRIMARY KEY,
-    no2  DOUBLE PRECISION,
-    co   DOUBLE PRECISION,
-    so2  DOUBLE PRECISION,
-    o3   DOUBLE PRECISION
-);
-```
-
-### Langkah 3: Mengimpor Data CSV ke Tabel
-1. Pada pgAdmin, klik kanan tabel `polutan_gresik` → **Import/Export Data...**.
-2. Pilih mode **Import**, arahkan *Filename* ke `Polutan_Gresik_Terkini.csv`, format `csv`, centang **Header**, delimiter `,`.
-3. Petakan kolom CSV (`date, NO2, CO, SO2, O3`) ke kolom tabel (`date, no2, co, so2, o3`), lalu jalankan.
-4. Verifikasi: klik kanan tabel → **View/Edit Data → All Rows**. Sel kosong pada CSV (mis. baris `2025-09-07` dan `2025-09-08`) akan tampil sebagai `[null]` — inilah *missing values* yang nantinya terhitung otomatis pada tahap statistik.
-
-> Alternatif *tanpa* GUI: gunakan `psql \copy` atau *client* seperti HeidiSQL/DBeaver dengan mekanisme yang sama (koneksi → buat tabel → import CSV).
-
----
-
-## Bagian 2 — Menarik Data ke KNIME Analytics Platform
-
-### Langkah 4: Menyusun Workflow di KNIME
-1. Buat *workflow* baru, lalu tambahkan *node* berikut dari *Node Repository*:
-   * **PostgreSQL Connector** — menghubungkan KNIME ke server Aiven.
-   * **DB Table Selector** — memilih skema `public` dan tabel `polutan_gresik`.
-   * **DB Reader** — memuat data ke memori KNIME.
-   * **Statistics** — menghitung metrik statistika deskriptif.
-2. Hubungkan node secara berurutan: `PostgreSQL Connector → DB Table Selector → DB Reader → Statistics`.
-3. Konfigurasi **PostgreSQL Connector**: isi Hostname, Port, Database name (`db_polutan_gresik`), serta kredensial (User/Password) sama seperti Langkah 1–2.
-4. Konfigurasi **DB Table Selector**: pilih skema `public`, tabel `polutan_gresik`.
-5. Eksekusi **DB Reader** (klik kanan → **Execute**); indikator hijau menandakan data berhasil dimuat.
-
-### Langkah 5: Menjalankan Node Statistics
-1. Klik kanan node **Statistics** → **Execute**, lalu setelah hijau, pilih **Statistics View**.
-2. Tabel output akan memuat kolom `no2`, `co`, `so2`, `o3` dengan metrik: **Min, Max, Mean, Std. deviation, Variance, Skewness, Kurtosis, Overall Sum, No. missings, No. NaNs, No. +infs/-infs**, serta histogram sebaran tiap kolom.
-
-Berikut ringkasan nilai aktual dari dataset `Polutan_Gresik_Terkini.csv` (dihitung terhadap baris valid, tidak termasuk *missing*):
-
-| Metrik | NO2 | CO | SO2 | O3 |
-|---|---|---|---|---|
-| n valid (dari 363) | 288 | 275 | 307 | 360 |
-| No. missings | 75 | 88 | 56 | 3 |
-| Min | 6.195e-06 | 0.021424 | -0.000615 | 0.110516 |
-| Max | 1.957e-04 | 0.042927 | 0.000575 | 0.122790 |
-| Mean | 4.458e-05 | 0.029244 | 5.339e-05 | 0.115819 |
-| Median | 4.023e-05 | 0.028893 | 4.926e-05 | 0.115645 |
-| Std. Deviation | 2.188e-05 | 0.003242 | 1.394e-04 | 0.002362 |
-| Variance | 4.789e-10 | 1.051e-05 | 1.943e-08 | 5.578e-06 |
-| Skewness | 1.849 | 0.842 | -0.365 | 0.430 |
-| Kurtosis (excess) | 7.919 | 1.781 | 4.479 | -0.132 |
-| Overall Sum | 0.012840 | 8.042181 | 0.016392 | 41.694804 |
-
-**Interpretasi cepat:** `NO2` paling menceng ke kanan (skewness 1.85) dan paling *leptokurtik* (kurtosis 7.92) → banyak nilai ekstrem tinggi yang jarang muncul. `O3` paling mendekati simetris dan sedikit *platikurtik* (kurtosis -0.13) → puncak distribusinya relatif datar. `SO2` memiliki nilai negatif (karena berasal dari data satelit yang bisa menghasilkan bias koreksi negatif) sehingga skewness-nya negatif (-0.365).
-
----
 
 ## Bagian 3 — Penjelasan Setiap Fitur pada Node Statistics: Rumus & Contoh Perhitungan Manual
 
@@ -185,19 +126,3 @@ $$n \text{ ganjil}: Median = X_{(n+1)/2} \qquad n \text{ genap}: Median = \frac{
 **Contoh (CO):** `n = 275` (ganjil), sehingga:
 $$Median_{CO} = X_{(275+1)/2} = X_{138} = 0.028893$$
 *(nilai pada urutan ke-138 setelah 275 data `CO` valid diurutkan menaik)*
-
----
-
-## Ringkasan Alur
-
-```
-CSV (Polutan_Gresik_Terkini.csv)
-   └─▶ Import ke PostgreSQL Aiven (via pgAdmin 4)
-         └─▶ PostgreSQL Connector (KNIME)
-               └─▶ DB Table Selector → DB Reader
-                     └─▶ Statistics Node → Min, Max, Mean, Median,
-                          Std. Dev, Variance, Skewness, Kurtosis,
-                          Sum, Missing/NaN/Inf count, Histogram
-```
-
-Alur ini memastikan data *time-series* polutan Gresik tersimpan aman di cloud database, dapat diakses berulang, dan siap dianalisis statistiknya secara otomatis maupun diverifikasi secara manual seperti dijabarkan di atas.
