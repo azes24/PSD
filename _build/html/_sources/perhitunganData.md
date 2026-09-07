@@ -40,6 +40,10 @@ Sebelum menyambungkan koneksi melalui aplikasi apa pun, kita membutuhkan informa
 
 ...
 
+## Bagian 2 — Statistics Table view
+
+![statistics View](img/statistik1.png)
+
 
 ## Bagian 3 — Penjelasan Setiap Fitur pada Node Statistics: Rumus & Contoh Perhitungan Manual
 
