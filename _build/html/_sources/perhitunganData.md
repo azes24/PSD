@@ -24,9 +24,14 @@ Sebelum menyambungkan koneksi melalui aplikasi apa pun, kita membutuhkan informa
 ![Aiven PostgreSQL Console](img/aiven1.png)
 
 
-### Langkah 2: koneksi ke knime
+### Langkah 2: koneksi ke knime pada node PostgreeSQL conector
 
 ![PostgreSQL Console](img/koneksi1.png)
+
+...
+### Langkah 2: koneksi ke knime pada node DB Table selector
+
+![PostgreSQL Console](img/koneksi2.png)
 
 ...
 
