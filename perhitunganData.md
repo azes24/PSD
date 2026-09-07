@@ -24,7 +24,9 @@ Sebelum menyambungkan koneksi melalui aplikasi apa pun, kita membutuhkan informa
 ![Aiven PostgreSQL Console](img/aiven1.png)
 
 
-### Langkah 2: Konfigurasi Koneksi di HeidiSQL
+### Langkah 2: koneksi ke knime
+
+
 ...
 
 
