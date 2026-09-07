@@ -29,9 +29,14 @@ Sebelum menyambungkan koneksi melalui aplikasi apa pun, kita membutuhkan informa
 ![PostgreSQL Console](img/koneksi1.png)
 
 ...
-### Langkah 2: koneksi ke knime pada node DB Table selector
+### Langkah 3: koneksi ke knime pada node DB Table selector
 
 ![PostgreSQL Console](img/koneksi2.png)
+
+...
+### Langkah 4: Sususnan node koneksi ke knime
+
+![PostgreSQL Console](img/koneksi3.png)
 
 ...
 
