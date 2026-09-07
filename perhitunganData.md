@@ -26,6 +26,7 @@ Sebelum menyambungkan koneksi melalui aplikasi apa pun, kita membutuhkan informa
 
 ### Langkah 2: koneksi ke knime
 
+![PostgreSQL Console](img/koneksi1.png)
 
 ...
 
