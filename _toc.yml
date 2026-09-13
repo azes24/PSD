@@ -4,5 +4,9 @@
 format: jb-book
 root: intro
 chapters:
-- file: crawling.ipynb
-- file: perhitunganData
+  - file: data/crawling.ipynb
+    sections:
+      - file: data/perhitunganData.md
+  - file: data/crawlingKecamatan.ipynb
+    sections:
+      - file: ekstraksiDukun.ipynb

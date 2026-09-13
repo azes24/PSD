@@ -21,28 +21,28 @@ Sebelum menyambungkan koneksi melalui aplikasi apa pun, kita membutuhkan informa
    * **SSL mode:** `require`
 4. Pastikan Anda telah mengunduh sertifikat SSL (klik **Show** pada bagian *CA certificate* kemudian unduh) apabila *client* yang Anda gunakan mensyaratkannya.
 
-![Aiven PostgreSQL Console](img/aiven1.png)
+![Aiven PostgreSQL Console](../img/aiven1.png)
 
 
 ### Langkah 2: koneksi ke knime pada node PostgreeSQL conector
 
-![PostgreSQL Console](img/koneksi1.png)
+![PostgreSQL Console](../img/koneksi1.png)
 
 ...
 ### Langkah 3: koneksi ke knime pada node DB Table selector
 
-![PostgreSQL Console](img/koneksi2.png)
+![PostgreSQL Console](../img/koneksi2.png)
 
 ...
 ### Langkah 4: Sususnan node koneksi ke knime
 
-![PostgreSQL Console](img/koneksi3.png)
+![PostgreSQL Console](../img/koneksi3.png)
 
 ...
 
 ## Bagian 2 — Statistics Table view
 
-![statistics View](img/statistik1.png)
+![statistics View](../img/statistik1.png)
 
 
 ## Bagian 3 — Penjelasan Setiap Fitur pada Node Statistics: Rumus & Contoh Perhitungan Manual

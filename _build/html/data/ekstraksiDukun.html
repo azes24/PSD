@@ -1,0 +1,852 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Ekstraksi Fitur Data kualitas udara di wilayah Dukun, Gresik &#8212; PSD</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=1ae7504c"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'data/ekstraksiDukun';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="PSD - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="PSD - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    INTROduce MySelf
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="crawling.html">Crawling Data kualitas udara di wilayah Gresik</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="crawlingKecamatan.html">Crawling Data kualitas udara di wilayah Dukun, Gresik</a></li>
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/azes24/PSD" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/azes24/PSD/issues/new?title=Issue%20on%20page%20%2Fdata/ekstraksiDukun.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/data/ekstraksiDukun.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Ekstraksi Fitur Data kualitas udara di wilayah Dukun, Gresik</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ekstraksi-68-fitur-tsfel-untuk-polutan-no2">Ekstraksi 68 Fitur TSFEL untuk Polutan NO2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simpan-hasil-ekstraksi-ke-database-aiven">Simpan Hasil Ekstraksi ke Database Aiven</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-di-database">Data di Database</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="ekstraksi-fitur-data-kualitas-udara-di-wilayah-dukun-gresik">
+<h1>Ekstraksi Fitur Data kualitas udara di wilayah Dukun, Gresik<a class="headerlink" href="#ekstraksi-fitur-data-kualitas-udara-di-wilayah-dukun-gresik" title="Link to this heading">#</a></h1>
+<section id="ekstraksi-68-fitur-tsfel-untuk-polutan-no2">
+<h2>Ekstraksi 68 Fitur TSFEL untuk Polutan NO2<a class="headerlink" href="#ekstraksi-68-fitur-tsfel-untuk-polutan-no2" title="Link to this heading">#</a></h2>
+<p>Tahap ini mengekstraksi 68 fitur numerik dari data time series konsentrasi NO2 harian (kolom NO2_imputed) menggunakan pustaka TSFEL. Setiap fitur merepresentasikan satu karakteristik statistik, temporal, spektral, atau kompleksitas dari sinyal, sehingga deret waktu 366 hari diringkas jadi satu baris fitur per kecamatan. Fungsi diambil langsung dari tsfel.feature_extraction.features (bukan lewat extractor tingkat tinggi) agar daftar fitur persis 68 sesuai permintaan, dengan fs=1 karena data harian.</p>
+<p>68 fitur dikelompokkan jadi domain2:</p>
+<ul class="simple">
+<li><p>Statistik — sebaran nilai NO2 secara keseluruhan: calc_mean, calc_median, calc_std, calc_var, calc_max, calc_min, skewness, kurtosis, interq_range, mean_abs_deviation, median_abs_deviation, ecdf, ecdf_percentile, ecdf_percentile_count, ecdf_slope, hist_mode, pk_pk_distance, rms</p></li>
+<li><p>Temporal — pola perubahan hari ke hari &amp; kompleksitas/fraktal sinyal: autocorr, distance, slope, entropy, zero_cross, mean_diff, median_diff, mean_abs_diff, median_abs_diff, sum_abs_diff, positive_turning, negative_turning, neighbourhood_peaks, calc_centroid, auc, abs_energy, mse, dfa, hurst_exponent, higuchi_fractal_dimension, petrosian_fractal_dimension, maximum_fractal_length, lempel_ziv</p></li>
+<li><p>Spektral — pola frekuensi/musiman hasil transformasi Fourier: spectral_centroid, spectral_spread, spectral_skewness, spectral_kurtosis, spectral_entropy, spectral_slope, spectral_decrease, spectral_distance, spectral_variation, spectral_positive_turning, spectral_roll_off, spectral_roll_on, max_frequency, median_frequency, fundamental_frequency, max_power_spectrum, power_bandwidth, average_power, human_range_energy, mfcc, lpcc, spectrogram_mean_coeff</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>tsfel
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: tsfel in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (0.2.0)
+Requirement already satisfied: ipython&gt;=7.4.0 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from tsfel) (8.18.1)
+Requirement already satisfied: numpy&gt;=1.18.5 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from tsfel) (2.0.2)
+Requirement already satisfied: pandas&gt;=1.5.3 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from tsfel) (2.3.3)
+Requirement already satisfied: PyWavelets&gt;=1.4.1 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from tsfel) (1.6.0)
+Requirement already satisfied: requests&gt;=2.31.0 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from tsfel) (2.32.5)
+Requirement already satisfied: scikit-learn&gt;=0.21.3 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from tsfel) (1.6.1)
+Requirement already satisfied: scipy&gt;=1.7.3 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from tsfel) (1.13.1)
+Requirement already satisfied: setuptools&gt;=47.1.1 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from tsfel) (49.2.1)
+Requirement already satisfied: statsmodels&gt;=0.12.0 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from tsfel) (0.14.6)
+Requirement already satisfied: decorator in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from ipython&gt;=7.4.0-&gt;tsfel) (5.2.1)
+Requirement already satisfied: jedi&gt;=0.16 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from ipython&gt;=7.4.0-&gt;tsfel) (0.19.2)
+Requirement already satisfied: matplotlib-inline in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from ipython&gt;=7.4.0-&gt;tsfel) (0.2.1)
+Requirement already satisfied: prompt-toolkit&lt;3.1.0,&gt;=3.0.41 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from ipython&gt;=7.4.0-&gt;tsfel) (3.0.52)
+Requirement already satisfied: pygments&gt;=2.4.0 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from ipython&gt;=7.4.0-&gt;tsfel) (2.19.2)
+Requirement already satisfied: stack-data in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from ipython&gt;=7.4.0-&gt;tsfel) (0.6.3)
+Requirement already satisfied: traitlets&gt;=5 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from ipython&gt;=7.4.0-&gt;tsfel) (5.14.3)
+Requirement already satisfied: typing-extensions in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from ipython&gt;=7.4.0-&gt;tsfel) (4.15.0)
+Requirement already satisfied: exceptiongroup in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from ipython&gt;=7.4.0-&gt;tsfel) (1.3.1)
+Requirement already satisfied: colorama in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from ipython&gt;=7.4.0-&gt;tsfel) (0.4.6)
+Requirement already satisfied: wcwidth in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from prompt-toolkit&lt;3.1.0,&gt;=3.0.41-&gt;ipython&gt;=7.4.0-&gt;tsfel) (0.6.0)
+Requirement already satisfied: parso&lt;0.9.0,&gt;=0.8.4 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from jedi&gt;=0.16-&gt;ipython&gt;=7.4.0-&gt;tsfel) (0.8.6)
+Requirement already satisfied: python-dateutil&gt;=2.8.2 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from pandas&gt;=1.5.3-&gt;tsfel) (2.9.0.post0)
+Requirement already satisfied: pytz&gt;=2020.1 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from pandas&gt;=1.5.3-&gt;tsfel) (2025.2)
+Requirement already satisfied: tzdata&gt;=2022.7 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from pandas&gt;=1.5.3-&gt;tsfel) (2025.3)
+Requirement already satisfied: six&gt;=1.5 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from python-dateutil&gt;=2.8.2-&gt;pandas&gt;=1.5.3-&gt;tsfel) (1.17.0)
+Requirement already satisfied: charset_normalizer&lt;4,&gt;=2 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from requests&gt;=2.31.0-&gt;tsfel) (3.4.4)
+Requirement already satisfied: idna&lt;4,&gt;=2.5 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from requests&gt;=2.31.0-&gt;tsfel) (3.11)
+Requirement already satisfied: urllib3&lt;3,&gt;=1.21.1 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from requests&gt;=2.31.0-&gt;tsfel) (2.6.3)
+Requirement already satisfied: certifi&gt;=2017.4.17 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from requests&gt;=2.31.0-&gt;tsfel) (2026.1.4)
+Requirement already satisfied: joblib&gt;=1.2.0 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from scikit-learn&gt;=0.21.3-&gt;tsfel) (1.5.3)
+Requirement already satisfied: threadpoolctl&gt;=3.1.0 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from scikit-learn&gt;=0.21.3-&gt;tsfel) (3.6.0)
+Requirement already satisfied: patsy&gt;=0.5.6 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from statsmodels&gt;=0.12.0-&gt;tsfel) (1.0.3)
+Requirement already satisfied: packaging&gt;=21.3 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from statsmodels&gt;=0.12.0-&gt;tsfel) (26.0)
+Requirement already satisfied: executing&gt;=1.2.0 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from stack-data-&gt;ipython&gt;=7.4.0-&gt;tsfel) (2.2.1)
+Requirement already satisfied: asttokens&gt;=2.1.0 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from stack-data-&gt;ipython&gt;=7.4.0-&gt;tsfel) (3.0.1)
+Requirement already satisfied: pure-eval in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from stack-data-&gt;ipython&gt;=7.4.0-&gt;tsfel) (0.2.3)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tsfel.feature_extraction.features</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tsfel_features</span>
+
+<span class="c1"># ---------- 1. Muat dan bersihkan data ----------</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;NO2_Dukun_Cleaned.csv&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">])</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">target_pollutant</span> <span class="o">=</span> <span class="s1">&#39;NO2&#39;</span>
+
+<span class="c1"># --- FIX: paksa kolom target jadi numerik, nilai yang gagal dikonversi -&gt; NaN ---</span>
+<span class="n">df</span><span class="p">[</span><span class="n">target_pollutant</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">target_pollutant</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;coerce&#39;</span><span class="p">)</span>
+
+<span class="n">n_missing_before</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">target_pollutant</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah nilai non-numerik/kosong yang dikonversi jadi NaN: </span><span class="si">{</span><span class="n">n_missing_before</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">Q1</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">target_pollutant</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="n">Q3</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">target_pollutant</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="n">IQR</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">-</span> <span class="n">Q1</span>
+<span class="n">lower_bound</span> <span class="o">=</span> <span class="n">Q1</span> <span class="o">-</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">IQR</span>
+<span class="n">upper_bound</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">+</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">IQR</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="n">target_pollutant</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">lower_bound</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">target_pollutant</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">upper_bound</span><span class="p">),</span> <span class="n">target_pollutant</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+<span class="n">df_clean</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">ffill</span><span class="p">()</span><span class="o">.</span><span class="n">bfill</span><span class="p">()</span>
+
+<span class="n">fs</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">signal_1d</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="n">target_pollutant</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+
+<span class="c1"># ---------- 2. Daftar PERSIS fitur yang diminta ----------</span>
+<span class="n">FEATURE_LIST</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;abs_energy auc autocorr average_power calc_centroid calc_max calc_mean</span>
+<span class="s2">calc_median calc_min calc_std calc_var dfa distance ecdf ecdf_percentile ecdf_percentile_count</span>
+<span class="s2">ecdf_slope entropy fundamental_frequency higuchi_fractal_dimension hist_mode human_range_energy</span>
+<span class="s2">hurst_exponent interq_range kurtosis lempel_ziv lpcc max_frequency max_power_spectrum</span>
+<span class="s2">maximum_fractal_length mean_abs_deviation mean_abs_diff mean_diff median_abs_deviation</span>
+<span class="s2">median_abs_diff median_diff median_frequency mfcc mse negative_turning neighbourhood_peaks</span>
+<span class="s2">petrosian_fractal_dimension pk_pk_distance positive_turning power_bandwidth rms skewness slope</span>
+<span class="s2">spectral_centroid spectral_decrease spectral_distance spectral_entropy spectral_kurtosis</span>
+<span class="s2">spectral_positive_turning spectral_roll_off spectral_roll_on spectral_skewness spectral_slope</span>
+<span class="s2">spectral_spread spectral_variation spectrogram_mean_coeff sum_abs_diff wavelet_abs_mean</span>
+<span class="s2">wavelet_energy wavelet_entropy wavelet_std wavelet_var zero_cross&quot;&quot;&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah fitur yang diminta:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">FEATURE_LIST</span><span class="p">))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">to_scalar</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="s2">&quot;values&quot;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;values&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)):</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">arr</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_one</span><span class="p">(</span><span class="n">fn_name</span><span class="p">,</span> <span class="n">signal</span><span class="p">,</span> <span class="n">fs</span><span class="p">):</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">tsfel_features</span><span class="p">,</span> <span class="n">fn_name</span><span class="p">)</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span><span class="o">.</span><span class="n">parameters</span>
+    <span class="k">if</span> <span class="s2">&quot;fs&quot;</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="n">signal</span><span class="p">,</span> <span class="n">fs</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">to_scalar</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+
+<span class="n">row</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">fn_name</span> <span class="ow">in</span> <span class="n">FEATURE_LIST</span><span class="p">:</span>
+    <span class="n">row</span><span class="p">[</span><span class="n">fn_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">extract_one</span><span class="p">(</span><span class="n">fn_name</span><span class="p">,</span> <span class="n">signal_1d</span><span class="p">,</span> <span class="n">fs</span><span class="p">)</span>
+
+<span class="n">extracted_features_final</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">row</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Berhasil! Jumlah fitur yang dihasilkan untuk </span><span class="si">{</span><span class="n">target_pollutant</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">extracted_features_final</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">extracted_features_final</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">target_pollutant</span><span class="si">}</span><span class="s1">_Dukun_TSFEL.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah nilai non-numerik/kosong yang dikonversi jadi NaN: 159
+Jumlah fitur yang diminta: 68
+Berhasil! Jumlah fitur yang dihasilkan untuk NO2: 68
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">df_fitur</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;NO2_Dukun_TSFEL.csv&quot;</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_columns&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df_fitur</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>abs_energy</th>
+      <th>auc</th>
+      <th>autocorr</th>
+      <th>average_power</th>
+      <th>calc_centroid</th>
+      <th>calc_max</th>
+      <th>calc_mean</th>
+      <th>calc_median</th>
+      <th>calc_min</th>
+      <th>calc_std</th>
+      <th>calc_var</th>
+      <th>dfa</th>
+      <th>distance</th>
+      <th>ecdf</th>
+      <th>ecdf_percentile</th>
+      <th>ecdf_percentile_count</th>
+      <th>ecdf_slope</th>
+      <th>entropy</th>
+      <th>fundamental_frequency</th>
+      <th>higuchi_fractal_dimension</th>
+      <th>hist_mode</th>
+      <th>human_range_energy</th>
+      <th>hurst_exponent</th>
+      <th>interq_range</th>
+      <th>kurtosis</th>
+      <th>lempel_ziv</th>
+      <th>lpcc</th>
+      <th>max_frequency</th>
+      <th>max_power_spectrum</th>
+      <th>maximum_fractal_length</th>
+      <th>mean_abs_deviation</th>
+      <th>mean_abs_diff</th>
+      <th>mean_diff</th>
+      <th>median_abs_deviation</th>
+      <th>median_abs_diff</th>
+      <th>median_diff</th>
+      <th>median_frequency</th>
+      <th>mfcc</th>
+      <th>mse</th>
+      <th>negative_turning</th>
+      <th>neighbourhood_peaks</th>
+      <th>petrosian_fractal_dimension</th>
+      <th>pk_pk_distance</th>
+      <th>positive_turning</th>
+      <th>power_bandwidth</th>
+      <th>rms</th>
+      <th>skewness</th>
+      <th>slope</th>
+      <th>spectral_centroid</th>
+      <th>spectral_decrease</th>
+      <th>spectral_distance</th>
+      <th>spectral_entropy</th>
+      <th>spectral_kurtosis</th>
+      <th>spectral_positive_turning</th>
+      <th>spectral_roll_off</th>
+      <th>spectral_roll_on</th>
+      <th>spectral_skewness</th>
+      <th>spectral_slope</th>
+      <th>spectral_spread</th>
+      <th>spectral_variation</th>
+      <th>spectrogram_mean_coeff</th>
+      <th>sum_abs_diff</th>
+      <th>wavelet_abs_mean</th>
+      <th>wavelet_energy</th>
+      <th>wavelet_entropy</th>
+      <th>wavelet_std</th>
+      <th>wavelet_var</th>
+      <th>zero_cross</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3.782973e-07</td>
+      <td>0.010983</td>
+      <td>3.0</td>
+      <td>1.036431e-09</td>
+      <td>203.472414</td>
+      <td>0.000071</td>
+      <td>0.00003</td>
+      <td>0.000028</td>
+      <td>0.000007</td>
+      <td>0.000011</td>
+      <td>1.293063e-10</td>
+      <td>0.869955</td>
+      <td>365.0</td>
+      <td>0.015027</td>
+      <td>0.00003</td>
+      <td>182.5</td>
+      <td>29976.74047</td>
+      <td>0.999358</td>
+      <td>0.002732</td>
+      <td>1.920019</td>
+      <td>0.00003</td>
+      <td>0.0</td>
+      <td>0.783378</td>
+      <td>0.000014</td>
+      <td>0.806169</td>
+      <td>0.18306</td>
+      <td>0.6677</td>
+      <td>0.42623</td>
+      <td>67.045594</td>
+      <td>-2.519529</td>
+      <td>0.000009</td>
+      <td>0.000006</td>
+      <td>-3.717708e-08</td>
+      <td>0.000007</td>
+      <td>0.000003</td>
+      <td>-2.173505e-07</td>
+      <td>0.087432</td>
+      <td>16.896036</td>
+      <td>1.036666</td>
+      <td>57.0</td>
+      <td>15.0</td>
+      <td>1.020639</td>
+      <td>0.000063</td>
+      <td>58.0</td>
+      <td>0.29235</td>
+      <td>0.000032</td>
+      <td>0.954705</td>
+      <td>2.748443e-08</td>
+      <td>0.131274</td>
+      <td>-2.098373</td>
+      <td>-1.763756</td>
+      <td>0.73751</td>
+      <td>2.709172</td>
+      <td>61.0</td>
+      <td>0.42623</td>
+      <td>0.0</td>
+      <td>0.927511</td>
+      <td>-0.030637</td>
+      <td>0.142728</td>
+      <td>0.332346</td>
+      <td>1.727637e-10</td>
+      <td>0.002232</td>
+      <td>0.000002</td>
+      <td>0.000017</td>
+      <td>2.161638</td>
+      <td>0.000017</td>
+      <td>2.963959e-10</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="simpan-hasil-ekstraksi-ke-database-aiven">
+<h2>Simpan Hasil Ekstraksi ke Database Aiven<a class="headerlink" href="#simpan-hasil-ekstraksi-ke-database-aiven" title="Link to this heading">#</a></h2>
+<p>Contoh ini menggunakan <strong>PostgreSQL</strong> (jenis service Aiven yang paling umum dipakai).</p>
+<p>Sebelum menyambungkan koneksi melalui aplikasi apa pun, kita membutuhkan informasi kredensial server.</p>
+<ol class="arabic simple">
+<li><p>Akses <em>dashboard</em> atau console <strong>Aiven</strong>, lalu arahkan ke proyek yang dimiliki.</p></li>
+<li><p>Buka tab <strong>Overview</strong> pada layanan (<em>service</em>) PostgreSQL yang sedang beroperasi (<code class="docutils literal notranslate"><span class="pre">pg-157c2e9</span></code>).</p></li>
+<li><p>Pada bagian <strong>Connection information</strong>, catat parameter-parameter berikut ini:</p>
+<ul class="simple">
+<li><p><strong>Host:</strong> <code class="docutils literal notranslate"><span class="pre">pg-157c2e9-project-95fb.l.aivencloud.com</span></code></p></li>
+<li><p><strong>Port:</strong> <code class="docutils literal notranslate"><span class="pre">13459</span></code></p></li>
+<li><p><strong>User:</strong> <code class="docutils literal notranslate"><span class="pre">avnadmin</span></code></p></li>
+<li><p><strong>Password:</strong> <code class="docutils literal notranslate"><span class="pre">AVNS_Khi-ZHOCTI3NhlU_Dui</span></code></p></li>
+<li><p><strong>SSL mode:</strong> <code class="docutils literal notranslate"><span class="pre">require</span></code></p></li>
+<li><p><strong>Database:</strong> <code class="docutils literal notranslate"><span class="pre">udara_dukun_tsfel</span></code></p></li>
+</ul>
+</li>
+</ol>
+<p><img alt="Aiven PostgreSQL Console" src="../_images/aiven2.png" /></p>
+<section id="data-di-database">
+<h3>Data di Database<a class="headerlink" href="#data-di-database" title="Link to this heading">#</a></h3>
+<p><img alt="Aiven PostgreSQL Console" src="../_images/dbdukun.png" /></p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./data"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ekstraksi-68-fitur-tsfel-untuk-polutan-no2">Ekstraksi 68 Fitur TSFEL untuk Polutan NO2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simpan-hasil-ekstraksi-ke-database-aiven">Simpan Hasil Ekstraksi ke Database Aiven</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-di-database">Data di Database</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Fathul Aziz Saifuddin
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
