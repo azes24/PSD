@@ -9,4 +9,4 @@ chapters:
       - file: data/perhitunganData.md
   - file: data/crawlingKecamatan.ipynb
     sections:
-      - file: ekstraksiDukun.ipynb
+      - file: data/ekstraksiDukun.ipynb
