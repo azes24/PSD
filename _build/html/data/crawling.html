@@ -57,8 +57,6 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'data/crawling';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -185,8 +183,11 @@
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Crawling Data kualitas udara di wilayah Gresik</a></li>
 
 
+<li class="toctree-l1"><a class="reference internal" href="perhitunganData.html">Analisis Data Polutan Gresik</a></li>
 <li class="toctree-l1"><a class="reference internal" href="crawlingKecamatan.html">Crawling Data kualitas udara di wilayah Dukun, Gresik</a></li>
 
+
+<li class="toctree-l1"><a class="reference internal" href="ekstraksiDukun.html">Ekstraksi Fitur Data kualitas udara di wilayah Dukun, Gresik</a></li>
 
 </ul>
 
@@ -527,9 +528,7 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: openeo in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (0.51.0)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: netCDF4 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (1.7.2)
+Requirement already satisfied: netCDF4 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (1.7.2)
 Requirement already satisfied: pandas in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (2.3.3)
 Requirement already satisfied: numpy in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (2.0.2)
 Requirement already satisfied: requests&gt;=2.26.0 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from openeo) (2.32.5)
@@ -642,19 +641,19 @@ Requirement already satisfied: idna&lt;4,&gt;=2.5 in c:\users\faziz\appdata\loca
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Memulai NO2...
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:00 Job &#39;j-2609130802224e1f9e0032b2512f855b&#39;: send &#39;start&#39;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:00 Job &#39;j-2609140020134468ae7e79b2cf22e9fc&#39;: send &#39;start&#39;
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:04 Job &#39;j-2609130802224e1f9e0032b2512f855b&#39;: queued (progress 0%)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:03 Job &#39;j-2609140020134468ae7e79b2cf22e9fc&#39;: queued (progress 0%)
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:09 Job &#39;j-2609130802224e1f9e0032b2512f855b&#39;: queued (progress 0%)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:09 Job &#39;j-2609140020134468ae7e79b2cf22e9fc&#39;: queued (progress 0%)
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:16 Job &#39;j-2609130802224e1f9e0032b2512f855b&#39;: queued (progress 0%)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:16 Job &#39;j-2609140020134468ae7e79b2cf22e9fc&#39;: queued (progress 0%)
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:24 Job &#39;j-2609130802224e1f9e0032b2512f855b&#39;: queued (progress 0%)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:24 Job &#39;j-2609140020134468ae7e79b2cf22e9fc&#39;: queued (progress 0%)
 </pre></div>
 </div>
 </div>
@@ -1396,8 +1395,6 @@ Successfully installed branca-0.8.2 folium-0.20.0 xyzservices-2026.9.1
 </div>
 </section>
 </section>
-<div class="toctree-wrapper compound">
-</div>
 </section>
 
     <script type="text/x-thebe-config">
