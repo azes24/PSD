@@ -380,12 +380,24 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Ekstraksi Fitur Data kualitas udara di wilayah Dukun, Gresik</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ekstraksi-68-fitur-tsfel-untuk-polutan-no2">Ekstraksi 68 Fitur TSFEL untuk Polutan NO2</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#penjelasan-68-fitur-tsfel-untuk-data-no2">Penjelasan 68 Fitur TSFEL untuk Data NO2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-domain-statistik">A. Domain Statistik</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-domain-temporal">B. Domain Temporal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-domain-spektral">C. Domain Spektral</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-domain-wavelet">D. Domain Wavelet</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan">Ringkasan</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simpan-hasil-ekstraksi-ke-database-aiven">Simpan Hasil Ekstraksi ke Database Aiven</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-di-database">Data di Database</a></li>
 </ul>
 </li>
 </ul>
+</li>
+</ul>
+
             </nav>
         </div>
     </div>
@@ -719,6 +731,141 @@ Jumlah fitur yang diminta: 68
 </div></div></div>
 </div>
 </section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="penjelasan-68-fitur-tsfel-untuk-data-no2">
+<h1>Penjelasan 68 Fitur TSFEL untuk Data NO2<a class="headerlink" href="#penjelasan-68-fitur-tsfel-untuk-data-no2" title="Link to this heading">#</a></h1>
+<p>Dokumen ini menjelaskan arti dan kegunaan dari 68 fitur yang diekstraksi menggunakan pustaka <strong>TSFEL</strong> dari data time series konsentrasi NO2 harian. Fitur dikelompokkan menjadi 4 domain: <strong>Statistik</strong>, <strong>Temporal</strong>, <strong>Spektral</strong>, dan <strong>Wavelet</strong>.</p>
+<hr class="docutils" />
+<section id="a-domain-statistik">
+<h2>A. Domain Statistik<a class="headerlink" href="#a-domain-statistik" title="Link to this heading">#</a></h2>
+<p><em>Menggambarkan sebaran dan karakteristik nilai NO2 secara keseluruhan, tanpa memperhatikan urutan waktu.</em></p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">calc_mean</span></code></strong> — Nilai rata-rata NO2 selama periode data. Kegunaan: menunjukkan level polusi rata-rata suatu kecamatan.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">calc_median</span></code></strong> — Nilai tengah data setelah diurutkan. Kegunaan: representasi pusat data yang tidak mudah terpengaruh nilai ekstrem, cocok jika distribusinya condong (skewed).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">calc_std</span></code></strong> — Standar deviasi, mengukur seberapa besar fluktuasi nilai dari rata-rata. Kegunaan: kecamatan dengan std tinggi berarti kualitas udaranya lebih fluktuatif/tidak stabil.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">calc_var</span></code></strong> — Variansi (kuadrat dari std). Kegunaan: ukuran sebaran data secara keseluruhan, versi lain dari std.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">calc_max</span></code></strong> — Nilai NO2 tertinggi yang tercatat. Kegunaan: mengetahui puncak polusi selama periode data.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">calc_min</span></code></strong> — Nilai NO2 terendah yang tercatat. Kegunaan: mengetahui kondisi udara terbaik selama periode data.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">skewness</span></code></strong> — Kemencengan distribusi (apakah data condong ke nilai tinggi atau rendah). Kegunaan: mendeteksi apakah lonjakan polusi terjadi sesekali (ekor panjang) atau merata.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">kurtosis</span></code></strong> — Keruncingan distribusi dibanding distribusi normal. Kegunaan: mendeteksi seberapa sering muncul nilai ekstrem/lonjakan tajam.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">interq_range</span></code></strong> — Rentang interkuartil (Q3 − Q1), sebaran 50% data tengah. Kegunaan: ukuran variabilitas yang tahan terhadap outlier.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">mean_abs_deviation</span></code></strong> — Rata-rata deviasi absolut terhadap mean. Kegunaan: ukuran variabilitas alternatif, kurang sensitif terhadap outlier ekstrem dibanding std.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">median_abs_deviation</span></code></strong> — Median dari deviasi absolut terhadap median. Kegunaan: ukuran sebaran yang sangat robust terhadap outlier, cocok untuk data polusi yang kadang melonjak tajam.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ecdf</span></code></strong> — <em>Empirical Cumulative Distribution Function</em>, kurva yang menunjukkan proporsi data di bawah suatu nilai. Kegunaan: memberi gambaran ringkas distribusi kumulatif nilai NO2.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ecdf_percentile</span></code></strong> — Nilai NO2 pada persentil-persentil tertentu (mis. 25%, 75%). Kegunaan: melihat sebaran nilai pada titik persentil penting.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ecdf_percentile_count</span></code></strong> — Jumlah titik data di bawah persentil acuan. Kegunaan: melengkapi <code class="docutils literal notranslate"><span class="pre">ecdf_percentile</span></code> dengan info kuantitas datanya.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ecdf_slope</span></code></strong> — Kemiringan kurva ECDF antara dua persentil. Kegunaan: menunjukkan seberapa cepat nilai data terkonsentrasi pada suatu rentang.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">hist_mode</span></code></strong> — Nilai yang paling sering muncul (modus) berdasarkan histogram. Kegunaan: mengetahui level NO2 “tipikal” yang paling sering terjadi.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">pk_pk_distance</span></code></strong> — <em>Peak-to-peak distance</em>, selisih nilai maksimum dan minimum. Kegunaan: mengukur rentang total fluktuasi NO2 selama periode data.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">rms</span></code></strong> — <em>Root Mean Square</em>, akar dari rata-rata kuadrat nilai. Kegunaan: mengukur “besaran energi” rata-rata sinyal, memperhitungkan magnitude keseluruhan (bukan hanya rata-rata biasa).</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="b-domain-temporal">
+<h2>B. Domain Temporal<a class="headerlink" href="#b-domain-temporal" title="Link to this heading">#</a></h2>
+<p><em>Menggambarkan pola perubahan nilai NO2 dari hari ke hari, termasuk tren, osilasi, dan kompleksitas sinyal.</em></p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">autocorr</span></code></strong> — Autokorelasi, mengukur kemiripan nilai hari ini dengan nilai di waktu sebelumnya. Kegunaan: mendeteksi pola berulang/musiman pada data.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">distance</span></code></strong> — Total panjang lintasan kurva sinyal (jumlah jarak antar titik berurutan). Kegunaan: mengukur seberapa “aktif”/berliku pergerakan NO2 dari hari ke hari.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">slope</span></code></strong> — Kemiringan garis tren linear yang di-fit ke seluruh data. Kegunaan: menunjukkan apakah NO2 cenderung naik atau turun secara keseluruhan.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">entropy</span></code></strong> — Mengukur tingkat ketidakteraturan/ketidakpastian data. Kegunaan: nilai tinggi berarti pola NO2 lebih acak dan sulit diprediksi.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">zero_cross</span></code></strong> — Jumlah kali sinyal melewati garis nol/rata-rata. Kegunaan: mengukur seberapa sering nilai berosilasi naik-turun melewati titik tengahnya.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">mean_diff</span></code></strong> — Rata-rata selisih antar titik berurutan. Kegunaan: menunjukkan kecenderungan rata-rata perubahan harian (naik/turun).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">median_diff</span></code></strong> — Median dari selisih antar titik berurutan. Kegunaan: versi robust dari <code class="docutils literal notranslate"><span class="pre">mean_diff</span></code>, tidak terlalu dipengaruhi lonjakan ekstrem.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">mean_abs_diff</span></code></strong> — Rata-rata nilai absolut selisih antar titik. Kegunaan: mengukur besar rata-rata perubahan harian tanpa memandang arah naik/turun.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">median_abs_diff</span></code></strong> — Median nilai absolut selisih antar titik. Kegunaan: versi robust dari <code class="docutils literal notranslate"><span class="pre">mean_abs_diff</span></code>.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">sum_abs_diff</span></code></strong> — Total akumulasi seluruh perubahan absolut sepanjang periode. Kegunaan: mengukur total “aktivitas”/volatilitas keseluruhan sinyal.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">positive_turning</span></code></strong> — Jumlah titik balik naik (dari turun ke naik). Kegunaan: menghitung frekuensi terjadinya kenaikan mendadak/local minimum.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">negative_turning</span></code></strong> — Jumlah titik balik turun (dari naik ke turun). Kegunaan: menghitung frekuensi puncak/local maximum polusi singkat.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">neighbourhood_peaks</span></code></strong> — Jumlah puncak (peak) lokal yang terdeteksi dalam sinyal. Kegunaan: mengidentifikasi seberapa sering muncul lonjakan konsentrasi NO2.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">calc_centroid</span></code></strong> — Titik pusat massa sinyal berdasarkan waktu. Kegunaan: menunjukkan periode di mana “bobot” konsentrasi NO2 secara rata-rata terkonsentrasi.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">auc</span></code></strong> — <em>Area Under Curve</em>, luas area di bawah kurva sinyal. Kegunaan: mengukur total “paparan” polusi kumulatif selama periode data.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">abs_energy</span></code></strong> — Jumlah kuadrat seluruh nilai sinyal. Kegunaan: mengukur total intensitas/magnitude sinyal secara keseluruhan.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">mse</span></code></strong> — <em>Multiscale entropy</em>, mengukur kompleksitas sinyal pada berbagai skala waktu. Kegunaan: menilai apakah pola NO2 kompleks/multi-skala atau sederhana.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">dfa</span></code></strong> — <em>Detrended Fluctuation Analysis</em>, mengukur korelasi jangka panjang dalam sinyal setelah tren dihilangkan. Kegunaan: mendeteksi apakah polusi hari ini berhubungan dengan pola beberapa waktu sebelumnya secara jangka panjang.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">hurst_exponent</span></code></strong> — Mengukur kecenderungan sinyal untuk terus trending (<em>persistent</em>) atau berbalik arah menuju rata-rata (<em>mean-reverting</em>). Kegunaan: menilai apakah tren NO2 cenderung berlanjut atau kembali normal.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">higuchi_fractal_dimension</span></code></strong> — Dimensi fraktal (metode Higuchi), mengukur kompleksitas/kekasaran bentuk kurva. Kegunaan: nilai tinggi menunjukkan sinyal lebih “bergerigi”/tidak teratur.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">petrosian_fractal_dimension</span></code></strong> — Metode alternatif menghitung dimensi fraktal berdasarkan perubahan arah sinyal. Kegunaan: mengukur kompleksitas pola dengan pendekatan komputasi lebih ringan dibanding Higuchi.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">maximum_fractal_length</span></code></strong> — Panjang maksimum kurva pada skala fraktal tertentu. Kegunaan: melengkapi info fraktal soal seberapa panjang lintasan sinyal pada skala terkecil.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">lempel_ziv</span></code></strong> — Kompleksitas Lempel-Ziv, mengukur “keteracakan”/kompresibilitas pola sinyal. Kegunaan: nilai tinggi berarti pola NO2 sulit diprediksi/dikompresi, menandakan variasi yang kompleks.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="c-domain-spektral">
+<h2>C. Domain Spektral<a class="headerlink" href="#c-domain-spektral" title="Link to this heading">#</a></h2>
+<p><em>Menggambarkan pola frekuensi/periodisitas sinyal, diperoleh dari transformasi Fourier terhadap data NO2.</em></p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">spectral_centroid</span></code></strong> — Titik pusat massa spektrum frekuensi. Kegunaan: mengindikasikan seberapa cepat/lambat pola perubahan NO2 berosilasi secara dominan.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">spectral_spread</span></code></strong> — Sebaran (variance) di sekitar spectral centroid. Kegunaan: mengukur seberapa lebar rentang frekuensi yang mendominasi pola sinyal.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">spectral_skewness</span></code></strong> — Kemencengan distribusi spektrum frekuensi. Kegunaan: menunjukkan apakah energi sinyal condong ke frekuensi rendah (tren jangka panjang) atau tinggi (fluktuasi cepat).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">spectral_kurtosis</span></code></strong> — Keruncingan distribusi spektrum. Kegunaan: mendeteksi apakah ada satu frekuensi dominan yang sangat menonjol.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">spectral_entropy</span></code></strong> — Entropi dari distribusi energi pada spektrum frekuensi. Kegunaan: mengukur seberapa “tersebar” energi sinyal di berbagai frekuensi (makin tinggi makin acak/noise-like).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">spectral_slope</span></code></strong> — Kemiringan tren penurunan/kenaikan energi seiring bertambahnya frekuensi. Kegunaan: menunjukkan dominasi komponen frekuensi rendah vs tinggi.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">spectral_decrease</span></code></strong> — Mengukur seberapa cepat energi menurun terhadap frekuensi. Kegunaan: melihat konsentrasi energi pada frekuensi rendah (mirip <code class="docutils literal notranslate"><span class="pre">spectral_slope</span></code> dengan pembobotan berbeda).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">spectral_distance</span></code></strong> — Jarak kumulatif antara kurva spektrum aktual dan garis linear ideal. Kegunaan: mengukur seberapa jauh bentuk spektrum menyimpang dari pola sederhana.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">spectral_variation</span></code></strong> — Perubahan/variasi spektrum antar segmen sinyal. Kegunaan: mendeteksi seberapa stabil pola frekuensi sinyal dari waktu ke waktu.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">spectral_positive_turning</span></code></strong> — Jumlah titik balik naik pada representasi spektral sinyal. Kegunaan: melihat variasi/osilasi pada domain frekuensi.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">spectral_roll_off</span></code></strong> — Frekuensi di bawah mana sebagian besar energi sinyal terkumpul (mis. 95%). Kegunaan: menunjukkan batas atas frekuensi yang dominan.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">spectral_roll_on</span></code></strong> — Frekuensi di mana energi awal sinyal mulai terkumpul. Kegunaan: menandai batas bawah rentang frekuensi signifikan.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">max_frequency</span></code></strong> — Frekuensi dengan magnitude tertinggi pada spektrum. Kegunaan: menunjukkan periodisitas paling dominan (mis. siklus mingguan/bulanan).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">median_frequency</span></code></strong> — Frekuensi di titik tengah distribusi energi kumulatif. Kegunaan: representasi frekuensi “khas” dari sinyal.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">fundamental_frequency</span></code></strong> — Frekuensi dasar/komponen periodik terkuat pada sinyal. Kegunaan: mengindikasikan siklus utama, misalnya pola musiman NO2.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">max_power_spectrum</span></code></strong> — Nilai daya (power) maksimum pada spektrum frekuensi. Kegunaan: menunjukkan seberapa kuat komponen periodik paling dominan.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">power_bandwidth</span></code></strong> — Lebar pita frekuensi yang mengandung sebagian besar daya sinyal. Kegunaan: mengukur seberapa lebar rentang frekuensi yang berkontribusi signifikan.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">average_power</span></code></strong> — Rata-rata daya sinyal. Kegunaan: representasi umum “kekuatan” sinyal secara keseluruhan.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">human_range_energy</span></code></strong> — Proporsi energi sinyal pada rentang frekuensi acuan tertentu. Kegunaan: memberi info energi relatif sinyal pada skala waktu/frekuensi spesifik.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">mfcc</span></code></strong> — <em>Mel-Frequency Cepstral Coefficients</em>, koefisien yang merangkum bentuk spektrum dalam skala mel (umum dipakai di pengolahan audio). Kegunaan: menangkap pola bentuk spektral secara ringkas, berguna sebagai fitur pembeda pola antar kecamatan.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">lpcc</span></code></strong> — <em>Linear Prediction Cepstral Coefficients</em>, koefisien dari model prediksi linear sinyal. Kegunaan: merangkum karakteristik “bentuk” sinyal berdasarkan model autoregresif, melengkapi info spektral lainnya.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">spectrogram_mean_coeff</span></code></strong> — Rata-rata koefisien spectrogram (representasi energi sinyal terhadap waktu &amp; frekuensi). Kegunaan: memberi gambaran umum bagaimana energi sinyal berubah lintas waktu-frekuensi.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="d-domain-wavelet">
+<h2>D. Domain Wavelet<a class="headerlink" href="#d-domain-wavelet" title="Link to this heading">#</a></h2>
+<p><em>Dekomposisi sinyal ke berbagai skala waktu-frekuensi, menangkap pola jangka pendek dan panjang sekaligus.</em></p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">wavelet_abs_mean</span></code></strong> — Rata-rata nilai absolut koefisien wavelet pada berbagai skala dekomposisi. Kegunaan: mengukur besaran rata-rata komponen sinyal di skala waktu-frekuensi berbeda.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">wavelet_energy</span></code></strong> — Total energi pada koefisien wavelet. Kegunaan: menunjukkan seberapa besar “kekuatan” sinyal tersebar di berbagai skala.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">wavelet_entropy</span></code></strong> — Entropi dari distribusi energi antar skala wavelet. Kegunaan: mengukur seberapa merata/acak distribusi energi sinyal antar skala waktu.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">wavelet_std</span></code></strong> — Standar deviasi koefisien wavelet. Kegunaan: mengukur variabilitas komponen sinyal pada tiap skala.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">wavelet_var</span></code></strong> — Variansi koefisien wavelet. Kegunaan: serupa <code class="docutils literal notranslate"><span class="pre">wavelet_std</span></code> namun dalam skala kuadrat, menekankan komponen dengan variasi besar.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="ringkasan">
+<h2>Ringkasan<a class="headerlink" href="#ringkasan" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Domain</p></th>
+<th class="head"><p>Jumlah Fitur</p></th>
+<th class="head"><p>Fokus Analisis</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Statistik</p></td>
+<td><p>18</p></td>
+<td><p>Sebaran nilai NO2 secara keseluruhan</p></td>
+</tr>
+<tr class="row-odd"><td><p>Temporal</p></td>
+<td><p>23</p></td>
+<td><p>Pola perubahan nilai antar waktu &amp; kompleksitas sinyal</p></td>
+</tr>
+<tr class="row-even"><td><p>Spektral</p></td>
+<td><p>22</p></td>
+<td><p>Pola frekuensi/periodisitas sinyal</p></td>
+</tr>
+<tr class="row-odd"><td><p>Wavelet</p></td>
+<td><p>5</p></td>
+<td><p>Pola pada berbagai skala waktu-frekuensi sekaligus</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Total</strong></p></td>
+<td><p><strong>68</strong></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
 <section id="simpan-hasil-ekstraksi-ke-database-aiven">
 <h2>Simpan Hasil Ekstraksi ke Database Aiven<a class="headerlink" href="#simpan-hasil-ekstraksi-ke-database-aiven" title="Link to this heading">#</a></h2>
 <p>Contoh ini menggunakan <strong>PostgreSQL</strong> (jenis service Aiven yang paling umum dipakai).</p>
@@ -800,12 +947,24 @@ Jumlah fitur yang diminta: 68
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Ekstraksi Fitur Data kualitas udara di wilayah Dukun, Gresik</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ekstraksi-68-fitur-tsfel-untuk-polutan-no2">Ekstraksi 68 Fitur TSFEL untuk Polutan NO2</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#penjelasan-68-fitur-tsfel-untuk-data-no2">Penjelasan 68 Fitur TSFEL untuk Data NO2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-domain-statistik">A. Domain Statistik</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-domain-temporal">B. Domain Temporal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-domain-spektral">C. Domain Spektral</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-domain-wavelet">D. Domain Wavelet</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan">Ringkasan</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simpan-hasil-ekstraksi-ke-database-aiven">Simpan Hasil Ekstraksi ke Database Aiven</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-di-database">Data di Database</a></li>
 </ul>
 </li>
 </ul>
+</li>
+</ul>
+
   </nav></div>
 
 </div></div>
