@@ -1,0 +1,2873 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Analisis K-Means Clustering Polutan CO dengan Fokus Daerah Dukun &#8212; PSD</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=1ae7504c"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'data/KMeans_CO_Dukun';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="PSD - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="PSD - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    INTROduce MySelf
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="crawling.html">Crawling Data kualitas udara di wilayah Gresik</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="perhitunganData.html">Analisis Data Polutan Gresik</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crawlingKecamatan.html">Crawling Data kualitas udara di wilayah Dukun, Gresik</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="ekstraksiDukun.html">Ekstraksi Fitur Data kualitas udara di wilayah Dukun, Gresik</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/azes24/PSD" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/azes24/PSD/issues/new?title=Issue%20on%20page%20%2Fdata/KMeans_CO_Dukun.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/data/KMeans_CO_Dukun.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Analisis K-Means Clustering Polutan CO dengan Fokus Daerah Dukun</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-library">1. Import Library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membaca-data-co">2. Membaca Data CO</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pemeriksaan-data-dan-identifikasi-dukun">3. Pemeriksaan Data dan Identifikasi Dukun</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menyiapkan-fitur-dan-standardisasi">4. Menyiapkan Fitur dan Standardisasi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reduksi-dimensi-menjadi-37-pca">5. Reduksi Dimensi menjadi 37 PCA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menentukan-jumlah-cluster">6. Menentukan Jumlah Cluster</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catatan-interpretasi-k">Catatan interpretasi K</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means-final">7. K-Means Final</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-pca-1-dan-pca-2">8. Visualisasi PCA 1 dan PCA 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#posisi-dukun-di-dalam-cluster">9. Posisi Dukun di Dalam Cluster</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#komposisi-daerah-pada-setiap-cluster">10. Komposisi Daerah pada Setiap Cluster</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#daerah-yang-paling-dekat-dengan-dukun-pada-ruang-pca">11. Daerah yang Paling Dekat dengan Dukun pada Ruang PCA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-khusus-68-fitur-tsfel-dukun">12. Analisis Khusus 68 Fitur TSFEL Dukun</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan-yang-perlu-ditulis-pada-laporan">13. Kesimpulan yang Perlu Ditulis pada Laporan</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="analisis-k-means-clustering-polutan-co-dengan-fokus-daerah-dukun">
+<h1>Analisis K-Means Clustering Polutan CO dengan Fokus Daerah Dukun<a class="headerlink" href="#analisis-k-means-clustering-polutan-co-dengan-fokus-daerah-dukun" title="Link to this heading">#</a></h1>
+<p>Notebook ini merupakan modifikasi dari pembahasan K-Means sebelumnya dengan fokus utama pada <strong>Dukun, Gresik</strong>. Analisis digunakan untuk melihat kemiripan karakteristik pola polutan CO antar-daerah berdasarkan fitur hasil ekstraksi TSFEL.</p>
+<p>Tahapan utama:</p>
+<ol class="arabic simple">
+<li><p>Membaca data fitur CO hasil ekstraksi TSFEL.</p></li>
+<li><p>Standardisasi fitur.</p></li>
+<li><p>Reduksi dimensi menjadi <strong>37 komponen PCA</strong>.</p></li>
+<li><p>Evaluasi jumlah cluster menggunakan <strong>Elbow Method</strong> dan <strong>Silhouette Score</strong>.</p></li>
+<li><p>Membentuk cluster K-Means.</p></li>
+<li><p>Memvisualisasikan hasil menggunakan PCA 1 dan PCA 2.</p></li>
+<li><p>Mengidentifikasi posisi dan cluster <strong>Dukun, Gresik</strong>.</p></li>
+<li><p>Membandingkan profil Dukun dengan daerah lain.</p></li>
+<li><p>Mengecek file TSFEL 68 fitur khusus Dukun sebagai profil fitur.</p></li>
+</ol>
+<blockquote>
+<div><p>Catatan: file <code class="docutils literal notranslate"><span class="pre">CO_3Dukun_TSFEL(1).csv</span></code> yang diberikan hanya berisi <strong>1 baris × 68 fitur</strong>, sehingga tidak dapat digunakan sendirian untuk membentuk beberapa cluster. File tersebut digunakan sebagai profil fitur Dukun, sedangkan proses clustering dilakukan pada dataset gabungan yang memiliki banyak observasi.</p>
+</div></blockquote>
+<section id="import-library">
+<h2>1. Import Library<a class="headerlink" href="#import-library" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>seaborn
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: seaborn in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (0.13.2)
+Requirement already satisfied: numpy!=1.24.0,&gt;=1.20 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from seaborn) (2.0.2)
+Requirement already satisfied: pandas&gt;=1.2 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from seaborn) (2.3.3)
+Requirement already satisfied: matplotlib!=3.6.1,&gt;=3.4 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from seaborn) (3.9.4)
+Requirement already satisfied: contourpy&gt;=1.0.1 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from matplotlib!=3.6.1,&gt;=3.4-&gt;seaborn) (1.3.0)
+Requirement already satisfied: cycler&gt;=0.10 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from matplotlib!=3.6.1,&gt;=3.4-&gt;seaborn) (0.12.1)
+Requirement already satisfied: fonttools&gt;=4.22.0 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from matplotlib!=3.6.1,&gt;=3.4-&gt;seaborn) (4.60.2)
+Requirement already satisfied: kiwisolver&gt;=1.3.1 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from matplotlib!=3.6.1,&gt;=3.4-&gt;seaborn) (1.4.7)
+Requirement already satisfied: packaging&gt;=20.0 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from matplotlib!=3.6.1,&gt;=3.4-&gt;seaborn) (26.0)
+Requirement already satisfied: pillow&gt;=8 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from matplotlib!=3.6.1,&gt;=3.4-&gt;seaborn) (11.3.0)
+Requirement already satisfied: pyparsing&gt;=2.3.1 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from matplotlib!=3.6.1,&gt;=3.4-&gt;seaborn) (3.3.2)
+Requirement already satisfied: python-dateutil&gt;=2.7 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from matplotlib!=3.6.1,&gt;=3.4-&gt;seaborn) (2.9.0.post0)
+Requirement already satisfied: importlib-resources&gt;=3.2.0 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from matplotlib!=3.6.1,&gt;=3.4-&gt;seaborn) (6.5.2)
+Requirement already satisfied: zipp&gt;=3.1.0 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from importlib-resources&gt;=3.2.0-&gt;matplotlib!=3.6.1,&gt;=3.4-&gt;seaborn) (3.23.0)
+Requirement already satisfied: pytz&gt;=2020.1 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from pandas&gt;=1.2-&gt;seaborn) (2025.2)
+Requirement already satisfied: tzdata&gt;=2022.7 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from pandas&gt;=1.2-&gt;seaborn) (2025.3)
+Requirement already satisfied: six&gt;=1.5 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from python-dateutil&gt;=2.7-&gt;matplotlib!=3.6.1,&gt;=3.4-&gt;seaborn) (1.17.0)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">KMeans</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">silhouette_score</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">pairwise_distances</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s2">&quot;display.max_columns&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;whitegrid&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="membaca-data-co">
+<h2>2. Membaca Data CO<a class="headerlink" href="#membaca-data-co" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Dataset utama: hasil ekstraksi fitur CO dari beberapa daerah</span>
+<span class="n">path_data</span> <span class="o">=</span> <span class="s2">&quot;ekstraksi_fitur_co.csv&quot;</span>
+
+<span class="c1"># Profil TSFEL khusus Dukun: 1 observasi dengan 68 fitur</span>
+<span class="n">path_dukun</span> <span class="o">=</span> <span class="s2">&quot;CO_3Dukun_TSFEL.csv&quot;</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path_data</span><span class="p">)</span>
+<span class="n">df_dukun_68</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path_dukun</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ukuran dataset utama :&quot;</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ukuran data Dukun 68 fitur :&quot;</span><span class="p">,</span> <span class="n">df_dukun_68</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df_dukun_68</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ukuran dataset utama : (37, 71)
+Ukuran data Dukun 68 fitur : (1, 68)
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>nama</th>
+      <th>daerah</th>
+      <th>abs_energy</th>
+      <th>auc</th>
+      <th>autocorr</th>
+      <th>average_power</th>
+      <th>calc_centroid</th>
+      <th>calc_max</th>
+      <th>calc_mean</th>
+      <th>calc_median</th>
+      <th>calc_min</th>
+      <th>calc_std</th>
+      <th>calc_var</th>
+      <th>dfa</th>
+      <th>distance</th>
+      <th>ecdf</th>
+      <th>ecdf_percentile</th>
+      <th>ecdf_percentile_count</th>
+      <th>ecdf_slope</th>
+      <th>entropy</th>
+      <th>fundamental_frequency</th>
+      <th>higuchi_fractal_dimension</th>
+      <th>hist_mode</th>
+      <th>human_range_energy</th>
+      <th>hurst_exponent</th>
+      <th>interq_range</th>
+      <th>kurtosis</th>
+      <th>lempel_ziv</th>
+      <th>lpcc</th>
+      <th>max_frequency</th>
+      <th>max_power_spectrum</th>
+      <th>maximum_fractal_length</th>
+      <th>mean_abs_deviation</th>
+      <th>mean_abs_diff</th>
+      <th>mean_diff</th>
+      <th>median_abs_deviation</th>
+      <th>median_abs_diff</th>
+      <th>median_diff</th>
+      <th>median_frequency</th>
+      <th>mfcc</th>
+      <th>mse</th>
+      <th>negative_turning</th>
+      <th>neighbourhood_peaks</th>
+      <th>petrosian_fractal_dimension</th>
+      <th>pk_pk_distance</th>
+      <th>positive_turning</th>
+      <th>power_bandwidth</th>
+      <th>rms</th>
+      <th>skewness</th>
+      <th>slope</th>
+      <th>spectral_centroid</th>
+      <th>spectral_decrease</th>
+      <th>spectral_distance</th>
+      <th>spectral_entropy</th>
+      <th>spectral_kurtosis</th>
+      <th>spectral_positive_turning</th>
+      <th>spectral_roll_off</th>
+      <th>spectral_roll_on</th>
+      <th>spectral_skewness</th>
+      <th>spectral_slope</th>
+      <th>spectral_spread</th>
+      <th>spectral_variation</th>
+      <th>spectrogram_mean_coeff</th>
+      <th>sum_abs_diff</th>
+      <th>wavelet_abs_mean</th>
+      <th>wavelet_energy</th>
+      <th>wavelet_entropy</th>
+      <th>wavelet_std</th>
+      <th>wavelet_var</th>
+      <th>zero_cross</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3</td>
+      <td>Nurhabibatul Umah</td>
+      <td>Kerek, Tuban</td>
+      <td>0.325552</td>
+      <td>10.822536</td>
+      <td>3</td>
+      <td>0.000892</td>
+      <td>185.172183</td>
+      <td>0.038546</td>
+      <td>0.029654</td>
+      <td>0.029505</td>
+      <td>0.021616</td>
+      <td>0.003179</td>
+      <td>0.000010</td>
+      <td>1.042906</td>
+      <td>365</td>
+      <td>0.015027</td>
+      <td>0.029627</td>
+      <td>182.5</td>
+      <td>108.458864</td>
+      <td>0.998474</td>
+      <td>0.002732</td>
+      <td>1.901318</td>
+      <td>0.029235</td>
+      <td>0</td>
+      <td>0.742720</td>
+      <td>0.004623</td>
+      <td>-0.392904</td>
+      <td>0.188525</td>
+      <td>0.905428</td>
+      <td>0.393443</td>
+      <td>22.075911</td>
+      <td>-0.044002</td>
+      <td>0.002591</td>
+      <td>0.001930</td>
+      <td>0.000021</td>
+      <td>0.002318</td>
+      <td>0.001164</td>
+      <td>-0.000146</td>
+      <td>0.0</td>
+      <td>12.119794</td>
+      <td>1.252563</td>
+      <td>75</td>
+      <td>16</td>
+      <td>1.026565</td>
+      <td>0.016930</td>
+      <td>75</td>
+      <td>0.336066</td>
+      <td>0.029824</td>
+      <td>0.190216</td>
+      <td>0.000003</td>
+      <td>0.077955</td>
+      <td>-7.553302</td>
+      <td>-1210.997693</td>
+      <td>0.776339</td>
+      <td>4.628717</td>
+      <td>59</td>
+      <td>0.393443</td>
+      <td>0</td>
+      <td>1.674682</td>
+      <td>-0.044396</td>
+      <td>0.130288</td>
+      <td>0.554103</td>
+      <td>0.000015</td>
+      <td>0.704421</td>
+      <td>0.001815</td>
+      <td>0.008006</td>
+      <td>2.144113</td>
+      <td>0.007772</td>
+      <td>0.000069</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4</td>
+      <td>Verdi Setyawan Ardiansyah Putra</td>
+      <td>Menganti Gresik</td>
+      <td>0.311946</td>
+      <td>10.599365</td>
+      <td>3</td>
+      <td>0.000855</td>
+      <td>183.614501</td>
+      <td>0.036701</td>
+      <td>0.029041</td>
+      <td>0.028905</td>
+      <td>0.020794</td>
+      <td>0.002986</td>
+      <td>0.000009</td>
+      <td>0.987874</td>
+      <td>365</td>
+      <td>0.015027</td>
+      <td>0.028924</td>
+      <td>182.5</td>
+      <td>129.729006</td>
+      <td>1.000000</td>
+      <td>0.002732</td>
+      <td>1.916911</td>
+      <td>0.029543</td>
+      <td>0</td>
+      <td>0.748064</td>
+      <td>0.003997</td>
+      <td>-0.257197</td>
+      <td>0.193989</td>
+      <td>0.911070</td>
+      <td>0.415301</td>
+      <td>32.511317</td>
+      <td>-0.043733</td>
+      <td>0.002403</td>
+      <td>0.001943</td>
+      <td>0.000019</td>
+      <td>0.002033</td>
+      <td>0.001272</td>
+      <td>-0.000199</td>
+      <td>0.0</td>
+      <td>14.603933</td>
+      <td>1.432786</td>
+      <td>74</td>
+      <td>17</td>
+      <td>1.026062</td>
+      <td>0.015907</td>
+      <td>74</td>
+      <td>0.387978</td>
+      <td>0.029194</td>
+      <td>0.211965</td>
+      <td>0.000001</td>
+      <td>0.082436</td>
+      <td>-7.475632</td>
+      <td>-1161.049478</td>
+      <td>0.814954</td>
+      <td>4.410509</td>
+      <td>61</td>
+      <td>0.415301</td>
+      <td>0</td>
+      <td>1.620868</td>
+      <td>-0.043240</td>
+      <td>0.135135</td>
+      <td>0.592456</td>
+      <td>0.000015</td>
+      <td>0.709078</td>
+      <td>0.001715</td>
+      <td>0.007520</td>
+      <td>2.139121</td>
+      <td>0.007297</td>
+      <td>0.000060</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5</td>
+      <td>Okan Syailendra wahyudi</td>
+      <td>Manyar, Gresik</td>
+      <td>0.306332</td>
+      <td>10.489406</td>
+      <td>3</td>
+      <td>0.000842</td>
+      <td>180.902553</td>
+      <td>0.036488</td>
+      <td>0.028827</td>
+      <td>0.028897</td>
+      <td>0.021112</td>
+      <td>0.002878</td>
+      <td>0.000008</td>
+      <td>0.998062</td>
+      <td>364</td>
+      <td>0.015068</td>
+      <td>0.028758</td>
+      <td>182.5</td>
+      <td>141.576148</td>
+      <td>1.000000</td>
+      <td>0.002740</td>
+      <td>1.881547</td>
+      <td>0.029569</td>
+      <td>0</td>
+      <td>0.819084</td>
+      <td>0.003986</td>
+      <td>-0.154798</td>
+      <td>0.186301</td>
+      <td>0.902928</td>
+      <td>0.378082</td>
+      <td>18.741802</td>
+      <td>-0.086948</td>
+      <td>0.002276</td>
+      <td>0.001713</td>
+      <td>0.000023</td>
+      <td>0.001923</td>
+      <td>0.001102</td>
+      <td>0.000112</td>
+      <td>0.0</td>
+      <td>11.976767</td>
+      <td>1.223360</td>
+      <td>66</td>
+      <td>18</td>
+      <td>1.023266</td>
+      <td>0.015375</td>
+      <td>65</td>
+      <td>0.312329</td>
+      <td>0.028970</td>
+      <td>0.052994</td>
+      <td>-0.000002</td>
+      <td>0.077472</td>
+      <td>-7.597746</td>
+      <td>-1167.052697</td>
+      <td>0.835311</td>
+      <td>4.545169</td>
+      <td>59</td>
+      <td>0.378082</td>
+      <td>0</td>
+      <td>1.645435</td>
+      <td>-0.044829</td>
+      <td>0.127778</td>
+      <td>0.661400</td>
+      <td>0.000014</td>
+      <td>0.623414</td>
+      <td>0.001676</td>
+      <td>0.007558</td>
+      <td>2.126252</td>
+      <td>0.007348</td>
+      <td>0.000061</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>6</td>
+      <td>Mochammad Zaenal Abidin</td>
+      <td>Widang, Tuban</td>
+      <td>0.320845</td>
+      <td>10.744960</td>
+      <td>3</td>
+      <td>0.000879</td>
+      <td>184.819043</td>
+      <td>0.037897</td>
+      <td>0.029439</td>
+      <td>0.029169</td>
+      <td>0.021190</td>
+      <td>0.003156</td>
+      <td>0.000010</td>
+      <td>0.830604</td>
+      <td>365</td>
+      <td>0.015027</td>
+      <td>0.029376</td>
+      <td>182.5</td>
+      <td>101.640322</td>
+      <td>0.998474</td>
+      <td>0.002732</td>
+      <td>1.925278</td>
+      <td>0.027037</td>
+      <td>0</td>
+      <td>0.745385</td>
+      <td>0.004265</td>
+      <td>-0.177489</td>
+      <td>0.188525</td>
+      <td>0.905312</td>
+      <td>0.393443</td>
+      <td>55.370786</td>
+      <td>-0.048745</td>
+      <td>0.002549</td>
+      <td>0.001914</td>
+      <td>0.000018</td>
+      <td>0.002183</td>
+      <td>0.001312</td>
+      <td>0.000069</td>
+      <td>0.0</td>
+      <td>12.016886</td>
+      <td>1.267239</td>
+      <td>78</td>
+      <td>16</td>
+      <td>1.027568</td>
+      <td>0.016707</td>
+      <td>78</td>
+      <td>0.385246</td>
+      <td>0.029608</td>
+      <td>0.226369</td>
+      <td>0.000003</td>
+      <td>0.077480</td>
+      <td>-7.701349</td>
+      <td>-1195.411090</td>
+      <td>0.745865</td>
+      <td>4.804562</td>
+      <td>55</td>
+      <td>0.393443</td>
+      <td>0</td>
+      <td>1.703920</td>
+      <td>-0.044519</td>
+      <td>0.129537</td>
+      <td>0.474190</td>
+      <td>0.000013</td>
+      <td>0.698436</td>
+      <td>0.001767</td>
+      <td>0.007519</td>
+      <td>2.147071</td>
+      <td>0.007280</td>
+      <td>0.000060</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>7</td>
+      <td>M. Hendrik Purwanto</td>
+      <td>Sreseh, Sampang</td>
+      <td>0.300128</td>
+      <td>10.334234</td>
+      <td>4</td>
+      <td>0.000831</td>
+      <td>178.342624</td>
+      <td>0.038664</td>
+      <td>0.028630</td>
+      <td>0.028280</td>
+      <td>0.021544</td>
+      <td>0.003069</td>
+      <td>0.000009</td>
+      <td>1.042484</td>
+      <td>361</td>
+      <td>0.015193</td>
+      <td>0.028522</td>
+      <td>180.5</td>
+      <td>107.078389</td>
+      <td>0.998455</td>
+      <td>0.002762</td>
+      <td>1.832444</td>
+      <td>0.027536</td>
+      <td>0</td>
+      <td>0.863764</td>
+      <td>0.004214</td>
+      <td>-0.177998</td>
+      <td>0.179558</td>
+      <td>0.918027</td>
+      <td>0.395028</td>
+      <td>21.949313</td>
+      <td>-0.114832</td>
+      <td>0.002473</td>
+      <td>0.001694</td>
+      <td>0.000007</td>
+      <td>0.002102</td>
+      <td>0.000879</td>
+      <td>0.000096</td>
+      <td>0.0</td>
+      <td>8.444976</td>
+      <td>0.804123</td>
+      <td>54</td>
+      <td>16</td>
+      <td>1.019508</td>
+      <td>0.017120</td>
+      <td>53</td>
+      <td>0.328729</td>
+      <td>0.028794</td>
+      <td>0.414033</td>
+      <td>-0.000003</td>
+      <td>0.075745</td>
+      <td>-7.546030</td>
+      <td>-1158.496513</td>
+      <td>0.792770</td>
+      <td>4.919090</td>
+      <td>58</td>
+      <td>0.395028</td>
+      <td>0</td>
+      <td>1.761275</td>
+      <td>-0.045455</td>
+      <td>0.130322</td>
+      <td>0.684887</td>
+      <td>0.000017</td>
+      <td>0.611650</td>
+      <td>0.001698</td>
+      <td>0.007830</td>
+      <td>2.098579</td>
+      <td>0.007624</td>
+      <td>0.000068</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>abs_energy</th>
+      <th>auc</th>
+      <th>autocorr</th>
+      <th>average_power</th>
+      <th>calc_centroid</th>
+      <th>calc_max</th>
+      <th>calc_mean</th>
+      <th>calc_median</th>
+      <th>calc_min</th>
+      <th>calc_std</th>
+      <th>calc_var</th>
+      <th>dfa</th>
+      <th>distance</th>
+      <th>ecdf</th>
+      <th>ecdf_percentile</th>
+      <th>ecdf_percentile_count</th>
+      <th>ecdf_slope</th>
+      <th>entropy</th>
+      <th>fundamental_frequency</th>
+      <th>higuchi_fractal_dimension</th>
+      <th>hist_mode</th>
+      <th>human_range_energy</th>
+      <th>hurst_exponent</th>
+      <th>interq_range</th>
+      <th>kurtosis</th>
+      <th>lempel_ziv</th>
+      <th>lpcc</th>
+      <th>max_frequency</th>
+      <th>max_power_spectrum</th>
+      <th>maximum_fractal_length</th>
+      <th>mean_abs_deviation</th>
+      <th>mean_abs_diff</th>
+      <th>mean_diff</th>
+      <th>median_abs_deviation</th>
+      <th>median_abs_diff</th>
+      <th>median_diff</th>
+      <th>median_frequency</th>
+      <th>mfcc</th>
+      <th>mse</th>
+      <th>negative_turning</th>
+      <th>neighbourhood_peaks</th>
+      <th>petrosian_fractal_dimension</th>
+      <th>pk_pk_distance</th>
+      <th>positive_turning</th>
+      <th>power_bandwidth</th>
+      <th>rms</th>
+      <th>skewness</th>
+      <th>slope</th>
+      <th>spectral_centroid</th>
+      <th>spectral_decrease</th>
+      <th>spectral_distance</th>
+      <th>spectral_entropy</th>
+      <th>spectral_kurtosis</th>
+      <th>spectral_positive_turning</th>
+      <th>spectral_roll_off</th>
+      <th>spectral_roll_on</th>
+      <th>spectral_skewness</th>
+      <th>spectral_slope</th>
+      <th>spectral_spread</th>
+      <th>spectral_variation</th>
+      <th>spectrogram_mean_coeff</th>
+      <th>sum_abs_diff</th>
+      <th>wavelet_abs_mean</th>
+      <th>wavelet_energy</th>
+      <th>wavelet_entropy</th>
+      <th>wavelet_std</th>
+      <th>wavelet_var</th>
+      <th>zero_cross</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.31295</td>
+      <td>10.58842</td>
+      <td>3.0</td>
+      <td>0.00086</td>
+      <td>182.402254</td>
+      <td>0.038594</td>
+      <td>0.029091</td>
+      <td>0.028833</td>
+      <td>0.020323</td>
+      <td>0.003336</td>
+      <td>0.000011</td>
+      <td>0.917194</td>
+      <td>364.00145</td>
+      <td>0.015068</td>
+      <td>0.028931</td>
+      <td>182.5</td>
+      <td>99.398302</td>
+      <td>0.999356</td>
+      <td>0.00274</td>
+      <td>1.852419</td>
+      <td>0.028545</td>
+      <td>0.0</td>
+      <td>0.802562</td>
+      <td>0.004875</td>
+      <td>-0.174817</td>
+      <td>0.175342</td>
+      <td>0.906714</td>
+      <td>0.421918</td>
+      <td>21.052426</td>
+      <td>-0.092724</td>
+      <td>0.002711</td>
+      <td>0.0019</td>
+      <td>0.000013</td>
+      <td>0.002421</td>
+      <td>0.001122</td>
+      <td>-0.000189</td>
+      <td>0.0</td>
+      <td>17.497902</td>
+      <td>1.238981</td>
+      <td>72.0</td>
+      <td>16.0</td>
+      <td>1.025637</td>
+      <td>0.018271</td>
+      <td>72.0</td>
+      <td>0.416438</td>
+      <td>0.029281</td>
+      <td>0.304184</td>
+      <td>5.668754e-07</td>
+      <td>0.081209</td>
+      <td>-7.002415</td>
+      <td>-1192.320387</td>
+      <td>0.777051</td>
+      <td>4.49369</td>
+      <td>57.0</td>
+      <td>0.421918</td>
+      <td>0.0</td>
+      <td>1.64552</td>
+      <td>-0.043854</td>
+      <td>0.133953</td>
+      <td>0.534442</td>
+      <td>0.000017</td>
+      <td>0.691652</td>
+      <td>0.00178</td>
+      <td>0.007723</td>
+      <td>2.12092</td>
+      <td>0.007492</td>
+      <td>0.000064</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="pemeriksaan-data-dan-identifikasi-dukun">
+<h2>3. Pemeriksaan Data dan Identifikasi Dukun<a class="headerlink" href="#pemeriksaan-data-dan-identifikasi-dukun" title="Link to this heading">#</a></h2>
+<p>Kolom <code class="docutils literal notranslate"><span class="pre">id</span></code>, <code class="docutils literal notranslate"><span class="pre">nama</span></code>, dan <code class="docutils literal notranslate"><span class="pre">daerah</span></code> diperlakukan sebagai identitas, bukan sebagai variabel numerik untuk clustering. Seluruh kolom TSFEL digunakan sebagai fitur.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Kolom dataset utama:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Informasi daerah:&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;daerah&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Jumlah&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;Daerah&quot;</span><span class="p">}))</span>
+
+<span class="c1"># Mencari observasi Dukun</span>
+<span class="n">dukun_mask</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;daerah&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;Dukun&quot;</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">na</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">df_dukun</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">dukun_mask</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah observasi Dukun pada dataset utama: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df_dukun</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df_dukun</span><span class="p">[[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;nama&quot;</span><span class="p">,</span> <span class="s2">&quot;daerah&quot;</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Kolom dataset utama:
+[&#39;id&#39;, &#39;nama&#39;, &#39;daerah&#39;, &#39;abs_energy&#39;, &#39;auc&#39;, &#39;autocorr&#39;, &#39;average_power&#39;, &#39;calc_centroid&#39;, &#39;calc_max&#39;, &#39;calc_mean&#39;, &#39;calc_median&#39;, &#39;calc_min&#39;, &#39;calc_std&#39;, &#39;calc_var&#39;, &#39;dfa&#39;, &#39;distance&#39;, &#39;ecdf&#39;, &#39;ecdf_percentile&#39;, &#39;ecdf_percentile_count&#39;, &#39;ecdf_slope&#39;, &#39;entropy&#39;, &#39;fundamental_frequency&#39;, &#39;higuchi_fractal_dimension&#39;, &#39;hist_mode&#39;, &#39;human_range_energy&#39;, &#39;hurst_exponent&#39;, &#39;interq_range&#39;, &#39;kurtosis&#39;, &#39;lempel_ziv&#39;, &#39;lpcc&#39;, &#39;max_frequency&#39;, &#39;max_power_spectrum&#39;, &#39;maximum_fractal_length&#39;, &#39;mean_abs_deviation&#39;, &#39;mean_abs_diff&#39;, &#39;mean_diff&#39;, &#39;median_abs_deviation&#39;, &#39;median_abs_diff&#39;, &#39;median_diff&#39;, &#39;median_frequency&#39;, &#39;mfcc&#39;, &#39;mse&#39;, &#39;negative_turning&#39;, &#39;neighbourhood_peaks&#39;, &#39;petrosian_fractal_dimension&#39;, &#39;pk_pk_distance&#39;, &#39;positive_turning&#39;, &#39;power_bandwidth&#39;, &#39;rms&#39;, &#39;skewness&#39;, &#39;slope&#39;, &#39;spectral_centroid&#39;, &#39;spectral_decrease&#39;, &#39;spectral_distance&#39;, &#39;spectral_entropy&#39;, &#39;spectral_kurtosis&#39;, &#39;spectral_positive_turning&#39;, &#39;spectral_roll_off&#39;, &#39;spectral_roll_on&#39;, &#39;spectral_skewness&#39;, &#39;spectral_slope&#39;, &#39;spectral_spread&#39;, &#39;spectral_variation&#39;, &#39;spectrogram_mean_coeff&#39;, &#39;sum_abs_diff&#39;, &#39;wavelet_abs_mean&#39;, &#39;wavelet_energy&#39;, &#39;wavelet_entropy&#39;, &#39;wavelet_std&#39;, &#39;wavelet_var&#39;, &#39;zero_cross&#39;]
+
+Informasi daerah:
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>daerah</th>
+      <th>Jumlah</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Kwanyar, Bangkalan</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Kamal, Bangkalan</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Kerek, Tuban</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Manyar, Gresik</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Menganti Gresik</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Widang, Tuban</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Sreseh, Sampang</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Pilangkenceng, Madiun</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Tikala, Manado</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Cerme, Gresik</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Nunukan</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Paciran, Lamongan</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Waru, Pamekasan</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Gresik Kota, Gresik</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>sambeng lamongan</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Widodaren, Ngawi</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Kertosono, Ngajuk</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Labang, Bangkalan</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Kec. Kalianget, Sumenep</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Bandung, Jogoroto, Jombang</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Kedungpring Lamongan</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Tanah Merah, Bangkalan</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Socah, Bangkalan</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Banyu Ajuh, Perumnas, Kamal</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Wonokromo, Surabaya</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Dukun, Gresik</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>jabon , Sidoarjo</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Kota Sumenep, Sumenep</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>Baron Nganjuk</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Warudoyong, Kota Sukabumi</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>Kec. Bangkalan, Kab. Bangkalan</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>Wonoayu</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>Kecamatan Bangkalan,Bangkalan</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>Asemrowo, Surabaya</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>Kamal, Banyuajuh</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah observasi Dukun pada dataset utama: 1
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>nama</th>
+      <th>daerah</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>24</th>
+      <td>28</td>
+      <td>Fathul Aziz Saifuddin</td>
+      <td>Dukun, Gresik</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="menyiapkan-fitur-dan-standardisasi">
+<h2>4. Menyiapkan Fitur dan Standardisasi<a class="headerlink" href="#menyiapkan-fitur-dan-standardisasi" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">identitas</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;nama&quot;</span><span class="p">,</span> <span class="s2">&quot;daerah&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">fitur_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;nama&quot;</span><span class="p">,</span> <span class="s2">&quot;daerah&quot;</span><span class="p">]]</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">fitur_cols</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="c1"># Pastikan seluruh fitur numerik</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span>
+
+<span class="c1"># Menangani nilai kosong bila ada</span>
+<span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Terdapat nilai kosong. Nilai kosong diisi dengan median fitur.&quot;</span><span class="p">)</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">median</span><span class="p">())</span>
+
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">X_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah fitur TSFEL:&quot;</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ukuran matriks setelah standardisasi:&quot;</span><span class="p">,</span> <span class="n">X_scaled</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah fitur TSFEL: 68
+Ukuran matriks setelah standardisasi: (37, 68)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="reduksi-dimensi-menjadi-37-pca">
+<h2>5. Reduksi Dimensi menjadi 37 PCA<a class="headerlink" href="#reduksi-dimensi-menjadi-37-pca" title="Link to this heading">#</a></h2>
+<p>Sesuai pembahasan, data direduksi menjadi <strong>37 komponen utama</strong>. Karena dataset memiliki 68 fitur, PCA membantu merangkum informasi fitur sebelum K-Means.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_pca</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">37</span><span class="p">,</span> <span class="n">X_scaled</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">X_scaled</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n_pca</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">X_pca</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span>
+
+<span class="n">explained</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span>
+<span class="n">cumulative</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">explained</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah komponen PCA:&quot;</span><span class="p">,</span> <span class="n">n_pca</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total variance yang dijelaskan oleh </span><span class="si">{</span><span class="n">n_pca</span><span class="si">}</span><span class="s2"> PCA: </span><span class="si">{</span><span class="n">cumulative</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">cumulative</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah komponen PCA: 37
+Total variance yang dijelaskan oleh 37 PCA: 1.0000 (100.00%)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_pca</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">cumulative</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mf">0.90</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;90% variance&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Jumlah Komponen PCA&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Cumulative Explained Variance&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Cumulative Explained Variance PCA - CO&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/b6d265cd8099cc130d7ac9e9ec6e02c450b4377144e67da7c5506408d7b31184.png" src="../_images/b6d265cd8099cc130d7ac9e9ec6e02c450b4377144e67da7c5506408d7b31184.png" />
+</div>
+</div>
+</section>
+<section id="menentukan-jumlah-cluster">
+<h2>6. Menentukan Jumlah Cluster<a class="headerlink" href="#menentukan-jumlah-cluster" title="Link to this heading">#</a></h2>
+<p>Dua ukuran digunakan secara bersamaan:</p>
+<ul class="simple">
+<li><p><strong>Elbow Method</strong>: melihat penurunan inertia ketika jumlah cluster bertambah.</p></li>
+<li><p><strong>Silhouette Score</strong>: mengukur seberapa baik observasi berada di cluster masing-masing. Nilai yang lebih tinggi menunjukkan pemisahan cluster yang lebih jelas.</p></li>
+</ul>
+<p>Pemilihan <code class="docutils literal notranslate"><span class="pre">K</span></code> pada notebook ini dibuat berdasarkan hasil metrik, bukan langsung mengunci nilai tertentu.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">K_range</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+<span class="n">inertias</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">silhouettes</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">K_range</span><span class="p">:</span>
+    <span class="n">km</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">km</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X_pca</span><span class="p">)</span>
+
+    <span class="n">inertias</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">km</span><span class="o">.</span><span class="n">inertia_</span><span class="p">)</span>
+    <span class="n">silhouettes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">silhouette_score</span><span class="p">(</span><span class="n">X_pca</span><span class="p">,</span> <span class="n">labels</span><span class="p">))</span>
+
+<span class="n">hasil_k</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;K&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">K_range</span><span class="p">),</span>
+    <span class="s2">&quot;Inertia&quot;</span><span class="p">:</span> <span class="n">inertias</span><span class="p">,</span>
+    <span class="s2">&quot;Silhouette&quot;</span><span class="p">:</span> <span class="n">silhouettes</span>
+<span class="p">})</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">hasil_k</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>K</th>
+      <th>Inertia</th>
+      <th>Silhouette</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2</td>
+      <td>1123.800303</td>
+      <td>0.795494</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3</td>
+      <td>660.214101</td>
+      <td>0.697034</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4</td>
+      <td>509.373825</td>
+      <td>0.342517</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>5</td>
+      <td>413.889526</td>
+      <td>0.184501</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>6</td>
+      <td>361.351576</td>
+      <td>0.153812</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>7</td>
+      <td>315.868398</td>
+      <td>0.161337</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>8</td>
+      <td>272.854136</td>
+      <td>0.142490</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>9</td>
+      <td>239.322559</td>
+      <td>0.150055</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>10</td>
+      <td>221.039012</td>
+      <td>0.145469</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hasil_k</span><span class="p">[</span><span class="s2">&quot;K&quot;</span><span class="p">],</span> <span class="n">hasil_k</span><span class="p">[</span><span class="s2">&quot;Inertia&quot;</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Elbow Method - CO&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Jumlah Cluster (K)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Inertia&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hasil_k</span><span class="p">[</span><span class="s2">&quot;K&quot;</span><span class="p">],</span> <span class="n">hasil_k</span><span class="p">[</span><span class="s2">&quot;Silhouette&quot;</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Silhouette Score - CO&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Jumlah Cluster (K)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Silhouette Score&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">k_silhouette</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">hasil_k</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">hasil_k</span><span class="p">[</span><span class="s2">&quot;Silhouette&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">idxmax</span><span class="p">(),</span> <span class="s2">&quot;K&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;K dengan Silhouette Score tertinggi:&quot;</span><span class="p">,</span> <span class="n">k_silhouette</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/ece2414ec2d97655a701fdac3a6ed3400ac9bf3e7b2c660d54da1a5301e617ce.png" src="../_images/ece2414ec2d97655a701fdac3a6ed3400ac9bf3e7b2c660d54da1a5301e617ce.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>K dengan Silhouette Score tertinggi: 2
+</pre></div>
+</div>
+</div>
+</div>
+<section id="catatan-interpretasi-k">
+<h3>Catatan interpretasi K<a class="headerlink" href="#catatan-interpretasi-k" title="Link to this heading">#</a></h3>
+<p>Silhouette Score digunakan sebagai indikator kuantitatif tambahan. Grafik Elbow tetap perlu dilihat untuk mengetahui apakah terdapat titik perubahan inertia yang jelas. Dengan demikian, nilai <code class="docutils literal notranslate"><span class="pre">K</span></code> yang dipakai pada tahap akhir dapat dibandingkan antara kedua pendekatan tersebut.</p>
+</section>
+</section>
+<section id="k-means-final">
+<h2>7. K-Means Final<a class="headerlink" href="#k-means-final" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Menggunakan K dengan Silhouette Score tertinggi sebagai titik awal analisis</span>
+<span class="n">K_FINAL</span> <span class="o">=</span> <span class="n">k_silhouette</span>
+
+<span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">K_FINAL</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">cluster_labels</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X_pca</span><span class="p">)</span>
+
+<span class="n">df_hasil</span> <span class="o">=</span> <span class="n">identitas</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_hasil</span><span class="p">[</span><span class="s2">&quot;Cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster_labels</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah cluster yang digunakan: </span><span class="si">{</span><span class="n">K_FINAL</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df_hasil</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah cluster yang digunakan: 2
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>nama</th>
+      <th>daerah</th>
+      <th>Cluster</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3</td>
+      <td>Nurhabibatul Umah</td>
+      <td>Kerek, Tuban</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4</td>
+      <td>Verdi Setyawan Ardiansyah Putra</td>
+      <td>Menganti Gresik</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5</td>
+      <td>Okan Syailendra wahyudi</td>
+      <td>Manyar, Gresik</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>6</td>
+      <td>Mochammad Zaenal Abidin</td>
+      <td>Widang, Tuban</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>7</td>
+      <td>M. Hendrik Purwanto</td>
+      <td>Sreseh, Sampang</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>8</td>
+      <td>Robbaniyah Umdatun Ni'mah</td>
+      <td>Cerme, Gresik</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>10</td>
+      <td>Ainur Raftuzzaki</td>
+      <td>Nunukan</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>11</td>
+      <td>Magdalena Jovita Hatuopar</td>
+      <td>Pilangkenceng, Madiun</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>12</td>
+      <td>Rachelia Andini Tendean</td>
+      <td>Tikala, Manado</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>13</td>
+      <td>Kurnia Maulinda Sari</td>
+      <td>Labang, Bangkalan</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="visualisasi-pca-1-dan-pca-2">
+<h2>8. Visualisasi PCA 1 dan PCA 2<a class="headerlink" href="#visualisasi-pca-1-dan-pca-2" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">X_pca</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">X_pca</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="n">hue</span><span class="o">=</span><span class="n">df_hasil</span><span class="p">[</span><span class="s2">&quot;Cluster&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">),</span>
+    <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;tab10&quot;</span><span class="p">,</span>
+    <span class="n">s</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span>
+<span class="p">)</span>
+
+<span class="c1"># Tandai observasi Dukun</span>
+<span class="n">dukun_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dukun_mask</span><span class="o">.</span><span class="n">values</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dukun_idx</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+        <span class="n">X_pca</span><span class="p">[</span><span class="n">dukun_idx</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="n">X_pca</span><span class="p">[</span><span class="n">dukun_idx</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="n">s</span><span class="o">=</span><span class="mi">220</span><span class="p">,</span>
+        <span class="n">facecolors</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
+        <span class="n">edgecolors</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+        <span class="n">linewidths</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Dukun, Gresik&quot;</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dukun_idx</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+            <span class="s2">&quot;Dukun&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">X_pca</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_pca</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span>
+            <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
+            <span class="n">textcoords</span><span class="o">=</span><span class="s2">&quot;offset points&quot;</span><span class="p">,</span>
+            <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span>
+        <span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;PCA 1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;PCA 2&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;K-Means Clustering CO dengan Penanda Dukun, Gresik&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Cluster&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/16c7315531fc5bf676f7de8471606bff3793913106407cdcc0520cc6ac052e67.png" src="../_images/16c7315531fc5bf676f7de8471606bff3793913106407cdcc0520cc6ac052e67.png" />
+</div>
+</div>
+</section>
+<section id="posisi-dukun-di-dalam-cluster">
+<h2>9. Posisi Dukun di Dalam Cluster<a class="headerlink" href="#posisi-dukun-di-dalam-cluster" title="Link to this heading">#</a></h2>
+<p>Bagian ini secara khusus melihat Dukun, bukan hanya persebaran seluruh daerah. Hasil berikut menunjukkan cluster tempat observasi Dukun berada.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_dukun</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">df_hasil</span><span class="p">[</span><span class="n">df_hasil</span><span class="p">[</span><span class="s2">&quot;daerah&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;Dukun&quot;</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">na</span><span class="o">=</span><span class="kc">False</span><span class="p">)])</span>
+
+    <span class="n">dukun_cluster</span> <span class="o">=</span> <span class="n">df_hasil</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+        <span class="n">df_hasil</span><span class="p">[</span><span class="s2">&quot;daerah&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;Dukun&quot;</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">na</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+        <span class="s2">&quot;Cluster&quot;</span>
+    <span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cluster Dukun:&quot;</span><span class="p">,</span> <span class="n">dukun_cluster</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tidak ditemukan observasi dengan nama daerah Dukun.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>nama</th>
+      <th>daerah</th>
+      <th>Cluster</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>24</th>
+      <td>28</td>
+      <td>Fathul Aziz Saifuddin</td>
+      <td>Dukun, Gresik</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cluster Dukun: [0]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="komposisi-daerah-pada-setiap-cluster">
+<h2>10. Komposisi Daerah pada Setiap Cluster<a class="headerlink" href="#komposisi-daerah-pada-setiap-cluster" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">profil_daerah</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_hasil</span>
+    <span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;Cluster&quot;</span><span class="p">,</span> <span class="s2">&quot;daerah&quot;</span><span class="p">])</span>
+    <span class="o">.</span><span class="n">size</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Jumlah&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s2">&quot;Cluster&quot;</span><span class="p">,</span> <span class="s2">&quot;Jumlah&quot;</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">])</span>
+<span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">profil_daerah</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Cluster yang berisi Dukun:&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_dukun</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">d_cluster</span> <span class="o">=</span> <span class="n">df_hasil</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">dukun_mask</span><span class="p">,</span> <span class="s2">&quot;Cluster&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">profil_daerah</span><span class="p">[</span><span class="n">profil_daerah</span><span class="p">[</span><span class="s2">&quot;Cluster&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">d_cluster</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Cluster</th>
+      <th>daerah</th>
+      <th>Jumlah</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>7</th>
+      <td>0</td>
+      <td>Kamal, Bangkalan</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>0</td>
+      <td>Kwanyar, Bangkalan</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>Asemrowo, Surabaya</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>Bandung, Jogoroto, Jombang</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>Banyu Ajuh, Perumnas, Kamal</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>Baron Nganjuk</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>Cerme, Gresik</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0</td>
+      <td>Dukun, Gresik</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0</td>
+      <td>Gresik Kota, Gresik</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0</td>
+      <td>Kec. Bangkalan, Kab. Bangkalan</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0</td>
+      <td>Kec. Kalianget, Sumenep</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0</td>
+      <td>Kecamatan Bangkalan,Bangkalan</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>0</td>
+      <td>Kedungpring Lamongan</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>0</td>
+      <td>Kerek, Tuban</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>0</td>
+      <td>Kertosono, Ngajuk</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>0</td>
+      <td>Kota Sumenep, Sumenep</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>0</td>
+      <td>Labang, Bangkalan</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>0</td>
+      <td>Manyar, Gresik</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>0</td>
+      <td>Menganti Gresik</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>0</td>
+      <td>Nunukan</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>0</td>
+      <td>Paciran, Lamongan</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>0</td>
+      <td>Pilangkenceng, Madiun</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>0</td>
+      <td>Socah, Bangkalan</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>0</td>
+      <td>Sreseh, Sampang</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>0</td>
+      <td>Tanah Merah, Bangkalan</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>0</td>
+      <td>Tikala, Manado</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>0</td>
+      <td>Waru, Pamekasan</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>0</td>
+      <td>Warudoyong, Kota Sukabumi</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>0</td>
+      <td>Widang, Tuban</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>0</td>
+      <td>Widodaren, Ngawi</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>0</td>
+      <td>Wonoayu</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>0</td>
+      <td>Wonokromo, Surabaya</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>0</td>
+      <td>jabon , Sidoarjo</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>0</td>
+      <td>sambeng lamongan</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>1</td>
+      <td>Kamal, Banyuajuh</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cluster yang berisi Dukun:
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Cluster</th>
+      <th>daerah</th>
+      <th>Jumlah</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>7</th>
+      <td>0</td>
+      <td>Kamal, Bangkalan</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>0</td>
+      <td>Kwanyar, Bangkalan</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>Asemrowo, Surabaya</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>Bandung, Jogoroto, Jombang</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>Banyu Ajuh, Perumnas, Kamal</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>Baron Nganjuk</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>Cerme, Gresik</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0</td>
+      <td>Dukun, Gresik</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0</td>
+      <td>Gresik Kota, Gresik</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0</td>
+      <td>Kec. Bangkalan, Kab. Bangkalan</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0</td>
+      <td>Kec. Kalianget, Sumenep</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0</td>
+      <td>Kecamatan Bangkalan,Bangkalan</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>0</td>
+      <td>Kedungpring Lamongan</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>0</td>
+      <td>Kerek, Tuban</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>0</td>
+      <td>Kertosono, Ngajuk</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>0</td>
+      <td>Kota Sumenep, Sumenep</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>0</td>
+      <td>Labang, Bangkalan</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>0</td>
+      <td>Manyar, Gresik</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>0</td>
+      <td>Menganti Gresik</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>0</td>
+      <td>Nunukan</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>0</td>
+      <td>Paciran, Lamongan</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>0</td>
+      <td>Pilangkenceng, Madiun</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>0</td>
+      <td>Socah, Bangkalan</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>0</td>
+      <td>Sreseh, Sampang</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>0</td>
+      <td>Tanah Merah, Bangkalan</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>0</td>
+      <td>Tikala, Manado</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>0</td>
+      <td>Waru, Pamekasan</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>0</td>
+      <td>Warudoyong, Kota Sukabumi</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>0</td>
+      <td>Widang, Tuban</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>0</td>
+      <td>Widodaren, Ngawi</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>0</td>
+      <td>Wonoayu</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>0</td>
+      <td>Wonokromo, Surabaya</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>0</td>
+      <td>jabon , Sidoarjo</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>0</td>
+      <td>sambeng lamongan</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="daerah-yang-paling-dekat-dengan-dukun-pada-ruang-pca">
+<h2>11. Daerah yang Paling Dekat dengan Dukun pada Ruang PCA<a class="headerlink" href="#daerah-yang-paling-dekat-dengan-dukun-pada-ruang-pca" title="Link to this heading">#</a></h2>
+<p>Selain melihat cluster yang sama, jarak ke titik Dukun dapat digunakan untuk mencari observasi yang secara matematis memiliki karakteristik paling dekat pada ruang PCA. Ini membantu memperjelas daerah mana yang memiliki pola fitur CO yang mirip dengan Dukun.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_dukun</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">d_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dukun_mask</span><span class="o">.</span><span class="n">values</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X_pca</span> <span class="o">-</span> <span class="n">X_pca</span><span class="p">[</span><span class="n">d_idx</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">kedekatan_dukun</span> <span class="o">=</span> <span class="n">df_hasil</span><span class="p">[[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;nama&quot;</span><span class="p">,</span> <span class="s2">&quot;daerah&quot;</span><span class="p">,</span> <span class="s2">&quot;Cluster&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">kedekatan_dukun</span><span class="p">[</span><span class="s2">&quot;Jarak_dari_Dukun&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">distances</span>
+
+    <span class="c1"># Dukun sendiri dikeluarkan dari daftar tetangga</span>
+    <span class="n">kedekatan_dukun</span> <span class="o">=</span> <span class="n">kedekatan_dukun</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">d_idx</span><span class="p">)</span>
+
+    <span class="n">display</span><span class="p">(</span>
+        <span class="n">kedekatan_dukun</span>
+        <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;Jarak_dari_Dukun&quot;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+    <span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Analisis jarak tidak dapat dilakukan karena Dukun tidak ditemukan.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>nama</th>
+      <th>daerah</th>
+      <th>Cluster</th>
+      <th>Jarak_dari_Dukun</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>11</th>
+      <td>15</td>
+      <td>Ahmad Dafi Zidni Alfarisi</td>
+      <td>Paciran, Lamongan</td>
+      <td>0</td>
+      <td>2.210471</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>21</td>
+      <td>Triswanti Jannatul Ma'wa</td>
+      <td>Kedungpring Lamongan</td>
+      <td>0</td>
+      <td>2.789627</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4</td>
+      <td>Verdi Setyawan Ardiansyah Putra</td>
+      <td>Menganti Gresik</td>
+      <td>0</td>
+      <td>3.128675</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>26</td>
+      <td>A. Choiril Anwar El-Asfihani Risydan</td>
+      <td>Banyu Ajuh, Perumnas, Kamal</td>
+      <td>0</td>
+      <td>3.302830</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>13</td>
+      <td>Kurnia Maulinda Sari</td>
+      <td>Labang, Bangkalan</td>
+      <td>0</td>
+      <td>3.613083</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>20</td>
+      <td>AHMAD MAULANA ISHAQ</td>
+      <td>Kertosono, Ngajuk</td>
+      <td>0</td>
+      <td>3.757717</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>3</td>
+      <td>Nurhabibatul Umah</td>
+      <td>Kerek, Tuban</td>
+      <td>0</td>
+      <td>3.806867</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>25</td>
+      <td>Laila Maghfiroh</td>
+      <td>Kamal, Bangkalan</td>
+      <td>0</td>
+      <td>3.837875</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>16</td>
+      <td>Rian Renaldy</td>
+      <td>Waru, Pamekasan</td>
+      <td>0</td>
+      <td>3.873895</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>19</td>
+      <td>Deo Candra Saputra</td>
+      <td>Widodaren, Ngawi</td>
+      <td>0</td>
+      <td>3.904710</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="analisis-khusus-68-fitur-tsfel-dukun">
+<h2>12. Analisis Khusus 68 Fitur TSFEL Dukun<a class="headerlink" href="#analisis-khusus-68-fitur-tsfel-dukun" title="Link to this heading">#</a></h2>
+<p>File <code class="docutils literal notranslate"><span class="pre">CO_3Dukun_TSFEL(1).csv</span></code> berisi satu observasi Dukun dengan 68 fitur TSFEL. Karena hanya satu observasi, data ini <strong>bukan dataset yang cukup untuk menjalankan K-Means secara mandiri</strong>.</p>
+<p>Namun, distribusi nilai fiturnya dapat diperiksa untuk mengetahui karakteristik ekstraksi fitur Dukun.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Statistik fitur Dukun</span>
+<span class="n">dukun_stats</span> <span class="o">=</span> <span class="n">df_dukun_68</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+<span class="n">dukun_stats</span><span class="p">[</span><span class="s2">&quot;abs_value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dukun_stats</span><span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">dukun_stats</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;abs_value&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">15</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+      <th>abs_value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>spectral_distance</th>
+      <td>1.0</td>
+      <td>-1192.320387</td>
+      <td>NaN</td>
+      <td>-1192.320387</td>
+      <td>-1192.320387</td>
+      <td>-1192.320387</td>
+      <td>-1192.320387</td>
+      <td>-1192.320387</td>
+      <td>1192.320387</td>
+    </tr>
+    <tr>
+      <th>distance</th>
+      <td>1.0</td>
+      <td>364.001450</td>
+      <td>NaN</td>
+      <td>364.001450</td>
+      <td>364.001450</td>
+      <td>364.001450</td>
+      <td>364.001450</td>
+      <td>364.001450</td>
+      <td>364.001450</td>
+    </tr>
+    <tr>
+      <th>ecdf_percentile_count</th>
+      <td>1.0</td>
+      <td>182.500000</td>
+      <td>NaN</td>
+      <td>182.500000</td>
+      <td>182.500000</td>
+      <td>182.500000</td>
+      <td>182.500000</td>
+      <td>182.500000</td>
+      <td>182.500000</td>
+    </tr>
+    <tr>
+      <th>calc_centroid</th>
+      <td>1.0</td>
+      <td>182.402254</td>
+      <td>NaN</td>
+      <td>182.402254</td>
+      <td>182.402254</td>
+      <td>182.402254</td>
+      <td>182.402254</td>
+      <td>182.402254</td>
+      <td>182.402254</td>
+    </tr>
+    <tr>
+      <th>ecdf_slope</th>
+      <td>1.0</td>
+      <td>99.398302</td>
+      <td>NaN</td>
+      <td>99.398302</td>
+      <td>99.398302</td>
+      <td>99.398302</td>
+      <td>99.398302</td>
+      <td>99.398302</td>
+      <td>99.398302</td>
+    </tr>
+    <tr>
+      <th>negative_turning</th>
+      <td>1.0</td>
+      <td>72.000000</td>
+      <td>NaN</td>
+      <td>72.000000</td>
+      <td>72.000000</td>
+      <td>72.000000</td>
+      <td>72.000000</td>
+      <td>72.000000</td>
+      <td>72.000000</td>
+    </tr>
+    <tr>
+      <th>positive_turning</th>
+      <td>1.0</td>
+      <td>72.000000</td>
+      <td>NaN</td>
+      <td>72.000000</td>
+      <td>72.000000</td>
+      <td>72.000000</td>
+      <td>72.000000</td>
+      <td>72.000000</td>
+      <td>72.000000</td>
+    </tr>
+    <tr>
+      <th>spectral_positive_turning</th>
+      <td>1.0</td>
+      <td>57.000000</td>
+      <td>NaN</td>
+      <td>57.000000</td>
+      <td>57.000000</td>
+      <td>57.000000</td>
+      <td>57.000000</td>
+      <td>57.000000</td>
+      <td>57.000000</td>
+    </tr>
+    <tr>
+      <th>max_power_spectrum</th>
+      <td>1.0</td>
+      <td>21.052426</td>
+      <td>NaN</td>
+      <td>21.052426</td>
+      <td>21.052426</td>
+      <td>21.052426</td>
+      <td>21.052426</td>
+      <td>21.052426</td>
+      <td>21.052426</td>
+    </tr>
+    <tr>
+      <th>mfcc</th>
+      <td>1.0</td>
+      <td>17.497902</td>
+      <td>NaN</td>
+      <td>17.497902</td>
+      <td>17.497902</td>
+      <td>17.497902</td>
+      <td>17.497902</td>
+      <td>17.497902</td>
+      <td>17.497902</td>
+    </tr>
+    <tr>
+      <th>neighbourhood_peaks</th>
+      <td>1.0</td>
+      <td>16.000000</td>
+      <td>NaN</td>
+      <td>16.000000</td>
+      <td>16.000000</td>
+      <td>16.000000</td>
+      <td>16.000000</td>
+      <td>16.000000</td>
+      <td>16.000000</td>
+    </tr>
+    <tr>
+      <th>auc</th>
+      <td>1.0</td>
+      <td>10.588420</td>
+      <td>NaN</td>
+      <td>10.588420</td>
+      <td>10.588420</td>
+      <td>10.588420</td>
+      <td>10.588420</td>
+      <td>10.588420</td>
+      <td>10.588420</td>
+    </tr>
+    <tr>
+      <th>spectral_decrease</th>
+      <td>1.0</td>
+      <td>-7.002415</td>
+      <td>NaN</td>
+      <td>-7.002415</td>
+      <td>-7.002415</td>
+      <td>-7.002415</td>
+      <td>-7.002415</td>
+      <td>-7.002415</td>
+      <td>7.002415</td>
+    </tr>
+    <tr>
+      <th>spectral_kurtosis</th>
+      <td>1.0</td>
+      <td>4.493690</td>
+      <td>NaN</td>
+      <td>4.493690</td>
+      <td>4.493690</td>
+      <td>4.493690</td>
+      <td>4.493690</td>
+      <td>4.493690</td>
+      <td>4.493690</td>
+    </tr>
+    <tr>
+      <th>autocorr</th>
+      <td>1.0</td>
+      <td>3.000000</td>
+      <td>NaN</td>
+      <td>3.000000</td>
+      <td>3.000000</td>
+      <td>3.000000</td>
+      <td>3.000000</td>
+      <td>3.000000</td>
+      <td>3.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualisasi nilai seluruh 68 fitur Dukun</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df_dukun_68</span><span class="o">.</span><span class="n">columns</span><span class="p">)),</span> <span class="n">df_dukun_68</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df_dukun_68</span><span class="o">.</span><span class="n">columns</span><span class="p">)),</span> <span class="n">df_dukun_68</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Fitur TSFEL&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Nilai fitur&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Profil 68 Fitur TSFEL - Dukun, Gresik&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/8deeb334ccb8b4d5c936f453491f04d05c62e56032240d421f5fe952025ed952.png" src="../_images/8deeb334ccb8b4d5c936f453491f04d05c62e56032240d421f5fe952025ed952.png" />
+</div>
+</div>
+</section>
+<section id="kesimpulan-yang-perlu-ditulis-pada-laporan">
+<h2>13. Kesimpulan yang Perlu Ditulis pada Laporan<a class="headerlink" href="#kesimpulan-yang-perlu-ditulis-pada-laporan" title="Link to this heading">#</a></h2>
+<p>Gunakan hasil angka dan grafik yang muncul setelah notebook dijalankan. Fokus pembahasannya adalah:</p>
+<ol class="arabic simple">
+<li><p>Dataset CO memiliki sejumlah observasi daerah dengan fitur hasil ekstraksi TSFEL.</p></li>
+<li><p>Standardisasi dilakukan sebelum PCA dan K-Means agar skala antarfitur tidak mendominasi jarak.</p></li>
+<li><p>PCA digunakan untuk merangkum 68 fitur menjadi 37 komponen.</p></li>
+<li><p>Jumlah cluster dievaluasi menggunakan Elbow Method dan Silhouette Score.</p></li>
+<li><p>Posisi <strong>Dukun, Gresik</strong> diperiksa secara khusus untuk mengetahui cluster dan kedekatannya dengan daerah lain.</p></li>
+<li><p>Jika Dukun berada dalam cluster yang sama dengan beberapa daerah lain, interpretasinya adalah bahwa observasi tersebut memiliki kemiripan pola fitur CO pada ruang fitur yang digunakan. Hal ini tidak berarti kondisi pencemaran di daerah tersebut identik.</p></li>
+<li><p>File 68 fitur khusus Dukun digunakan sebagai profil fitur dan tidak digunakan sebagai dataset K-Means mandiri karena hanya memiliki satu observasi.</p></li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./data"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-library">1. Import Library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membaca-data-co">2. Membaca Data CO</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pemeriksaan-data-dan-identifikasi-dukun">3. Pemeriksaan Data dan Identifikasi Dukun</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menyiapkan-fitur-dan-standardisasi">4. Menyiapkan Fitur dan Standardisasi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reduksi-dimensi-menjadi-37-pca">5. Reduksi Dimensi menjadi 37 PCA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menentukan-jumlah-cluster">6. Menentukan Jumlah Cluster</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catatan-interpretasi-k">Catatan interpretasi K</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means-final">7. K-Means Final</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-pca-1-dan-pca-2">8. Visualisasi PCA 1 dan PCA 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#posisi-dukun-di-dalam-cluster">9. Posisi Dukun di Dalam Cluster</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#komposisi-daerah-pada-setiap-cluster">10. Komposisi Daerah pada Setiap Cluster</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#daerah-yang-paling-dekat-dengan-dukun-pada-ruang-pca">11. Daerah yang Paling Dekat dengan Dukun pada Ruang PCA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-khusus-68-fitur-tsfel-dukun">12. Analisis Khusus 68 Fitur TSFEL Dukun</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan-yang-perlu-ditulis-pada-laporan">13. Kesimpulan yang Perlu Ditulis pada Laporan</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Fathul Aziz Saifuddin
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

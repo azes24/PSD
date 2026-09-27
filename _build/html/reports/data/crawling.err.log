@@ -26,8 +26,8 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-['# Eksekusi job dan simpan ke file NetCDF (.nc)', 'print("Memulai NO2...")', 's5p_NO2.execute_batch(title="NO2_Gresik", outputfile="NO2_Gresik.nc")', '', 'print("Memulai CO...")']
-...
-['', 'print("Memulai O3...")', 's5p_O3.execute_batch(title="O3_Gresik", outputfile="O3_Gresik.nc")', '', 'print("Semua file selesai!")']
+# Koneksi ke Server Copernicus (OpenEO)
+import openeo
+connection = openeo.connect("openeo.dataspace.copernicus.eu").authenticate_oidc()
 -------------------
 
