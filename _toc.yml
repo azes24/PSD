@@ -8,3 +8,6 @@ chapters:
   - file: data/perhitunganData.md
   - file: data/crawlingKecamatan.ipynb
   - file: data/ekstraksiDukun.ipynb
+  - file: data/crawling3polDukun.ipynb
+  - file: data/ekstraksi3Pol.ipynb
+  - file: data/clustering3Pol.ipynb
