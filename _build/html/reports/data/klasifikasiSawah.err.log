@@ -26,8 +26,8 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-['import geopandas as gpd', 'import openeo', 'import pandas as pd', '', '# ==============================================================================']
+['import geopandas as gpd', 'import openeo', 'import pandas as pd', '', 'gdf_sawah = gpd.read_file("sawah.zip").to_crs("EPSG:4326")']
 ...
-['# Unduh menjadi file GeoTIFF (.tif)', 'nama_tif = "sentinel2_sawah_nonsawah.tif"', 'print("Mengunduh citra Sentinel-2A (.tif)...")', 'composite_s2.download(nama_tif, format="GTiff")', 'print(f"Berhasil diunduh: {nama_tif}")']
+['', 'nama_tif = "sentinel2_sawah_nonsawah.tif"', 'print("Mengunduh citra Sentinel-2A (.tif)...")', 'composite_s2.download(nama_tif, format="GTiff")', 'print(f"Berhasil diunduh: {nama_tif}")']
 -------------------
 
