@@ -60,6 +60,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'data/crawling3polDukun';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Ekstraksi Fitur Data kualitas udara di wilayah Dukun, Gresik" href="ekstraksi3Pol.html" />
+    <link rel="prev" title="Ekstraksi Fitur Data kualitas udara di wilayah Dukun, Gresik" href="ekstraksiDukun.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -122,8 +124,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -179,7 +179,7 @@
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="crawling.html">Crawling Data kualitas udara di wilayah Gresik</a></li>
 
 
@@ -189,6 +189,14 @@
 
 <li class="toctree-l1"><a class="reference internal" href="ekstraksiDukun.html">Ekstraksi Fitur Data kualitas udara di wilayah Dukun, Gresik</a></li>
 
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Crawling Data kualitas udara di wilayah Dukun, Gresik</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="ekstraksi3Pol.html">Ekstraksi Fitur Data kualitas udara di wilayah Dukun, Gresik</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="clustering3Pol.html">Clustering Data Polutan (68 Fitur vs PCA 37 Fitur)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clusterBaik.html">Analisis Cluster Terbaik (Silhouette Coefficient) dan Peta</a></li>
+<li class="toctree-l1"><a class="reference internal" href="klasifikasiSawah.html">Klasifikasi Spasial Lahan Sawah dan Non-Sawah Menggunakan Citra Sentinel-2A</a></li>
 </ul>
 
     </div>
@@ -524,9 +532,7 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: openeo in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (0.51.0)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: netCDF4 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (1.7.2)
+Requirement already satisfied: netCDF4 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (1.7.2)
 Requirement already satisfied: pandas in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (2.3.3)
 Requirement already satisfied: numpy in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (2.0.2)
 Requirement already satisfied: requests&gt;=2.26.0 in c:\users\faziz\appdata\local\programs\python\python39\lib\site-packages (from openeo) (2.32.5)
@@ -644,19 +650,19 @@ Requirement already satisfied: idna&lt;4,&gt;=2.5 in c:\users\faziz\appdata\loca
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Memulai NO2...
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:00 Job &#39;j-260927165933451c9494a8a7440de16e&#39;: send &#39;start&#39;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:00 Job &#39;j-2610050104414b31937e1a16cda9be8e&#39;: send &#39;start&#39;
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:02 Job &#39;j-260927165933451c9494a8a7440de16e&#39;: queued (progress 0%)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:02 Job &#39;j-2610050104414b31937e1a16cda9be8e&#39;: queued (progress 0%)
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:08 Job &#39;j-260927165933451c9494a8a7440de16e&#39;: queued (progress 0%)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:08 Job &#39;j-2610050104414b31937e1a16cda9be8e&#39;: queued (progress 0%)
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:15 Job &#39;j-260927165933451c9494a8a7440de16e&#39;: queued (progress 0%)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:15 Job &#39;j-2610050104414b31937e1a16cda9be8e&#39;: queued (progress 0%)
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:23 Job &#39;j-260927165933451c9494a8a7440de16e&#39;: queued (progress 0%)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:23 Job &#39;j-2610050104414b31937e1a16cda9be8e&#39;: queued (progress 0%)
 </pre></div>
 </div>
 </div>
@@ -1220,6 +1226,24 @@ SUKSES! Data final disimpan sebagai: 3Polutan_Dukun_Final.csv
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="ekstraksiDukun.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Ekstraksi Fitur Data kualitas udara di wilayah Dukun, Gresik</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="ekstraksi3Pol.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Ekstraksi Fitur Data kualitas udara di wilayah Dukun, Gresik</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               

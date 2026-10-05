@@ -1,0 +1,1947 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Analisis Cluster Terbaik (Silhouette Coefficient) dan Peta &#8212; PSD</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=1ae7504c"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'data/clusterBaik';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Klasifikasi Spasial Lahan Sawah dan Non-Sawah Menggunakan Citra Sentinel-2A" href="klasifikasiSawah.html" />
+    <link rel="prev" title="Clustering Data Polutan (68 Fitur vs PCA 37 Fitur)" href="clustering3Pol.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="PSD - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="PSD - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    INTROduce MySelf
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="crawling.html">Crawling Data kualitas udara di wilayah Gresik</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="perhitunganData.html">Analisis Data Polutan Gresik</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crawlingKecamatan.html">Crawling Data kualitas udara di wilayah Dukun, Gresik</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="ekstraksiDukun.html">Ekstraksi Fitur Data kualitas udara di wilayah Dukun, Gresik</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="crawling3polDukun.html">Crawling Data kualitas udara di wilayah Dukun, Gresik</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="ekstraksi3Pol.html">Ekstraksi Fitur Data kualitas udara di wilayah Dukun, Gresik</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="clustering3Pol.html">Clustering Data Polutan (68 Fitur vs PCA 37 Fitur)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Analisis Cluster Terbaik (Silhouette Coefficient) dan Peta</a></li>
+<li class="toctree-l1"><a class="reference internal" href="klasifikasiSawah.html">Klasifikasi Spasial Lahan Sawah dan Non-Sawah Menggunakan Citra Sentinel-2A</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/azes24/PSD" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/azes24/PSD/issues/new?title=Issue%20on%20page%20%2Fdata/clusterBaik.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/data/clusterBaik.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Analisis Cluster Terbaik (Silhouette Coefficient) dan Peta</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alur-workflow-knime">1. Alur Workflow KNIME</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tahapan-teknis-per-node">2. Tahapan Teknis per Node</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cara-membaca-silhouette-coefficient">3. Cara Membaca Silhouette Coefficient</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#padanan-di-python-untuk-validasi">4. Padanan di Python (untuk Validasi)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-eksperimen-knime">5. Hasil Eksperimen KNIME</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-linier">Data Linier</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-polynomial">Data Polynomial</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="analisis-cluster-terbaik-silhouette-coefficient-dan-peta">
+<h1>Analisis Cluster Terbaik (Silhouette Coefficient) dan Peta<a class="headerlink" href="#analisis-cluster-terbaik-silhouette-coefficient-dan-peta" title="Link to this heading">#</a></h1>
+<p>Notebook ini menjelaskan <strong>cara dan tahapan teknis di KNIME</strong> untuk:</p>
+<ol class="arabic simple">
+<li><p>Mereduksi dimensi data menjadi <strong>203, 74, dan 37</strong> fitur (PCA).</p></li>
+<li><p>Memberi hasil <strong>clustering (K-Means)</strong> pada setiap dimensi.</p></li>
+<li><p>Mencari <strong>cluster terbaik</strong> dengan <strong>Silhouette Coefficient</strong>.</p></li>
+<li><p>Menampilkan hasil cluster pada <strong>peta</strong>.</p></li>
+</ol>
+<p>Data yang dipakai: <code class="docutils literal notranslate"><span class="pre">data_linier.csv</span></code> dan <code class="docutils literal notranslate"><span class="pre">data_polynomial.csv</span></code>, masing-masing <strong>37 responden (baris)</strong> dengan kolom <code class="docutils literal notranslate"><span class="pre">id</span></code>, <code class="docutils literal notranslate"><span class="pre">nama</span></code>, <code class="docutils literal notranslate"><span class="pre">daerah</span></code>, dan <strong>204 fitur numerik</strong> hasil ekstraksi (NO2, SO2, CO).</p>
+<p><img alt="knime" src="../_images/workflow1.png" /></p>
+<section id="alur-workflow-knime">
+<h2>1. Alur Workflow KNIME<a class="headerlink" href="#alur-workflow-knime" title="Link to this heading">#</a></h2>
+<p>Secara garis besar, workflow di KNIME terdiri dari:</p>
+<ol class="arabic simple">
+<li><p>Membaca data dari database MySQL.</p></li>
+<li><p>Melakukan reduksi dimensi fitur dengan PCA (tiga percobaan: 203, 74, dan 37 fitur).</p></li>
+<li><p>Mengelompokkan data hasil PCA dengan algoritma k-Means.</p></li>
+<li><p>Mengevaluasi kualitas clustering menggunakan Silhouette Coefficient.</p></li>
+</ol>
+</section>
+<section id="tahapan-teknis-per-node">
+<h2>2. Tahapan Teknis per Node<a class="headerlink" href="#tahapan-teknis-per-node" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Pengambilan data</strong>: MySQL Connector untuk koneksi database, DB Table Selector untuk memilih tabel data fitur linier/polynomial, dan DB Reader untuk membaca tabel ke KNIME.</p></li>
+<li><p><strong>Reduksi dimensi</strong>: Menggunakan tiga node PCA untuk mereduksi dimensi menjadi <strong>203</strong>, <strong>74</strong>, dan <strong>37</strong> fitur. Catatan: karena data hanya 37 baris, komponen maksimal yang dihasilkan PCA otomatis dibatasi 37.</p></li>
+<li><p><strong>Pengelompokan</strong>: Hasil setiap PCA dimasukkan ke node k-Means untuk dikelompokkan ke dalam beberapa cluster (k).</p></li>
+<li><p><strong>Evaluasi</strong>: Node Silhouette Coefficient digunakan untuk menilai kualitas cluster. Rata-rata skor ini ditampilkan di Table View untuk menentukan konfigurasi terbaik.</p></li>
+</ol>
+</section>
+<section id="cara-membaca-silhouette-coefficient">
+<h2>3. Cara Membaca Silhouette Coefficient<a class="headerlink" href="#cara-membaca-silhouette-coefficient" title="Link to this heading">#</a></h2>
+<p>Untuk satu titik data <span class="math notranslate nohighlight">\(i\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[s(i) = \frac{b(i) - a(i)}{\max\{a(i),\, b(i)\}}\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(a(i)\)</span>: rata-rata jarak titik <span class="math notranslate nohighlight">\(i\)</span> ke titik lain <strong>dalam cluster yang sama</strong>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(b(i)\)</span>: rata-rata jarak titik <span class="math notranslate nohighlight">\(i\)</span> ke titik-titik pada <strong>cluster terdekat lainnya</strong>.</p></li>
+</ul>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Nilai</p></th>
+<th class="head"><p>Arti</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>mendekati <strong>1</strong></p></td>
+<td><p>Titik berada tepat di clusternya dan terpisah jelas dari cluster lain.</p></td>
+</tr>
+<tr class="row-odd"><td><p>mendekati <strong>0</strong></p></td>
+<td><p>Titik berada di perbatasan dua cluster.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>negatif</strong></p></td>
+<td><p>Titik kemungkinan salah cluster.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Cluster terbaik</strong> adalah kombinasi <em>(dataset, dimensi PCA, k)</em> dengan <strong>rata-rata Silhouette Coefficient tertinggi</strong>.</p>
+</section>
+<section id="padanan-di-python-untuk-validasi">
+<h2>4. Padanan di Python (untuk Validasi)<a class="headerlink" href="#padanan-di-python-untuk-validasi" title="Link to this heading">#</a></h2>
+<p>Alur KNIME yang sama dapat direproduksi di Python. Sel di bawah mengulang percobaan <strong>dataset x dimensi PCA x k</strong> dan memilih skor silhouette tertinggi, sehingga hasil KNIME dapat dicocokkan.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">KMeans</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">silhouette_score</span>
+
+<span class="n">DATASETS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Linear&#39;</span><span class="p">:</span> <span class="s1">&#39;data_linier.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;Polynomial&#39;</span><span class="p">:</span> <span class="s1">&#39;data_polynomial.csv&#39;</span><span class="p">}</span>
+<span class="n">DIMENSI</span> <span class="o">=</span> <span class="p">[</span><span class="mi">203</span><span class="p">,</span> <span class="mi">74</span><span class="p">,</span> <span class="mi">37</span><span class="p">]</span>
+<span class="n">K_RANGE</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+
+<span class="n">raw</span> <span class="o">=</span> <span class="p">{</span><span class="n">nama</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">nama</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">DATASETS</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+<span class="k">for</span> <span class="n">nama</span><span class="p">,</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">raw</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">nama</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Linear (37, 207)
+Polynomial (37, 207)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fitur_numerik</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="c1"># Buang kolom identitas (id, nama, daerah); sisakan 204 fitur numerik</span>
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;nama&#39;</span><span class="p">,</span> <span class="s1">&#39;daerah&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">])</span>
+
+<span class="n">hasil</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">nama</span><span class="p">,</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">raw</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">fitur_numerik</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">dim</span> <span class="ow">in</span> <span class="n">DIMENSI</span><span class="p">:</span>
+        <span class="n">n_comp</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>   <span class="c1"># PCA dibatasi jumlah baris</span>
+        <span class="n">Z</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n_comp</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">K_RANGE</span><span class="p">:</span>
+            <span class="n">labels</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+            <span class="n">hasil</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;dataset&#39;</span><span class="p">:</span> <span class="n">nama</span><span class="p">,</span> <span class="s1">&#39;dimensi&#39;</span><span class="p">:</span> <span class="n">dim</span><span class="p">,</span> <span class="s1">&#39;komponen_dipakai&#39;</span><span class="p">:</span> <span class="n">n_comp</span><span class="p">,</span>
+                          <span class="s1">&#39;k&#39;</span><span class="p">:</span> <span class="n">k</span><span class="p">,</span> <span class="s1">&#39;silhouette&#39;</span><span class="p">:</span> <span class="n">silhouette_score</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">labels</span><span class="p">)})</span>
+
+<span class="n">tabel</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">hasil</span><span class="p">)</span>
+<span class="n">tabel</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;dataset&#39;</span><span class="p">,</span> <span class="s1">&#39;dimensi&#39;</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;silhouette&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>k</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>10</th>
+    </tr>
+    <tr>
+      <th>dataset</th>
+      <th>dimensi</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="3" valign="top">Linear</th>
+      <th>37</th>
+      <td>0.4909</td>
+      <td>0.1326</td>
+      <td>0.1481</td>
+      <td>0.1454</td>
+      <td>0.1568</td>
+      <td>0.1826</td>
+      <td>0.1415</td>
+      <td>0.1327</td>
+      <td>0.0923</td>
+    </tr>
+    <tr>
+      <th>74</th>
+      <td>0.4909</td>
+      <td>0.1326</td>
+      <td>0.1481</td>
+      <td>0.1454</td>
+      <td>0.1568</td>
+      <td>0.1826</td>
+      <td>0.1415</td>
+      <td>0.1327</td>
+      <td>0.0923</td>
+    </tr>
+    <tr>
+      <th>203</th>
+      <td>0.4909</td>
+      <td>0.1326</td>
+      <td>0.1481</td>
+      <td>0.1454</td>
+      <td>0.1568</td>
+      <td>0.1826</td>
+      <td>0.1415</td>
+      <td>0.1327</td>
+      <td>0.0923</td>
+    </tr>
+    <tr>
+      <th rowspan="3" valign="top">Polynomial</th>
+      <th>37</th>
+      <td>0.5375</td>
+      <td>0.2578</td>
+      <td>0.2212</td>
+      <td>0.1512</td>
+      <td>0.2220</td>
+      <td>0.1392</td>
+      <td>0.1411</td>
+      <td>0.1395</td>
+      <td>0.1451</td>
+    </tr>
+    <tr>
+      <th>74</th>
+      <td>0.5375</td>
+      <td>0.2578</td>
+      <td>0.2212</td>
+      <td>0.1512</td>
+      <td>0.2220</td>
+      <td>0.1392</td>
+      <td>0.1411</td>
+      <td>0.1395</td>
+      <td>0.1451</td>
+    </tr>
+    <tr>
+      <th>203</th>
+      <td>0.5375</td>
+      <td>0.2578</td>
+      <td>0.2212</td>
+      <td>0.1512</td>
+      <td>0.2220</td>
+      <td>0.1392</td>
+      <td>0.1411</td>
+      <td>0.1395</td>
+      <td>0.1451</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># k terbaik untuk setiap kombinasi dataset x dimensi</span>
+<span class="n">terbaik</span> <span class="o">=</span> <span class="n">tabel</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">tabel</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;dataset&#39;</span><span class="p">,</span> <span class="s1">&#39;dimensi&#39;</span><span class="p">])[</span><span class="s1">&#39;silhouette&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">terbaik</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dataset</th>
+      <th>dimensi</th>
+      <th>komponen_dipakai</th>
+      <th>k</th>
+      <th>silhouette</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Linear</td>
+      <td>37</td>
+      <td>37</td>
+      <td>2</td>
+      <td>0.490860</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Linear</td>
+      <td>74</td>
+      <td>37</td>
+      <td>2</td>
+      <td>0.490860</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Linear</td>
+      <td>203</td>
+      <td>37</td>
+      <td>2</td>
+      <td>0.490860</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Polynomial</td>
+      <td>37</td>
+      <td>37</td>
+      <td>2</td>
+      <td>0.537546</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Polynomial</td>
+      <td>74</td>
+      <td>37</td>
+      <td>2</td>
+      <td>0.537546</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Polynomial</td>
+      <td>203</td>
+      <td>37</td>
+      <td>2</td>
+      <td>0.537546</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="p">),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="n">nama</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">raw</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+    <span class="k">for</span> <span class="n">dim</span> <span class="ow">in</span> <span class="n">DIMENSI</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">tabel</span><span class="p">[(</span><span class="n">tabel</span><span class="o">.</span><span class="n">dataset</span> <span class="o">==</span> <span class="n">nama</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">tabel</span><span class="o">.</span><span class="n">dimensi</span> <span class="o">==</span> <span class="n">dim</span><span class="p">)]</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="s1">&#39;silhouette&#39;</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;PCA </span><span class="si">{</span><span class="n">dim</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Silhouette - </span><span class="si">{</span><span class="n">nama</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Jumlah cluster (k)&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Silhouette Coefficient&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/da4f8c5bd064331bca1d966230c39219de823398d007c7aca7025404edb4098d.png" src="../_images/da4f8c5bd064331bca1d966230c39219de823398d007c7aca7025404edb4098d.png" />
+</div>
+</div>
+</section>
+<section id="hasil-eksperimen-knime">
+<h2>5. Hasil Eksperimen KNIME<a class="headerlink" href="#hasil-eksperimen-knime" title="Link to this heading">#</a></h2>
+<p>Berdasarkan eksperimen di KNIME, hasil <em>Silhouette Coefficient</em> untuk ketiga percobaan dimensi PCA (<strong>203, 74, dan 37</strong>) ternyata memberikan <strong>hasil yang sama persis</strong> untuk setiap nilai <span class="math notranslate nohighlight">\(k\)</span>.</p>
+<p><strong>Mengapa hasilnya sama?</strong>
+Karena jumlah baris data (responden) kita hanya ada <strong>37 baris</strong>. Dalam algoritma PCA, jumlah maksimum <em>principal components</em> (komponen utama) yang bisa diekstrak tidak akan melebihi jumlah baris data.
+Jadi, walaupun kita menyetel parameter PCA menjadi 203 atau 74, sistem secara otomatis hanya bisa mengekstrak maksimal 37 fitur. Akibatnya, data hasil PCA 203, PCA 74, dan PCA 37 adalah data yang <strong>sama persis</strong>. Karena datanya sama, hasil pengelompokan k-Means dan skor Silhouette-nya pun menjadi identik.</p>
+<p>Berikut adalah hasil <em>Silhouette Coefficient</em> untuk percobaan <span class="math notranslate nohighlight">\(k=2, 3, 5\)</span>:</p>
+<section id="data-linier">
+<h3>Data Linier<a class="headerlink" href="#data-linier" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Jumlah Cluster (k)</p></th>
+<th class="head text-left"><p>Skor Cluster</p></th>
+<th class="head text-left"><p>Overall Silhouette</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><strong>k = 2</strong></p></td>
+<td class="text-left"><p>cluster_0: 0.8783<br>cluster_1: 0.3567</p></td>
+<td class="text-left"><p><strong>0.8219</strong></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>k = 3</strong></p></td>
+<td class="text-left"><p>cluster_1: 0.7873<br>cluster_0: 0.2702<br>cluster_2: 0.1345</p></td>
+<td class="text-left"><p><strong>0.6468</strong></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>k = 5</strong></p></td>
+<td class="text-left"><p>cluster_2: 0.6850<br>cluster_1: 0.4198<br>cluster_0: 0.5710<br>cluster_4: 0.9706<br>cluster_3: 0.4269</p></td>
+<td class="text-left"><p><strong>0.6373</strong></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="data-polynomial">
+<h3>Data Polynomial<a class="headerlink" href="#data-polynomial" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Jumlah Cluster (k)</p></th>
+<th class="head text-left"><p>Skor Cluster</p></th>
+<th class="head text-left"><p>Overall Silhouette</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><strong>k = 2</strong></p></td>
+<td class="text-left"><p>cluster_0: 0.6923<br>cluster_1: 0.3345</p></td>
+<td class="text-left"><p><strong>0.6343</strong></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>k = 3</strong></p></td>
+<td class="text-left"><p>cluster_2: 0.5828<br>cluster_0: 0.1939<br>cluster_1: 0.4027</p></td>
+<td class="text-left"><p><strong>0.4711</strong></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>k = 5</strong></p></td>
+<td class="text-left"><p>cluster_3: 0.5526<br>cluster_0: 0.3960<br>cluster_4: 0.5814<br>cluster_2: 0.1729<br>cluster_1: 0.6772</p></td>
+<td class="text-left"><p><strong>0.4856</strong></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Kesimpulan:</strong>
+Cluster terbaik diperoleh saat <strong>k = 2</strong> untuk kedua dataset, karena menghasilkan nilai rata-rata (<em>Overall</em>) Silhouette tertinggi, yaitu <strong>0.8219</strong> (Data Linier) dan <strong>0.6343</strong> (Data Polynomial).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">folium</span>
+
+<span class="c1"># Kita gunakan data linier sebagai contoh terbaik (Silhouette tertinggi 0.8219)</span>
+<span class="n">df_map</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data_linier.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Ambil fitur numerik dan lakukan PCA &amp; k-Means (k=2)</span>
+<span class="n">X_map</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">fitur_numerik</span><span class="p">(</span><span class="n">df_map</span><span class="p">))</span>
+<span class="n">Z_map</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="mi">37</span><span class="p">,</span> <span class="n">X_map</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_map</span><span class="p">)</span>
+<span class="n">df_map</span><span class="p">[</span><span class="s1">&#39;Cluster&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">Z_map</span><span class="p">)</span>
+
+<span class="c1"># Data koordinat lokasi daerah (Dukun, Gresik)</span>
+<span class="c1"># Karena CSV awal tidak memiliki kolom latitude dan longitude, kita tambahkan dummy koordinat untuk visualisasi </span>
+<span class="c1"># (Silakan ganti dengan koordinat sebenarnya jika ada)</span>
+<span class="c1"># Untuk contoh, kita buat sebaran koordinat acak di sekitar wilayah Gresik (-7.15, 112.65)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">df_map</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">7.15</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_map</span><span class="p">))</span>
+<span class="n">df_map</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">112.65</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_map</span><span class="p">))</span>
+
+<span class="c1"># Inisialisasi peta</span>
+<span class="n">peta</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">7.15</span><span class="p">,</span> <span class="mf">112.65</span><span class="p">],</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">warna_cluster</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;blue&#39;</span><span class="p">}</span>
+
+<span class="c1"># Tambahkan marker untuk setiap daerah</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df_map</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">folium</span><span class="o">.</span><span class="n">CircleMarker</span><span class="p">(</span>
+        <span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]],</span>
+        <span class="n">radius</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+        <span class="n">popup</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Daerah: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;daerah&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&lt;br&gt;Nama: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;nama&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&lt;br&gt;Cluster: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Cluster&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="n">warna_cluster</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Cluster&#39;</span><span class="p">]],</span>
+        <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">fill_color</span><span class="o">=</span><span class="n">warna_cluster</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Cluster&#39;</span><span class="p">]],</span>
+        <span class="n">fill_opacity</span><span class="o">=</span><span class="mf">0.7</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">peta</span><span class="p">)</span>
+
+<span class="c1"># Tampilkan peta</span>
+<span class="n">peta</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;"><span style="color:#565656">Make this Notebook Trusted to load map: File -> Trust Notebook</span><iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    
+    &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://code.jquery.com/jquery-3.7.1.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js&quot;&gt;&lt;/script&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css&quot;/&gt;
+    
+            &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; /&gt;
+            &lt;style&gt;
+                #map_1942bbe2ae3bdd5c96ead13790614a97 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            &lt;/style&gt;
+
+            &lt;style&gt;html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            &lt;/style&gt;
+
+            &lt;style&gt;#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            &lt;/style&gt;
+
+            &lt;script&gt;
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            &lt;/script&gt;
+
+        
+&lt;/head&gt;
+&lt;body&gt;
+    
+    
+            &lt;div class=&quot;folium-map&quot; id=&quot;map_1942bbe2ae3bdd5c96ead13790614a97&quot; &gt;&lt;/div&gt;
+        
+&lt;/body&gt;
+&lt;script&gt;
+    
+    
+            var map_1942bbe2ae3bdd5c96ead13790614a97 = L.map(
+                &quot;map_1942bbe2ae3bdd5c96ead13790614a97&quot;,
+                {
+                    center: [-7.15, 112.65],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  &quot;zoom&quot;: 11,
+  &quot;zoomControl&quot;: true,
+  &quot;preferCanvas&quot;: false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_08ce794353cbb73268a0f0b6e994a924 = L.tileLayer(
+                &quot;https://tile.openstreetmap.org/{z}/{x}/{y}.png&quot;,
+                {
+  &quot;minZoom&quot;: 0,
+  &quot;maxZoom&quot;: 19,
+  &quot;maxNativeZoom&quot;: 19,
+  &quot;noWrap&quot;: false,
+  &quot;attribution&quot;: &quot;\u0026copy; \u003ca href=\&quot;https://www.openstreetmap.org/copyright\&quot;\u003eOpenStreetMap\u003c/a\u003e contributors&quot;,
+  &quot;subdomains&quot;: &quot;abc&quot;,
+  &quot;detectRetina&quot;: false,
+  &quot;tms&quot;: false,
+  &quot;opacity&quot;: 1,
+}
+
+            );
+        
+    
+            tile_layer_08ce794353cbb73268a0f0b6e994a924.addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+            var circle_marker_a79aaa40259824792fe70a1090dc19d7 = L.circleMarker(
+                [-7.125164292349439, 112.55201649380602],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_1af874d1d2824e9766509e9466d35db5 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_40aef70b9f66efc547a7c6d50ad1a702 = $(`&lt;div id=&quot;html_40aef70b9f66efc547a7c6d50ad1a702&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Baron Nganjuk&lt;br&gt;Nama: Muhammad Ali Murtadho&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_1af874d1d2824e9766509e9466d35db5.setContent(html_40aef70b9f66efc547a7c6d50ad1a702);
+            
+        
+
+        circle_marker_a79aaa40259824792fe70a1090dc19d7.bindPopup(popup_1af874d1d2824e9766509e9466d35db5)
+        ;
+
+        
+    
+    
+            var circle_marker_be605be51787871945ef215967a79e42 = L.circleMarker(
+                [-7.15691321505856, 112.58359069755508],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_44b644dcdd7b5a26758e3200b0f19514 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_ee1fd2585002adf9a383d46bbe1c6a37 = $(`&lt;div id=&quot;html_ee1fd2585002adf9a383d46bbe1c6a37&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Nunukan&lt;br&gt;Nama: Ainur Raftuzzaki&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_44b644dcdd7b5a26758e3200b0f19514.setContent(html_ee1fd2585002adf9a383d46bbe1c6a37);
+            
+        
+
+        circle_marker_be605be51787871945ef215967a79e42.bindPopup(popup_44b644dcdd7b5a26758e3200b0f19514)
+        ;
+
+        
+    
+    
+            var circle_marker_c80a7052f1a7f05b62fd35957fd3a803 = L.circleMarker(
+                [-7.117615573094966, 112.65984306179347],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_72e9c697fdffb90c10d3712188811a53 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_efe822d1b6292a1a015a31766ffde99d = $(`&lt;div id=&quot;html_efe822d1b6292a1a015a31766ffde99d&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Sreseh, Sampang&lt;br&gt;Nama: M. Hendrik Purwanto&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_72e9c697fdffb90c10d3712188811a53.setContent(html_efe822d1b6292a1a015a31766ffde99d);
+            
+        
+
+        circle_marker_c80a7052f1a7f05b62fd35957fd3a803.bindPopup(popup_72e9c697fdffb90c10d3712188811a53)
+        ;
+
+        
+    
+    
+            var circle_marker_b191c966bc01dd5f4df9e9f5aeeb36d2 = L.circleMarker(
+                [-7.073848507179599, 112.68692332899978],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_d657f56da20526c1076352949dcb70a6 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_87e9b3b9a015f2bee89aeb5c71708cc6 = $(`&lt;div id=&quot;html_87e9b3b9a015f2bee89aeb5c71708cc6&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Manyar, Gresik&lt;br&gt;Nama: Okan Syailendra wahyudi&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_d657f56da20526c1076352949dcb70a6.setContent(html_87e9b3b9a015f2bee89aeb5c71708cc6);
+            
+        
+
+        circle_marker_b191c966bc01dd5f4df9e9f5aeeb36d2.bindPopup(popup_d657f56da20526c1076352949dcb70a6)
+        ;
+
+        
+    
+    
+            var circle_marker_6223c058c4d22a7c9d2a7234a5802366 = L.circleMarker(
+                [-7.161707668736167, 112.6585684140595],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_2572cf2a0d67e62a8f273986ac8f9e1b = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_c781876aa0fcebd6054e5d31704200b3 = $(`&lt;div id=&quot;html_c781876aa0fcebd6054e5d31704200b3&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Kamal, Bangkalan&lt;br&gt;Nama: Muhammad Zaidan Nabil Rafi&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_2572cf2a0d67e62a8f273986ac8f9e1b.setContent(html_c781876aa0fcebd6054e5d31704200b3);
+            
+        
+
+        circle_marker_6223c058c4d22a7c9d2a7234a5802366.bindPopup(popup_2572cf2a0d67e62a8f273986ac8f9e1b)
+        ;
+
+        
+    
+    
+            var circle_marker_685fff7fbabac8f0dd24c125cbed7574 = L.circleMarker(
+                [-7.1617068478474595, 112.6442175858806],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_ac65eb0b45ed16e5b9b59eccab2214f3 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_05a19ec8bbef88ec04b4be67a8b34fb3 = $(`&lt;div id=&quot;html_05a19ec8bbef88ec04b4be67a8b34fb3&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Kedungpring Lamongan&lt;br&gt;Nama: Triswanti Jannatul Ma&#x27;wa&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_ac65eb0b45ed16e5b9b59eccab2214f3.setContent(html_05a19ec8bbef88ec04b4be67a8b34fb3);
+            
+        
+
+        circle_marker_685fff7fbabac8f0dd24c125cbed7574.bindPopup(popup_ac65eb0b45ed16e5b9b59eccab2214f3)
+        ;
+
+        
+    
+    
+            var circle_marker_0f029d2d2a89edc0c68d13f47cbfcbb3 = L.circleMarker(
+                [-7.071039359224631, 112.63494481522054],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_86131b1258b204f954d9b1c8a3dbd89f = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_099f630acae4d64f920c42ce43f41628 = $(`&lt;div id=&quot;html_099f630acae4d64f920c42ce43f41628&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Gresik Kota, Gresik&lt;br&gt;Nama: Ahmad Syahrul Farihin&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_86131b1258b204f954d9b1c8a3dbd89f.setContent(html_099f630acae4d64f920c42ce43f41628);
+            
+        
+
+        circle_marker_0f029d2d2a89edc0c68d13f47cbfcbb3.bindPopup(popup_86131b1258b204f954d9b1c8a3dbd89f)
+        ;
+
+        
+    
+    
+            var circle_marker_d963bf777c30d80537546c17461844f3 = L.circleMarker(
+                [-7.111628263542355, 112.57607390048163],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_c9a67baad84a12355906d216033a6188 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_47de5d59dfd0208dcd4bf2f146d38a7e = $(`&lt;div id=&quot;html_47de5d59dfd0208dcd4bf2f146d38a7e&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Waru, Pamekasan&lt;br&gt;Nama: Rian Renaldy&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_c9a67baad84a12355906d216033a6188.setContent(html_47de5d59dfd0208dcd4bf2f146d38a7e);
+            
+        
+
+        circle_marker_d963bf777c30d80537546c17461844f3.bindPopup(popup_c9a67baad84a12355906d216033a6188)
+        ;
+
+        
+    
+    
+            var circle_marker_5ff2fd2051e4d0c71dd3226194b91a2d = L.circleMarker(
+                [-7.173473719296748, 112.61400778958027],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_453c0b2d09779d414b7c76fa6fd812cf = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_6b42ffd759a6e65f3d637594c4117dd9 = $(`&lt;div id=&quot;html_6b42ffd759a6e65f3d637594c4117dd9&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Paciran, Lamongan&lt;br&gt;Nama: Ahmad Dafi Zidni Alfarisi&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_453c0b2d09779d414b7c76fa6fd812cf.setContent(html_6b42ffd759a6e65f3d637594c4117dd9);
+            
+        
+
+        circle_marker_5ff2fd2051e4d0c71dd3226194b91a2d.bindPopup(popup_453c0b2d09779d414b7c76fa6fd812cf)
+        ;
+
+        
+    
+    
+            var circle_marker_3203b0c2bb6e60839f7b64957d352f12 = L.circleMarker(
+                [-7.1228719978207025, 112.62696806145202],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_41bb1ca233873f84d1663954a85d6980 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_d3cae929cc58faef66290e2522210dc3 = $(`&lt;div id=&quot;html_d3cae929cc58faef66290e2522210dc3&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Kertosono, Nganjuk&lt;br&gt;Nama: AHMAD MAULANA ISHAQ&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_41bb1ca233873f84d1663954a85d6980.setContent(html_d3cae929cc58faef66290e2522210dc3);
+            
+        
+
+        circle_marker_3203b0c2bb6e60839f7b64957d352f12.bindPopup(popup_41bb1ca233873f84d1663954a85d6980)
+        ;
+
+        
+    
+    
+            var circle_marker_1f360528ce59479fdec9c173050c938a = L.circleMarker(
+                [-7.173170884640624, 112.70285611131095],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;blue&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;blue&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_3252fee58dcd9bd5838513edae75ac78 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_970e074ae13a6f48b8525e4252c33a5c = $(`&lt;div id=&quot;html_970e074ae13a6f48b8525e4252c33a5c&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Jabon , Sidoarjo&lt;br&gt;Nama: Rahardian Ananta&lt;br&gt;Cluster: 1&lt;/div&gt;`)[0];
+                popup_3252fee58dcd9bd5838513edae75ac78.setContent(html_970e074ae13a6f48b8525e4252c33a5c);
+            
+        
+
+        circle_marker_1f360528ce59479fdec9c173050c938a.bindPopup(popup_3252fee58dcd9bd5838513edae75ac78)
+        ;
+
+        
+    
+    
+            var circle_marker_da286b4dc97d3d632c8cdf09095219c8 = L.circleMarker(
+                [-7.173286487678514, 112.66718091447842],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_8158c2954cfbd7cbb0f840582f39cbd0 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_69fc2e331647527aa124f0ccfc8e7847 = $(`&lt;div id=&quot;html_69fc2e331647527aa124f0ccfc8e7847&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Menganti, Gresik&lt;br&gt;Nama: Verdi Setyawan Ardiansyah Putra&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_8158c2954cfbd7cbb0f840582f39cbd0.setContent(html_69fc2e331647527aa124f0ccfc8e7847);
+            
+        
+
+        circle_marker_da286b4dc97d3d632c8cdf09095219c8.bindPopup(popup_8158c2954cfbd7cbb0f840582f39cbd0)
+        ;
+
+        
+    
+    
+            var circle_marker_29f85f17d56a527a0b5225f56c778ba2 = L.circleMarker(
+                [-7.137901886421699, 112.56184799223188],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_163c6dc689e42091cd127286e9dacbc5 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_7a1c4a8aabb760c566f60d5fc28d7be6 = $(`&lt;div id=&quot;html_7a1c4a8aabb760c566f60d5fc28d7be6&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Banyu Ajuh, Perumnas, Kamal&lt;br&gt;Nama: A.Choiril Anwar El-Asfihani Risydan&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_163c6dc689e42091cd127286e9dacbc5.setContent(html_7a1c4a8aabb760c566f60d5fc28d7be6);
+            
+        
+
+        circle_marker_29f85f17d56a527a0b5225f56c778ba2.bindPopup(popup_163c6dc689e42091cd127286e9dacbc5)
+        ;
+
+        
+    
+    
+            var circle_marker_667e43cd19b170f7853567b5d0864f9b = L.circleMarker(
+                [-7.24566401223289, 112.66620419846974],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_0b59a0681020269b81c0d09d47483d29 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_42c10c358c8fea9734e0c01ba4e175d6 = $(`&lt;div id=&quot;html_42c10c358c8fea9734e0c01ba4e175d6&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Bandung - Jogoroto, Jombang&lt;br&gt;Nama: Muhammad Isa&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_0b59a0681020269b81c0d09d47483d29.setContent(html_42c10c358c8fea9734e0c01ba4e175d6);
+            
+        
+
+        circle_marker_667e43cd19b170f7853567b5d0864f9b.bindPopup(popup_0b59a0681020269b81c0d09d47483d29)
+        ;
+
+        
+    
+    
+            var circle_marker_7a6e77b0ac96a4c59e4b364f3b7972d0 = L.circleMarker(
+                [-7.236245891625652, 112.6307458859792],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_8af541b5e5cc4d72737c35f0c02d78c3 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_8f45536f908cce218e338949c03a6ea6 = $(`&lt;div id=&quot;html_8f45536f908cce218e338949c03a6ea6&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Widang, Tuban&lt;br&gt;Nama: Mochammad Zaenal Abidin&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_8af541b5e5cc4d72737c35f0c02d78c3.setContent(html_8f45536f908cce218e338949c03a6ea6);
+            
+        
+
+        circle_marker_7a6e77b0ac96a4c59e4b364f3b7972d0.bindPopup(popup_8af541b5e5cc4d72737c35f0c02d78c3)
+        ;
+
+        
+    
+    
+            var circle_marker_bdf284dcecbbc28fa2d5748c26a91063 = L.circleMarker(
+                [-7.178114376462049, 112.61615389998471],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;blue&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;blue&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_93d9dd61d92621ac7d99f0b637360274 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_a1b95cd681adb0433aaf76c33bc06dee = $(`&lt;div id=&quot;html_a1b95cd681adb0433aaf76c33bc06dee&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Sidoarjo, Wonoayu&lt;br&gt;Nama: Alghifari Amar Mukhasyafah&lt;br&gt;Cluster: 1&lt;/div&gt;`)[0];
+                popup_93d9dd61d92621ac7d99f0b637360274.setContent(html_a1b95cd681adb0433aaf76c33bc06dee);
+            
+        
+
+        circle_marker_bdf284dcecbbc28fa2d5748c26a91063.bindPopup(popup_93d9dd61d92621ac7d99f0b637360274)
+        ;
+
+        
+    
+    
+            var circle_marker_cb92890dd48016013c5d0b6c25d4c920 = L.circleMarker(
+                [-7.200641556016722, 112.68058381444204],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_1d437a306556ba256a1f9faece10545b = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_f0bb993cc5e4301e44d131ce75cb5225 = $(`&lt;div id=&quot;html_f0bb993cc5e4301e44d131ce75cb5225&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Kwanyar, Bangkalan&lt;br&gt;Nama: M. Fatihul Umam&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_1d437a306556ba256a1f9faece10545b.setContent(html_f0bb993cc5e4301e44d131ce75cb5225);
+            
+        
+
+        circle_marker_cb92890dd48016013c5d0b6c25d4c920.bindPopup(popup_1d437a306556ba256a1f9faece10545b)
+        ;
+
+        
+    
+    
+            var circle_marker_2db9f755cc3c4692fe3ed27a8cf0ae8e = L.circleMarker(
+                [-7.134287633370237, 112.70154997612481],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_75d7ff8d1d171c2c9a53fceb56a62bdc = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_1634c73b85dbca751707874091a5b1a9 = $(`&lt;div id=&quot;html_1634c73b85dbca751707874091a5b1a9&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: sambeng, lamongan&lt;br&gt;Nama: dedy Nurohim&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_75d7ff8d1d171c2c9a53fceb56a62bdc.setContent(html_1634c73b85dbca751707874091a5b1a9);
+            
+        
+
+        circle_marker_2db9f755cc3c4692fe3ed27a8cf0ae8e.bindPopup(popup_75d7ff8d1d171c2c9a53fceb56a62bdc)
+        ;
+
+        
+    
+    
+            var circle_marker_8151751f10339aff2431d7f39b05864d = L.circleMarker(
+                [-7.195401203776061, 112.69656400595582],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_f01dbc225d32330946be88a05064c11c = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_804788a1e6ce6445601ddc8f1b6865a1 = $(`&lt;div id=&quot;html_804788a1e6ce6445601ddc8f1b6865a1&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Kec. Kalianget, Sumenep&lt;br&gt;Nama: Marshella Aulia Putri&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_f01dbc225d32330946be88a05064c11c.setContent(html_804788a1e6ce6445601ddc8f1b6865a1);
+            
+        
+
+        circle_marker_8151751f10339aff2431d7f39b05864d.bindPopup(popup_f01dbc225d32330946be88a05064c11c)
+        ;
+
+        
+    
+    
+            var circle_marker_f5db71520d0722c724091976843f470b = L.circleMarker(
+                [-7.220615185066765, 112.60803912383888],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_9122347388bb62b8fa8ebcc76f6fe124 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_e3122b35e878da529dc4041a32c2825f = $(`&lt;div id=&quot;html_e3122b35e878da529dc4041a32c2825f&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Cerme, Gresik&lt;br&gt;Nama: Robbaniyah Umdatun Ni&#x27;mah&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_9122347388bb62b8fa8ebcc76f6fe124.setContent(html_e3122b35e878da529dc4041a32c2825f);
+            
+        
+
+        circle_marker_f5db71520d0722c724091976843f470b.bindPopup(popup_9122347388bb62b8fa8ebcc76f6fe124)
+        ;
+
+        
+    
+    
+            var circle_marker_6d172b138c5a2d53d19c6b985544163c = L.circleMarker(
+                [-7.076717561553923, 112.63453938120745],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_dccba2f01dd31f474aa55a9c4afbc173 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_855c003c7ffc16c095f0c879696aae58 = $(`&lt;div id=&quot;html_855c003c7ffc16c095f0c879696aae58&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Tikala, Manado&lt;br&gt;Nama: Rachelia Andini Tendean&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_dccba2f01dd31f474aa55a9c4afbc173.setContent(html_855c003c7ffc16c095f0c879696aae58);
+            
+        
+
+        circle_marker_6d172b138c5a2d53d19c6b985544163c.bindPopup(popup_dccba2f01dd31f474aa55a9c4afbc173)
+        ;
+
+        
+    
+    
+            var circle_marker_f91ee3e65f34fce5288f2cd3200ed2ef = L.circleMarker(
+                [-7.161288815024327, 112.66656317157019],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_f0471d0a4bd06c73242c96fe4e6e1863 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_ba81745c22feddc1a969ede3a7e0ca10 = $(`&lt;div id=&quot;html_ba81745c22feddc1a969ede3a7e0ca10&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Kerek, Tuban&lt;br&gt;Nama: Nurhabibatul Umah&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_f0471d0a4bd06c73242c96fe4e6e1863.setContent(html_ba81745c22feddc1a969ede3a7e0ca10);
+            
+        
+
+        circle_marker_f91ee3e65f34fce5288f2cd3200ed2ef.bindPopup(popup_f0471d0a4bd06c73242c96fe4e6e1863)
+        ;
+
+        
+    
+    
+            var circle_marker_07dc2bdf9d674e2a3db770dfa40dfcf8 = L.circleMarker(
+                [-7.146623589765604, 112.69877725635612],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_e56ea9068600468d6fc19b31db7dae94 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_9d21f4f5c82aed389116535fceec2a2c = $(`&lt;div id=&quot;html_9d21f4f5c82aed389116535fceec2a2c&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Kwanyar, Bangkalan&lt;br&gt;Nama: Fahdimas akmal&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_e56ea9068600468d6fc19b31db7dae94.setContent(html_9d21f4f5c82aed389116535fceec2a2c);
+            
+        
+
+        circle_marker_07dc2bdf9d674e2a3db770dfa40dfcf8.bindPopup(popup_e56ea9068600468d6fc19b31db7dae94)
+        ;
+
+        
+    
+    
+            var circle_marker_9f273e0314f1effdf0e874fd9f108ce5 = L.circleMarker(
+                [-7.221237409310673, 112.62604128810774],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_85f61cce563735971fac2f4f889e6a7f = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_62e983f4250d90ad09a8e34cf0ef8478 = $(`&lt;div id=&quot;html_62e983f4250d90ad09a8e34cf0ef8478&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Wonokromo, Surabaya&lt;br&gt;Nama: Muhammad izzul Millah Aqil&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_85f61cce563735971fac2f4f889e6a7f.setContent(html_62e983f4250d90ad09a8e34cf0ef8478);
+            
+        
+
+        circle_marker_9f273e0314f1effdf0e874fd9f108ce5.bindPopup(popup_85f61cce563735971fac2f4f889e6a7f)
+        ;
+
+        
+    
+    
+            var circle_marker_fce3c6170268cec25c07a058b75f4b8f = L.circleMarker(
+                [-7.17721913622626, 112.64071705116682],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_c2accee9d49422885503737899b6be6a = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_92443609f0b3b0090303713c74bdc3e7 = $(`&lt;div id=&quot;html_92443609f0b3b0090303713c74bdc3e7&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Asemrowo, Surabaya&lt;br&gt;Nama: Riska Nana Nuril Fadilah&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_c2accee9d49422885503737899b6be6a.setContent(html_92443609f0b3b0090303713c74bdc3e7);
+            
+        
+
+        circle_marker_fce3c6170268cec25c07a058b75f4b8f.bindPopup(popup_c2accee9d49422885503737899b6be6a)
+        ;
+
+        
+    
+    
+            var circle_marker_7ed43d0c09f51e2d734eed517e936c35 = L.circleMarker(
+                [-7.144453870514507, 112.5946832512997],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_4da6f66694e5ae4f459e445f01044958 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_cf2855ca01fecec07c712596a6023fcd = $(`&lt;div id=&quot;html_cf2855ca01fecec07c712596a6023fcd&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Kota Sumenep, Sumenep&lt;br&gt;Nama: Alifah Sayyidaturrhohma&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_4da6f66694e5ae4f459e445f01044958.setContent(html_cf2855ca01fecec07c712596a6023fcd);
+            
+        
+
+        circle_marker_7ed43d0c09f51e2d734eed517e936c35.bindPopup(popup_4da6f66694e5ae4f459e445f01044958)
+        ;
+
+        
+    
+    
+            var circle_marker_2fe42f65f84ad16e3e0953839db6f894 = L.circleMarker(
+                [-7.207549678871115, 112.59018966879597],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_c7d3a5a313fed7d33deab75a8a0d9133 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_8becdf490fbbdd1b5437021108198251 = $(`&lt;div id=&quot;html_8becdf490fbbdd1b5437021108198251&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Socah, Bangkalan&lt;br&gt;Nama: Lailatul Hasanah&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_c7d3a5a313fed7d33deab75a8a0d9133.setContent(html_8becdf490fbbdd1b5437021108198251);
+            
+        
+
+        circle_marker_2fe42f65f84ad16e3e0953839db6f894.bindPopup(popup_c7d3a5a313fed7d33deab75a8a0d9133)
+        ;
+
+        
+    
+    
+            var circle_marker_1a6069368964f0de0a689ce6532763b1 = L.circleMarker(
+                [-7.131215099082716, 112.69062629111971],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_af67e3b772b2c87a57008c9aa3acde86 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_586e9243164c86e70bb5a4782a54a66a = $(`&lt;div id=&quot;html_586e9243164c86e70bb5a4782a54a66a&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Pilangkenceng, Madiun&lt;br&gt;Nama: Magdalena Jovita Hatuopar&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_af67e3b772b2c87a57008c9aa3acde86.setContent(html_586e9243164c86e70bb5a4782a54a66a);
+            
+        
+
+        circle_marker_1a6069368964f0de0a689ce6532763b1.bindPopup(popup_af67e3b772b2c87a57008c9aa3acde86)
+        ;
+
+        
+    
+    
+            var circle_marker_c24af9c0cd3b5bf1c37de0c5f3527968 = L.circleMarker(
+                [-7.180031934495941, 112.71781200142854],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;blue&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;blue&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_176caee2ec335e1ecf9ada7ae465eeeb = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_1257919b1a176eb783d657c7acdafa01 = $(`&lt;div id=&quot;html_1257919b1a176eb783d657c7acdafa01&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Tanah Merah, Bangkalan&lt;br&gt;Nama: Mohammad Aziz Huzaini&lt;br&gt;Cluster: 1&lt;/div&gt;`)[0];
+                popup_176caee2ec335e1ecf9ada7ae465eeeb.setContent(html_1257919b1a176eb783d657c7acdafa01);
+            
+        
+
+        circle_marker_c24af9c0cd3b5bf1c37de0c5f3527968.bindPopup(popup_176caee2ec335e1ecf9ada7ae465eeeb)
+        ;
+
+        
+    
+    
+            var circle_marker_032afe75762f33bfe936cd45362ebcc3 = L.circleMarker(
+                [-7.164584687489664, 112.646399493921],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_0df877c5011b51d74e79c4e9d84d0e3f = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_9461a6fb792f0e46835a28a51f4c4608 = $(`&lt;div id=&quot;html_9461a6fb792f0e46835a28a51f4c4608&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Labang, Bangkalan&lt;br&gt;Nama: Kurnia Maulinda Sari&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_0df877c5011b51d74e79c4e9d84d0e3f.setContent(html_9461a6fb792f0e46835a28a51f4c4608);
+            
+        
+
+        circle_marker_032afe75762f33bfe936cd45362ebcc3.bindPopup(popup_0df877c5011b51d74e79c4e9d84d0e3f)
+        ;
+
+        
+    
+    
+            var circle_marker_952e3d221b2c35db8fe4b095a3bc6a78 = L.circleMarker(
+                [-7.18008533061147, 112.70017664489461],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_d75648daf5f292cd107e807149939a3e = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_c4d0a41fcebbf22555efab5a3523adec = $(`&lt;div id=&quot;html_c4d0a41fcebbf22555efab5a3523adec&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Widodaren, Ngawi&lt;br&gt;Nama: Deo Candra Saputra&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_d75648daf5f292cd107e807149939a3e.setContent(html_c4d0a41fcebbf22555efab5a3523adec);
+            
+        
+
+        circle_marker_952e3d221b2c35db8fe4b095a3bc6a78.bindPopup(popup_d75648daf5f292cd107e807149939a3e)
+        ;
+
+        
+    
+    
+            var circle_marker_6017efab52345014e3363b75bb0f9a57 = L.circleMarker(
+                [-7.057386090774553, 112.66808180125238],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_57e7885cf68808cb4ce7e089adcad179 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_aee4c49d79c59847b77daad70e641718 = $(`&lt;div id=&quot;html_aee4c49d79c59847b77daad70e641718&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Bangkalan, Bangkalan&lt;br&gt;Nama: Rifqi Fairurrafi&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_57e7885cf68808cb4ce7e089adcad179.setContent(html_aee4c49d79c59847b77daad70e641718);
+            
+        
+
+        circle_marker_6017efab52345014e3363b75bb0f9a57.bindPopup(popup_57e7885cf68808cb4ce7e089adcad179)
+        ;
+
+        
+    
+    
+            var circle_marker_a4d4c9b9a6913dd6a1f6be487137efcd = L.circleMarker(
+                [-7.150674861236897, 112.61774401226975],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_77821e6ebb9b6df1965d94f3fe479033 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_83e15b13acaceea0c2e17ebdba0b1ad4 = $(`&lt;div id=&quot;html_83e15b13acaceea0c2e17ebdba0b1ad4&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Warudoyong, Kota Sukabumi&lt;br&gt;Nama: Fathan Ruhul Alam&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_77821e6ebb9b6df1965d94f3fe479033.setContent(html_83e15b13acaceea0c2e17ebdba0b1ad4);
+            
+        
+
+        circle_marker_a4d4c9b9a6913dd6a1f6be487137efcd.bindPopup(popup_77821e6ebb9b6df1965d94f3fe479033)
+        ;
+
+        
+    
+    
+            var circle_marker_6dda0626f0a9d2850f1d725fcfd42501 = L.circleMarker(
+                [-7.202885546447796, 112.66806978027543],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_a81535a9d57cfe418df33e849c49a486 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_a0fc0c5d4a1e136fcbf7821acda98e63 = $(`&lt;div id=&quot;html_a0fc0c5d4a1e136fcbf7821acda98e63&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Kamal, Bangkalan&lt;br&gt;Nama: Laila Maghfiroh&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_a81535a9d57cfe418df33e849c49a486.setContent(html_a0fc0c5d4a1e136fcbf7821acda98e63);
+            
+        
+
+        circle_marker_6dda0626f0a9d2850f1d725fcfd42501.bindPopup(popup_a81535a9d57cfe418df33e849c49a486)
+        ;
+
+        
+    
+    
+            var circle_marker_724838bd27b9a58a47d022cac971e99b = L.circleMarker(
+                [-7.108872754394841, 112.7269018283233],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_fc56422fa718970a753511fe038d9ce3 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_194791d0d0b1c7861bdc0c3394ca7882 = $(`&lt;div id=&quot;html_194791d0d0b1c7861bdc0c3394ca7882&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Banyuajuh kamal, Bangkalan&lt;br&gt;Nama: Dewi Geizya&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_fc56422fa718970a753511fe038d9ce3.setContent(html_194791d0d0b1c7861bdc0c3394ca7882);
+            
+        
+
+        circle_marker_724838bd27b9a58a47d022cac971e99b.bindPopup(popup_fc56422fa718970a753511fe038d9ce3)
+        ;
+
+        
+    
+    
+            var circle_marker_21238c5ade6c2c09db7983c8c49c6d36 = L.circleMarker(
+                [-7.211042182498551, 112.64820869804451],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_be4825f30fdfdf52b7226041b122ec00 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_d4e65b4dce32f670dd0b448857e613cf = $(`&lt;div id=&quot;html_d4e65b4dce32f670dd0b448857e613cf&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Dukun, Gresik&lt;br&gt;Nama: Fathul Aziz Saifuddin&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_be4825f30fdfdf52b7226041b122ec00.setContent(html_d4e65b4dce32f670dd0b448857e613cf);
+            
+        
+
+        circle_marker_21238c5ade6c2c09db7983c8c49c6d36.bindPopup(popup_be4825f30fdfdf52b7226041b122ec00)
+        ;
+
+        
+    
+    
+            var circle_marker_cad6fdc699e4c23a53c349a579139ca1 = L.circleMarker(
+                [-7.139556820249763, 112.7282321827907],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.7, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 8, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_1942bbe2ae3bdd5c96ead13790614a97);
+        
+    
+        var popup_4241776792df04bc6cffd0127cf4e0f9 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_142101706705e402ef0f88905c52f4cc = $(`&lt;div id=&quot;html_142101706705e402ef0f88905c52f4cc&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Daerah: Kecamatan Bangkalan,Bangkalan&lt;br&gt;Nama: Moh Rafie Nazar J&lt;br&gt;Cluster: 0&lt;/div&gt;`)[0];
+                popup_4241776792df04bc6cffd0127cf4e0f9.setContent(html_142101706705e402ef0f88905c52f4cc);
+            
+        
+
+        circle_marker_cad6fdc699e4c23a53c349a579139ca1.bindPopup(popup_4241776792df04bc6cffd0127cf4e0f9)
+        ;
+
+        
+    
+&lt;/script&gt;
+&lt;/html&gt;" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></div></div></div></div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./data"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="clustering3Pol.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Clustering Data Polutan (68 Fitur vs PCA 37 Fitur)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="klasifikasiSawah.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Klasifikasi Spasial Lahan Sawah dan Non-Sawah Menggunakan Citra Sentinel-2A</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alur-workflow-knime">1. Alur Workflow KNIME</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tahapan-teknis-per-node">2. Tahapan Teknis per Node</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cara-membaca-silhouette-coefficient">3. Cara Membaca Silhouette Coefficient</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#padanan-di-python-untuk-validasi">4. Padanan di Python (untuk Validasi)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-eksperimen-knime">5. Hasil Eksperimen KNIME</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-linier">Data Linier</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-polynomial">Data Polynomial</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Fathul Aziz Saifuddin
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
