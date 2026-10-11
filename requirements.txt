@@ -1,3 +1,8 @@
 jupyter-book
 matplotlib
 numpy
+
+streamlit
+pandas
+joblib
+scikit-learn
