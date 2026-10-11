@@ -26,8 +26,8 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-['# Cakupan mengikuti bounding box sampel, seperti pada kode awal.', 'kelas_list = list(model_terbaik.classes_)', '', 'with rasterio.open(nama_tif) as src:', '    img = src.read()']
+['# Cakupan mengikuti bounding box sampel, seperti pada kode awal.', 'import numpy as np', 'import rasterio', 'import matplotlib.pyplot as plt', 'from matplotlib.colors import ListedColormap']
 ...
-['im = ax.imshow(peta, cmap=ListedColormap(warna[:n]), vmin=-0.5, vmax=n - 0.5, extent=ext)', 'cbar = plt.colorbar(im, ax=ax, ticks=range(n), shrink=0.7)', 'cbar.ax.set_yticklabels(kelas_list)', 'ax.set_title("Peta Klasifikasi Tutupan Lahan")', 'plt.show()']
+['ax.set_title("Peta Klasifikasi Tutupan Lahan")', 'ax.set_xlabel("Koordinat X")', 'ax.set_ylabel("Koordinat Y")', 'plt.tight_layout()', 'plt.show()']
 -------------------
 
