@@ -1,0 +1,60 @@
+{
+  "bounds": [
+    [
+      -8.822415920683078,
+      111.07907981566969
+    ],
+    [
+      -6.682018599790839,
+      114.57540620714477
+    ]
+  ],
+  "kelas": [
+    "Bangunan",
+    "Danau",
+    "Lahan Hijau",
+    "Laut",
+    "Mangrove",
+    "Sawah"
+  ],
+  "warna_hex": [
+    "#ff0000",
+    "#0000ff",
+    "#00ff00",
+    "#00ffff",
+    "#800080",
+    "#ffff00"
+  ],
+  "file": [
+    "layer_0.png",
+    "layer_1.png",
+    "layer_2.png",
+    "layer_3.png",
+    "layer_4.png",
+    "layer_5.png"
+  ],
+  "piksel": [
+    941490,
+    1166433,
+    1595146,
+    3773929,
+    257523,
+    1246563
+  ],
+  "luas_km2": [
+    9414.9,
+    11664.33,
+    15951.460000000001,
+    37739.29,
+    2575.23,
+    12465.630000000001
+  ],
+  "total_valid": 8981084,
+  "ukuran": [
+    2352,
+    3847
+  ],
+  "resolusi_m": 100,
+  "periode": "9 September - 10 Oktober 2026",
+  "model_peta": "Random Forest"
+}

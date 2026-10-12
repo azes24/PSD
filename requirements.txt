@@ -4,5 +4,10 @@ numpy
 
 streamlit
 pandas
-joblib
+numpy
 scikit-learn
+joblib
+matplotlib
+altair
+folium
+streamlit-folium
