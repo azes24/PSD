@@ -191,15 +191,19 @@ with st.sidebar:
 st.title("Klasifikasi Tutupan Lahan Jawa Timur")
 st.caption("Citra Sentinel-2 · Random Forest · Naive Bayes · Decision Tree")
 
-tab_ringkas, tab_data, tab_eval, tab_peta, tab_prediksi, tab_catatan = st.tabs([
-    "🏠 Ringkasan", "📡 Data & Fitur", "📊 Evaluasi Model",
-    "🗺️ Peta Klasifikasi", "🔮 Prediksi", "⚠️ Catatan",
-])
+# Navigasi dengan radio (bukan st.tabs): hanya halaman aktif yang dijalankan.
+# Dengan st.tabs, peta di tab tersembunyi sering tampil kosong, dan peta berat
+# ikut dikirim ulang pada setiap interaksi di tab lain.
+HALAMAN = ["🏠 Ringkasan", "📡 Data & Fitur", "📊 Evaluasi Model",
+           "🗺️ Peta Klasifikasi", "🔮 Prediksi", "⚠️ Catatan"]
+halaman = st.radio("Halaman", HALAMAN, horizontal=True,
+                   label_visibility="collapsed", key="halaman")
+st.divider()
 
 # =====================================================================
 # TAB 1 — RINGKASAN
 # =====================================================================
-with tab_ringkas:
+if halaman == HALAMAN[0]:
     st.subheader("Gambaran Umum")
     st.write(
         "Proyek ini memetakan enam kelas tutupan lahan di Jawa Timur: "
@@ -247,7 +251,7 @@ with tab_ringkas:
 # =====================================================================
 # TAB 2 — DATA & FITUR
 # =====================================================================
-with tab_data:
+if halaman == HALAMAN[1]:
     st.subheader("Sumber Data: Sentinel-2")
     st.write(
         "Sentinel-2 adalah misi pengamatan bumi ESA (program Copernicus) dengan dua satelit "
@@ -328,7 +332,7 @@ with tab_data:
 # =====================================================================
 # TAB 3 — EVALUASI MODEL
 # =====================================================================
-with tab_eval:
+if halaman == HALAMAN[2]:
     st.subheader("Cara Menilai Model")
     st.write(
         "Setelah belajar dari data latih, model diuji pada **data uji** yang belum pernah "
@@ -427,13 +431,20 @@ with tab_eval:
 # =====================================================================
 # TAB 4 — PETA
 # =====================================================================
-with tab_peta:
+if halaman == HALAMAN[3]:
     st.subheader("Peta Klasifikasi Tutupan Lahan")
     if meta is None or not (ASSETS / meta["file"][0]).exists():
         st.warning(
-            "Aset peta belum tersedia (`data/peta_meta.json` dan `assets/layer_*.png`). "
-            "Jalankan `ekspor_tambahan.py` sebagai sel terakhir di notebook, lalu salin folder "
-            "`data/` dan `assets/` ke repositori."
+            "Aset peta belum ditemukan di server (`data/peta_meta.json` dan `assets/layer_*.png`). "
+            "Jalankan `ekspor_mandiri.py`, lalu pastikan folder `data/` dan `assets/` ikut "
+            "di-commit dan di-push ke GitHub (cek juga `.gitignore`)."
+        )
+        st.write("Status berkas:")
+        st.code(
+            f"data/peta_meta.json : {'ADA' if meta else 'TIDAK ADA'}\n"
+            + "\n".join(f"assets/layer_{i}.png : {'ADA' if (ASSETS / f'layer_{i}.png').exists() else 'TIDAK ADA'}"
+                        for i in range(6)),
+            language="text",
         )
     else:
         st.write(
@@ -447,7 +458,6 @@ with tab_peta:
         opasitas = c2.slider("Opasitas layer", 0.1, 1.0, 0.6, 0.05)
         titik = c3.checkbox("Tampilkan titik sampel", value=False)
 
-        @st.cache_resource(show_spinner="Menyusun peta...")
         def bangun_peta(kelas_tampil: tuple, opasitas: float, titik_sampel: bool):
             import folium
 
@@ -482,13 +492,30 @@ with tab_peta:
             folium.LayerControl(position="topright", collapsed=False).add_to(m)
             return m
 
-        peta_folium = bangun_peta(tuple(tampil), float(opasitas), bool(titik))
+        with st.spinner("Menyusun peta..."):
+            peta_folium = bangun_peta(tuple(tampil), float(opasitas), bool(titik))
+
+        status_render = "streamlit-folium"
         try:
             from streamlit_folium import st_folium
-            st_folium(peta_folium, height=620, use_container_width=True, returned_objects=[])
+            try:
+                st_folium(peta_folium, height=620, use_container_width=True,
+                          returned_objects=[], key="peta_utama")
+            except TypeError:
+                st_folium(peta_folium, height=620, returned_objects=[], key="peta_utama")
         except ImportError:
             import streamlit.components.v1 as components
+            status_render = "components.html (streamlit-folium belum terpasang)"
             components.html(peta_folium._repr_html_(), height=640)
+
+        with st.expander("Diagnosis peta (buka jika peta kosong)"):
+            ukuran_mb = sum((ASSETS / f).stat().st_size for f in meta["file"] if (ASSETS / f).exists()) / 1e6
+            st.write(f"Renderer: **{status_render}**")
+            st.write(f"Total ukuran layer PNG: **{ukuran_mb:.1f} MB** (idealnya < 5 MB)")
+            st.write(f"Layer ditemukan: **{sum((ASSETS / f).exists() for f in meta['file'])} / {len(meta['file'])}**")
+            st.write(f"Batas peta: {meta['bounds']}")
+            if ukuran_mb > 5:
+                st.warning("Layer terlalu besar. Jalankan ulang `ekspor_mandiri.py` versi terbaru (layer diperkecil otomatis).")
 
         st.markdown(
             " ".join(
@@ -533,7 +560,7 @@ with tab_peta:
 # =====================================================================
 # TAB 5 — PREDIKSI
 # =====================================================================
-with tab_prediksi:
+if halaman == HALAMAN[4]:
     st.subheader("Prediksi Tutupan Lahan dari Nilai Band")
     if not models:
         st.error("Model tidak ditemukan di folder `models/`.")
@@ -625,7 +652,7 @@ with tab_prediksi:
 # =====================================================================
 # TAB 6 — CATATAN
 # =====================================================================
-with tab_catatan:
+if halaman == HALAMAN[5]:
     st.subheader("Keterbatasan & Cara Membaca Hasil")
     st.markdown(
         """
